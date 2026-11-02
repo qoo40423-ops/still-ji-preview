@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紀家烘焙坊</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+    </style>
+
+<style id="premium-brand-refresh">
+:root {
+  --bakery-cream: #f7f2e9;
+  --bakery-paper: #fffdf9;
+  --bakery-cocoa: #49352b;
+  --bakery-cocoa-soft: #70584a;
+  --bakery-gold: #b79a68;
+  --bakery-line: #e9dfd1;
+  --bakery-muted: #8a7b6d;
+}
+html { scroll-behavior: smooth; }
+body {
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(183,154,104,.12), transparent 34rem),
+    linear-gradient(180deg, #fbf8f2 0%, var(--bakery-cream) 100%) !important;
+  color: var(--bakery-cocoa) !important;
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif !important;
+  letter-spacing: .015em;
+  padding-top: 2.5rem !important;
+  padding-bottom: 4rem !important;
+}
+.max-w-2xl { max-width: 48rem !important; }
+body > div > div:first-child { gap: 2rem !important; }
+h1 {
+  color: var(--bakery-cocoa) !important;
+  font-family: "Noto Serif TC", "Songti TC", "PMingLiU", serif !important;
+  font-size: clamp(1.8rem, 5vw, 2.55rem) !important;
+  line-height: 1.3 !important;
+  letter-spacing: .09em !important;
+  font-weight: 700 !important;
+}
+h1::before {
+  content: "STILL JI";
+  display: block;
+  color: var(--bakery-gold);
+  font: 600 .66rem/1.5 Georgia, serif;
+  letter-spacing: .28em;
+  margin-bottom: .85rem;
+}
+h2, h3 { color: var(--bakery-cocoa) !important; }
+#formBlock, #searchBlock, #successPagePickup, #successPageDelivery {
+  background: rgba(255,253,249,.96) !important;
+  border: 1px solid var(--bakery-line) !important;
+  border-radius: 1.35rem !important;
+  box-shadow: 0 18px 50px rgba(73,53,43,.07) !important;
+}
+#formBlock { padding: clamp(1.15rem, 4vw, 2rem) !important; }
+#formTitle {
+  border-color: var(--bakery-line) !important;
+  font-family: "Noto Serif TC", "Songti TC", serif;
+  letter-spacing: .04em;
+  padding-bottom: 1rem !important;
+}
+label { color: var(--bakery-cocoa-soft) !important; font-weight: 650 !important; }
+input:not([type="checkbox"]), select, textarea {
+  border-color: #dfd4c6 !important;
+  border-radius: .8rem !important;
+  background-color: #fffefa !important;
+  color: var(--bakery-cocoa) !important;
+  min-height: 2.8rem;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--bakery-gold) !important;
+  box-shadow: 0 0 0 3px rgba(183,154,104,.16) !important;
+  outline: none !important;
+}
+button {
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease !important;
+}
+button:hover { transform: translateY(-1px); }
+#tabPickup, #tabDelivery {
+  border-radius: .85rem !important;
+  padding-top: .85rem !important;
+  padding-bottom: .85rem !important;
+}
+#tabPickup.bg-amber-600, #tabDelivery.bg-amber-600 {
+  background: var(--bakery-cocoa) !important;
+  color: #fffaf2 !important;
+}
+#tabPickup:not(.bg-amber-600), #tabDelivery:not(.bg-amber-600) {
+  color: var(--bakery-cocoa-soft) !important;
+}
+.flex.rounded-xl.bg-gray-200 {
+  background: #eee6da !important;
+  border-radius: 1rem !important;
+  padding: .35rem !important;
+}
+#pickupProductBox > div, #deliveryProductBox > div {
+  background: #fffefa !important;
+  border-color: var(--bakery-line) !important;
+  border-radius: 1rem !important;
+  padding: 1rem !important;
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+#pickupProductBox > div:hover, #deliveryProductBox > div:hover {
+  border-color: #cbb58f !important;
+  box-shadow: 0 8px 22px rgba(73,53,43,.06);
+  transform: translateY(-1px);
+}
+#pickupProductBox span, #deliveryProductBox span { line-height: 1.6; }
+.bg-orange-50, .bg-amber-50 {
+  background: #f6f0e5 !important;
+  border-color: #e8dbc5 !important;
+  color: #72583e !important;
+}
+.text-amber-700, .text-amber-800 { color: var(--bakery-cocoa-soft) !important; }
+.border-amber-200 { border-color: #e8dbc5 !important; }
+.bg-amber-600, .hover\:bg-amber-700:hover {
+  background-color: var(--bakery-cocoa) !important;
+}
+#submitBtn, button[onclick="executeSubmit()"] {
+  background: var(--bakery-cocoa) !important;
+  color: #fffaf2 !important;
+  border-radius: .95rem !important;
+  min-height: 3.2rem;
+  letter-spacing: .08em;
+  box-shadow: 0 8px 18px rgba(73,53,43,.15);
+}
+#submitBtn:hover, button[onclick="executeSubmit()"]:hover {
+  background: #624838 !important;
+  box-shadow: 0 12px 24px rgba(73,53,43,.2);
+}
+#totalAmount {
+  color: var(--bakery-cocoa) !important;
+  font-family: Georgia, serif;
+}
+#confirmModal > div {
+  border-radius: 1.3rem !important;
+  border-color: var(--bakery-line) !important;
+}
+#searchBlock { padding: 1.4rem !important; }
+#successPagePickup, #successPageDelivery { padding: 2rem !important; }
+hr, .border-gray-100, .border-gray-200 { border-color: var(--bakery-line) !important; }
+.shadow-sm, .shadow-xs { box-shadow: 0 5px 18px rgba(73,53,43,.045) !important; }
+@media (max-width: 640px) {
+  body { padding: 1.25rem .85rem 3rem !important; }
+  #formBlock { padding: 1.1rem !important; }
+  h1 { font-size: 1.75rem !important; }
+  #pickupProductBox > div, #deliveryProductBox > div { padding: .8rem !important; }
+  #pickupProductBox input[type="number"], #deliveryProductBox input[type="number"] { width: 4.2rem !important; }
+}
+</style>
+
+
+<style id="premium-photo-showcase">
+:root { --bakery-cream:#f7f2e9; --bakery-paper:#fffdf9; --bakery-cocoa:#49352b; --bakery-gold:#b79a68; }
+.brand-showcase { width:100%; margin:1.6rem auto 0; color:var(--bakery-cocoa); }
+.brand-intro { padding:1.35rem 1rem 1.1rem; text-align:center; }
+.brand-kicker { color:var(--bakery-gold); font:600 .68rem/1.5 Georgia,serif; letter-spacing:.28em; }
+.brand-intro h2 { margin:.55rem 0 .6rem; font:700 clamp(1.25rem,3vw,1.65rem)/1.5 "Noto Serif TC","Songti TC",serif; letter-spacing:.08em; }
+.brand-intro p { margin:0 auto; max-width:34rem; color:#806f60; font-size:.88rem; line-height:1.9; }
+.brand-hero-photo { overflow:hidden; border-radius:1.2rem; background:#eee5d8; box-shadow:0 14px 34px rgba(73,53,43,.12); }
+.brand-hero-photo img { display:block; width:100%; aspect-ratio: 16 / 10; object-fit:cover; object-position:center 54%; }
+.brand-photo-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.85rem; margin-top:.9rem; }
+.brand-photo-card { overflow:hidden; background:var(--bakery-paper); border:1px solid #e9dfd1; border-radius:1rem; }
+.brand-photo-card img { display:block; width:100%; aspect-ratio:4 / 3; object-fit:cover; }
+.brand-photo-card figcaption { padding:.7rem .75rem .8rem; color:#70584a; text-align:center; font-size:.78rem; letter-spacing:.06em; }
+.brand-note { margin:1rem 0 0; padding:.9rem 1rem; border-top:1px solid #e9dfd1; border-bottom:1px solid #e9dfd1; text-align:center; color:#806f60; font-size:.78rem; line-height:1.8; letter-spacing:.04em; }
+.brand-awards { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:1rem; margin-top:1rem; padding:1rem; border-radius:1rem; background:rgba(255,253,249,.78); border:1px solid #e9dfd1; }
+.brand-awards img { width:100%; display:block; border-radius:.7rem; }
+.brand-awards p { margin:0; color:#70584a; font-size:.8rem; line-height:1.9; }
+.brand-awards strong { display:block; margin-bottom:.35rem; color:#49352b; font-family:"Noto Serif TC","Songti TC",serif; font-size:1rem; }
+.brand-order-hint { margin:.35rem 0 0; text-align:center; color:#8a7b6d; font-size:.76rem; letter-spacing:.08em; }
+@media(max-width:480px) {
+ .brand-photo-grid { gap:.6rem; }
+ .brand-photo-card figcaption { padding:.6rem .35rem; font-size:.72rem; }
+ .brand-awards { grid-template-columns:1fr; }
+ .brand-awards img { max-height:230px; object-fit:cover; }
+}
+</style>
+
+
+<style id="still-ji-navigation-and-brand">
+h1::before { content:none !important; }
+.brand-wordmark {
+  color:#49352b; font:700 clamp(2rem,6vw,3rem)/1.1 Georgia,"Times New Roman",serif;
+  letter-spacing:.22em; padding-left:.22em;
+}
+.brand-tagline { color:#a88d62; font:600 .62rem/1.5 Georgia,serif; letter-spacing:.28em; }
+.brand-intro { padding:1.1rem .6rem 1.35rem !important; }
+.brand-main-title, .brand-product-title {
+  color:#49352b; font-family:"Noto Serif TC","Songti TC",serif;
+  font-size:clamp(1.35rem,3.8vw,1.8rem); line-height:1.5; letter-spacing:.08em;
+}
+.brand-award-copy { color:#806f60; margin:.3rem auto 1rem !important; font-size:.9rem !important; }
+.brand-awards { max-width:42rem; margin:0 auto 1.5rem !important; }
+.brand-awards img { max-height:240px; object-fit:contain; background:#fff; }
+.brand-awards p { text-align:left; }
+.brand-product-title { margin:1.4rem 0 .4rem !important; }
+.brand-hero-photo img { aspect-ratio: 16/10; object-fit:cover; object-position:center 52%; }
+.brand-cta-wrap { text-align:center; padding:1.8rem .5rem .8rem; }
+.brand-cta {
+  width:min(100%,22rem); background:#49352b; color:#fffaf2; border:1px solid #49352b;
+  border-radius:999px; padding:1rem 2rem; font-weight:700; letter-spacing:.2em;
+  box-shadow:0 10px 24px rgba(73,53,43,.16); cursor:pointer;
+}
+.brand-cta:hover { background:#624838; }
+.brand-cta-wrap p { color:#b79a68; font:600 .62rem Georgia,serif; letter-spacing:.28em; margin-top:.65rem; }
+.order-choice-page, .order-form-page {
+  background:rgba(255,253,249,.96); border:1px solid #e9dfd1; border-radius:1.35rem;
+  padding:clamp(1rem,4vw,2rem); box-shadow:0 18px 50px rgba(73,53,43,.07);
+}
+.back-link {
+  color:#806f60; background:transparent; border:0; padding:.35rem 0 .9rem;
+  font-size:.85rem; cursor:pointer; letter-spacing:.04em;
+}
+.choice-heading { text-align:center; padding:1rem .4rem 1.5rem; }
+.choice-heading h2 { margin:.6rem 0; font:700 1.45rem "Noto Serif TC","Songti TC",serif; letter-spacing:.08em; }
+.choice-heading p { color:#8a7b6d; font-size:.85rem; }
+.choice-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.choice-card {
+  display:flex; flex-direction:column; align-items:center; gap:.8rem; text-align:center;
+  padding:1.5rem 1rem; border:1px solid #e9dfd1; border-radius:1.15rem;
+  background:#fffefa; color:#49352b; cursor:pointer; min-height:230px;
+}
+.choice-card:hover { border-color:#b79a68; box-shadow:0 10px 25px rgba(73,53,43,.08); }
+.choice-icon { color:#b79a68; font-size:1.8rem; }
+.choice-card strong { font:700 1.1rem "Noto Serif TC","Songti TC",serif; letter-spacing:.06em; }
+.choice-card span:not(.choice-icon) { color:#8a7b6d; font-size:.8rem; line-height:1.8; }
+.choice-card em { color:#8c6c40; font-size:.8rem; font-style:normal; font-weight:700; letter-spacing:.08em; margin-top:auto; }
+.product-care-note {
+  margin-top:1.5rem; padding:1.2rem 1.35rem; border:1px solid #e9dfd1;
+  border-radius:1rem; background:#f8f4ec; color:#70584a; font-size:.8rem; line-height:1.9;
+}
+.product-care-note h3 { font:700 1rem "Noto Serif TC","Songti TC",serif; letter-spacing:.06em; margin:0 0 .6rem; }
+.product-care-note p { margin:.25rem 0; }
+@media(max-width:520px) {
+  .choice-grid { grid-template-columns:1fr; }
+  .choice-card { min-height:180px; }
+  .brand-awards { grid-template-columns:1fr; }
+  .brand-awards img { max-height:210px; }
+}
+</style>
+
+<style id="still-ji-third-revision">
+.brand-wordmark {font-family:"Noto Serif TC","Songti TC",serif; font-size:clamp(1.7rem,5vw,2.7rem); letter-spacing:.16em; padding-left:.16em;}
+.brand-tagline {font-family:Georgia,serif; font-size:.9rem; letter-spacing:.12em; text-transform:none; margin-top:.35rem;}
+.brand-contact {margin:1.2rem auto 0; padding:1.5rem .8rem 1rem; border-top:1px solid #e7dccc; text-align:center; color:#49352b;}
+.brand-contact-title {font-weight:700; letter-spacing:.09em; margin-bottom:.8rem;}
+.brand-address {display:inline-block; color:#70584a; text-decoration:none; margin-bottom:1.2rem; line-height:1.8;}
+.brand-social-links {display:flex; justify-content:center; gap:.65rem; flex-wrap:wrap;}
+.brand-social-links a {display:inline-block; border:1px solid #d8c7b2; border-radius:999px; padding:.6rem .85rem; text-decoration:none; color:#49352b; background:#fffdf9; font-size:.82rem;}
+.brand-social-links a:hover {background:#eee4d7;}
+.brand-line-id {font-size:.76rem; color:#8a7b6d; margin-top:.75rem;}
+</style>
+
+<style id="still-ji-splash-and-story">
+.brand-honors {margin:1rem auto 1.5rem; color:#795b35; font-weight:700; font-size:clamp(.85rem,2.4vw,1rem); line-height:1.85;}
+.brand-honors p {margin:.3rem auto !important; color:#795b35 !important;}
+.brand-story {margin:0 auto 1.65rem; max-width:35rem; padding:1.1rem .9rem; border-top:1px solid #e7dccc; border-bottom:1px solid #e7dccc;}
+.brand-story p {margin:0 auto 1.35rem !important; color:#604b3d !important; font-size:clamp(.88rem,2.2vw,.98rem) !important; line-height:2.05 !important; letter-spacing:.035em;}
+.brand-story p:last-child {margin-bottom:0 !important;}
+.brand-story-ending {font-weight:700; color:#49352b !important;}
+.brand-splash[hidden] {display:none !important;}
+.brand-splash {position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#f7f2e9;opacity:1;transition:opacity .55s ease;}
+.brand-splash.splash-leaving {opacity:0;pointer-events:none;}
+.splash-inner {display:flex;align-items:center;flex-direction:column;justify-content:center;gap:.85rem;padding:1rem;text-align:center;color:#49352b;}
+.splash-zh {font:700 clamp(1.9rem,7vw,3.2rem)/1.4 "Noto Serif TC","Songti TC",serif;letter-spacing:.16em;opacity:0;transform:translateY(12px);animation:splash-rise .85s ease .1s forwards;}
+.splash-en {font:400 clamp(1rem,3vw,1.25rem)/1.4 Georgia,serif;letter-spacing:.28em;opacity:0;transform:translateY(8px);animation:splash-rise .75s ease .75s forwards;}
+.splash-rule {height:1px;width:0;background:#b79a68;animation:splash-line .75s ease 1.05s forwards;}
+@keyframes splash-rise {to {opacity:1;transform:translateY(0);}}
+@keyframes splash-line {to {width:100px;}}
+@media(prefers-reduced-motion:reduce){.brand-splash,.splash-zh,.splash-en,.splash-rule {animation:none !important;transition:none !important;}}
+</style>
+<style id="still-ji-story-fifth">
+body.story-open { overflow:hidden; }
+.story-opening {display:block;overflow-y:auto;overscroll-behavior:contain;background:#f7f2e9;position:fixed;inset:0;z-index:99999;opacity:1;transition:opacity .45s ease;}
+.story-opening[hidden] {display:none !important;}
+.story-opening.story-closing {opacity:0;pointer-events:none;}
+.story-scroll {max-width:640px;margin:0 auto;padding:clamp(5rem,11vh,8rem) 1.2rem 4rem;text-align:center;}
+.story-skip {position:fixed;top:1rem;right:1rem;z-index:2;background:rgba(255,253,249,.94);border:1px solid #d9c9b6;border-radius:99px;padding:.55rem 1rem;color:#49352b;cursor:pointer;}
+.story-brand-mark {font:700 clamp(2rem,7vw,3.4rem)/1.4 "Noto Serif TC","Songti TC",serif;letter-spacing:.12em;color:#49352b;animation:story-appear 1.2s ease both;}
+.story-english {font:400 1rem Georgia,serif;color:#a88d62;letter-spacing:.12em;animation:story-appear 1s ease .45s both;}
+.story-gold-line {height:1px;width:100px;background:#b79a68;margin:2rem auto;animation:story-appear 1s ease .75s both;}
+.story-intro {font:700 clamp(1.05rem,3vw,1.35rem) "Noto Serif TC",serif;color:#49352b;margin:2.5rem 0 1.5rem;}
+.story-opening .brand-honors {margin:0 auto 2.3rem;}
+.story-opening .brand-story {margin:0 auto 2rem;max-width:35rem;border:0;}
+.story-opening .brand-story p {font-size:clamp(.9rem,2.3vw,1rem) !important;line-height:2.1 !important;}
+.story-opening .brand-story-ending {font-weight:700;}
+.story-enter {background:#49352b;color:white;border-radius:99px;border:0;padding:1rem 2rem;margin-top:1rem;cursor:pointer;letter-spacing:.1em;}
+.story-caption {font:600 .65rem Georgia,serif;color:#a88d62;letter-spacing:.18em;margin-top:1rem;}
+@keyframes story-appear {from {opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.story-opening * {animation:none !important;transition:none !important;}}
+</style>
+<style id="still-ji-sixth-brand-story">
+.site-brand-row {display:flex;align-items:center;justify-content:center;gap:clamp(.65rem,2vw,1.2rem);}
+.site-official-logo {width:clamp(58px,13vw,92px);height:clamp(58px,13vw,92px);object-fit:contain;border-radius:14px;flex-shrink:0;mix-blend-mode:multiply;}
+.story-scroll {max-width:1160px;padding:clamp(3.5rem,8vh,5.5rem) clamp(1rem,3vw,2rem) 3rem;}
+.story-head {display:flex;flex-direction:column;align-items:center;}
+.story-official-logo {width:clamp(76px,13vw,112px);height:clamp(76px,13vw,112px);object-fit:contain;border-radius:16px;mix-blend-mode:multiply;margin-bottom:.65rem;}
+.story-content-layout {display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:start;gap:clamp(1.5rem,4vw,4rem);margin:1.4rem auto 1rem;text-align:center;}
+.story-awards-photo {margin:0;position:sticky;top:1.8rem;}
+.story-awards-photo img {display:block;width:100%;height:auto;max-height:min(72vh,750px);object-fit:contain;border-radius:16px;box-shadow:0 18px 42px rgba(73,53,43,.15);background:#fff;}
+.story-awards-photo figcaption {font-size:.78rem;color:#987f65;margin:.7rem 0;letter-spacing:.07em;}
+.story-copy {min-width:0;padding:clamp(.3rem,2vw,1.2rem) 0 0 clamp(.2rem,1.5vw,1rem);}
+.story-copy .brand-honors {margin:0 auto 1.7rem;}
+.story-copy .brand-story {max-width:100%;}
+.story-copy .brand-story p {margin-bottom:1.7rem !important;}
+.story-opening .story-reveal {opacity:0;transform:translateY(18px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1);}
+.story-opening .story-reveal.story-visible {opacity:1;transform:translateY(0);}
+.story-opening .story-head.story-reveal {transition-delay:.05s;}
+.story-opening .story-copy .story-reveal {transition-delay:.08s;}
+.story-opening .brand-story-ending.story-reveal {transition-delay:.16s;}
+@media(max-width:760px) {
+  .story-content-layout {grid-template-columns:1fr;gap:1.1rem;}
+  .story-awards-photo {position:static;max-width:540px;margin:0 auto;}
+  .story-awards-photo img {max-height:none;}
+  .story-copy {padding:0 .15rem;}
+  .story-scroll {padding-top:4.4rem;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .story-opening .story-reveal {opacity:1 !important;transform:none !important;transition:none !important;}
+}
+</style>
+<style id="stillji-seventh-adjustments">
+.story-brand-inline {display:flex;align-items:center;justify-content:center;gap:clamp(.5rem,2vw,1.2rem);}
+.story-brand-inline .story-official-logo {width:clamp(64px,10vw,106px);height:auto;max-height:110px;object-fit:contain;margin:0;border-radius:0;mix-blend-mode:normal;}
+.site-brand-row .site-official-logo {border-radius:0;mix-blend-mode:normal;width:clamp(52px,10vw,80px);height:auto;}
+.story-intro {font-size:clamp(1.55rem,3.7vw,2.25rem) !important;margin:1.05rem 0 .75rem !important;line-height:1.5;font-weight:700;}
+.story-gold-line {margin:1.1rem auto .6rem !important;}
+.story-content-layout {margin-top:.6rem !important;}
+@media(max-width:480px) {
+ .story-brand-mark {font-size:clamp(1.45rem,6vw,2.2rem) !important;letter-spacing:.04em;}
+ .story-brand-inline .story-official-logo {width:clamp(52px,16vw,72px);}
+ .site-brand-row .brand-wordmark {font-size:clamp(1.25rem,5vw,1.8rem);}
+ .site-brand-row .site-official-logo {width:54px;}
+ .story-intro {font-size:1.55rem !important;}
+}
+</style>
+<style id="stillji-logo-matched-title-color">
+/* Matched to the official Still Ji red logo */
+.story-brand-mark, .brand-wordmark { color: #901820 !important; }
+</style>
+
+<style id="stillji-refined-palette">
+:root {--sj-burgundy:#901820;--sj-cocoa:#49352b;--sj-soft:#725e51;--sj-gold:#b79a68;}
+/* Brand accents: wine red only on high-priority marks, not every line of copy. */
+.story-brand-mark,.brand-wordmark {color:var(--sj-burgundy) !important;}
+#brandSplash .brand-honors p {color:var(--sj-burgundy) !important;font-weight:700;}
+#brandSplash .brand-story p {color:var(--sj-soft) !important;}
+#brandSplash .brand-story-ending {color:var(--sj-burgundy) !important;}
+#brandSplash .story-caption,#brandSplash .story-awards-photo figcaption {color:#947b62 !important;}
+#brandSplash .story-skip {color:var(--sj-cocoa) !important;}
+#brandSplash .story-gold-line {background:var(--sj-gold) !important;}
+#landingPage h2,#landingPage h3 {color:var(--sj-cocoa) !important;}
+#landingPage p,#landingPage figcaption,#landingPage .brand-note,
+#landingPage .brand-address,#landingPage .brand-line-id {color:var(--sj-soft) !important;}
+#landingPage .brand-contact-title {color:var(--sj-burgundy) !important;}
+#landingPage .brand-social-links a {color:var(--sj-cocoa) !important;}
+#orderChoicePage,#orderFormPage {color:var(--sj-cocoa) !important;}
+#orderChoicePage p,#orderFormPage .product-care-note p {color:var(--sj-soft) !important;}
+#brandSplash .story-enter,#landingPage .brand-cta {background:var(--sj-burgundy) !important;color:#fffaf5 !important;}
+#brandSplash .story-enter:hover,#landingPage .brand-cta:hover {background:#75141b !important;color:#fffaf5 !important;}
+</style>
+<style id="product-page-entry">
+.site-products-link {display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border:1px solid #b79a68;border-radius:999px;padding:.85rem 1.7rem;color:#901820!important;background:#fffdf9;text-decoration:none;font-size:.9rem;font-weight:700;letter-spacing:.1em;margin:0 auto 1rem;}
+.site-products-link:hover{background:#f0e6da;}
+</style><style id="stillji-contact-icons">
+.brand-contact .brand-address {margin-bottom:.45rem;}
+.brand-contact .brand-phone {display:inline-block;margin:0 0 1.15rem .7rem;color:#725e51;text-decoration:none;white-space:nowrap;font-size:.9rem;}
+.brand-contact .brand-phone:hover {color:#901820;text-decoration:underline;}
+.brand-contact .social-icons {display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:0;}
+.brand-contact .social-icon-link {display:inline-flex;align-items:center;gap:7px;padding:8px 12px;margin:0;border:1px solid #e6dac9;border-radius:999px;background:#fffdf9;color:#901820;text-decoration:none;font-size:.83rem;}
+.brand-contact .social-icon-link:hover {background:#f0e5d9;border-color:#b79a68;}
+.brand-contact .social-icon-link svg {width:20px;height:20px;flex-shrink:0;}
+@media(max-width:540px) {
+ .brand-contact .brand-address,.brand-contact .brand-phone {display:block;margin:.15rem auto .6rem;}
+ .brand-contact .brand-phone {margin-bottom:1.2rem;}
+}
+</style>
+<style id="stillji-home-scroll-animations">
+/* Only animate when JS opts in; content stays readable if scripts are unavailable. */
+#landingPage .home-reveal-ready {
+  opacity:0;
+  transform:translate3d(0,25px,0);
+  transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  will-change:opacity,transform;
+}
+#landingPage .home-reveal-ready.home-reveal-visible {
+  opacity:1;
+  transform:translate3d(0,0,0);
+  will-change:auto;
+}
+#landingPage .brand-photo-card.home-reveal-ready:nth-child(even) {transition-delay:.12s}
+@media(prefers-reduced-motion:reduce) {
+ #landingPage .home-reveal-ready {opacity:1 !important;transform:none !important;transition:none !important;}
+}
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen py-10 px-4">
+
+
+    <section id="brandSplash" class="brand-splash story-opening" aria-label="紀家烘焙坊品牌故事" hidden>
+      <button type="button" class="story-skip" onclick="closeBrandStory()">略過故事 →</button>
+      <div class="story-scroll">
+        <div class="story-head">
+          <div class="story-brand-inline">
+            <div class="story-brand-mark">紀家烘焙坊</div>
+            <img class="story-official-logo" src="images/stillji-logo-transparent.png" alt="Still Ji 官方標誌">
+          </div>
+          
+          <div class="story-gold-line"></div>
+        </div>
+        <div class="story-content-layout">
+          <figure class="story-awards-photo story-reveal">
+            <img src="images/six-awards-real.jpg" alt="紀家烘焙坊六屆台灣百大糕餅伴手禮獎盃與橘色禮盒實拍" fetchpriority="high">
+            <figcaption>六屆榮耀・真實獎盃紀錄</figcaption>
+          </figure>
+          <div class="story-copy">
+                <div class="brand-honors" aria-label="品牌獲獎紀錄">
+                    <p>🏆 連續六屆入選台灣百大糕餅伴手禮</p>
+                    <p>🏆 彰化唯一｜六屆肯定</p>
+                </div>
+                <div class="brand-story">
+                    <p>一座獎盃，是一次肯定。<br>六座獎盃，是紀家一路堅持的累積。</p>
+                    <p>從第一次入選，到今年第六屆，<br>我們始終堅持對品質的要求。</p>
+                    <p>每日純手工現做，<br>金黃酥皮層層堆疊，<br>紅土鹹蛋黃 × 細緻豆沙，<br>酥、香、鹹、甜，比例剛剛好。</p>
+                    <p class="brand-story-ending">不是只有中秋節才能吃到的蛋黃酥，<br>而是想吃的每一天，都能吃到的紀家。</p>
+                </div>
+          </div>
+        </div>
+
+        <button type="button" class="story-enter" onclick="closeBrandStory()">進入紀家烘焙坊</button>
+        <p class="story-caption">SCROLL TO DISCOVER OUR STORY</p>
+      </div>
+    </section>
+
+    <div class="max-w-2xl mx-auto space-y-8">
+        
+        <!-- 品牌頁首 -->
+        <header class="text-center space-y-2" id="siteHeader">
+            <div class="site-brand-row">
+              <div><div class="brand-wordmark">紀家烘焙坊</div></div>
+              <img class="site-official-logo" src="images/stillji-logo-transparent.png" alt="Still Ji 官方標誌">
+            </div>
+        </header>
+
+        <!-- 品牌形象首頁 -->
+        <section class="brand-showcase" id="landingPage" aria-label="STILL JI 品牌與商品介紹">
+            <div class="brand-intro">
+                
+                
+                <div class="brand-awards">
+                    <img src="images/six-awards-real.jpg" alt="紀家烘焙坊六屆獲獎獎盃實拍" loading="lazy">
+                    <p><strong>六屆肯定，持續用心</strong>每一份支持，都是我們繼續堅持手作的動力。</p>
+                </div>
+                <h2 class="brand-product-title">把心意，裝進每一盒好滋味</h2>
+                <p>為日常留一份甜，也替重要的人準備一份心意。</p>
+            </div>
+
+            <div class="brand-hero-photo">
+                <img src="images/gift-box-detail.jpg" alt="STILL J 經典蛋黃酥禮盒實品照" fetchpriority="high">
+            </div>
+
+            <div class="brand-photo-grid">
+                <figure class="brand-photo-card">
+                    <img src="images/gift-box-main.jpg" alt="經典蛋黃酥禮盒開盒與提袋實拍" loading="lazy">
+                    <figcaption>蛋黃酥</figcaption>
+                </figure>
+                <figure class="brand-photo-card">
+                    <img src="images/pineapple-cake.jpg" alt="紀家烘焙坊鳳梨酥禮盒實品照" loading="lazy">
+                    <figcaption>土鳳梨酥</figcaption>
+                </figure>
+                <figure class="brand-photo-card">
+                    <img src="images/moon-cake-purple.jpg" alt="STILL J 老婆餅禮盒與產品" loading="lazy">
+                    <figcaption>老婆餅</figcaption>
+                </figure>
+                <figure class="brand-photo-card">
+                    <img src="images/moon-cake-red.jpg" alt="STILL J 太陽餅禮盒與產品" loading="lazy">
+                    <figcaption>太陽餅</figcaption>
+                </figure>
+            </div>
+            <div style="text-align:center;margin:1.4rem 0 0;">
+                <a class="site-products-link" href="products.html">認識我們的糕點　→</a>
+            </div>
+            <div class="brand-cta-wrap">
+                <button type="button" class="brand-cta" onclick="showOrderChoices()">點我訂購</button>
+<a href="lookup.html" class="brand-cta" style="display:inline-block;text-decoration:none;margin-top:12px;background:#fffdf9;color:#49352b;border:1px solid #b79a68">🔍 訂單查詢</a>
+            </div>
+            <footer class="brand-contact" aria-label="門市地址與官方社群">
+                <div class="brand-contact-title">紀家烘焙坊 · STILL JI</div>
+                <a class="brand-address" href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BD%B0%E5%8C%96%E5%B8%82%E4%B8%89%E6%B0%91%E8%B7%AF402-2%E8%99%9F" target="_blank" rel="noopener noreferrer">📍 彰化市三民路402-2號</a>
+                <a class="brand-phone" href="tel:047270717" aria-label="撥打紀家烘焙坊電話 04-7270717">☎ 04-7270717</a>
+                <div class="brand-social-links social-icons">
+<a class="social-icon-link" href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.3c-5.1 0-9.2 3.2-9.2 7.2 0 3.6 3.2 6.5 7.6 7.1l-.6 3.1 4-3.1c4.2-.6 7.4-3.5 7.4-7.1 0-4-4.1-7.2-9.2-7.2Z" fill="currentColor"/><path d="M6.6 9v3.7h2M10 9v3.7m1.8 0V9l2.2 3.7V9m4.1 0h-2.3v3.7h2.3m-2.3-1.9h1.8" stroke="#fff" stroke-width=".75" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><span>LINE</span></a>
+<a class="social-icon-link" href="https://www.facebook.com/JiPastry" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.88 3.77-3.88 1.1 0 2.25.2 2.25.2v2.47H15.2c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99A10 10 0 0 0 22 12Z"/></svg><span>Facebook</span></a>
+<a class="social-icon-link" href="https://www.instagram.com/still_ji/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.6" cy="6.7" r="1.2" fill="currentColor"/></svg><span>Instagram</span></a>
+</div>
+                <p class="brand-line-id">LINE ID：Still_ji</p>
+            </footer>
+        </section>
+
+        <!-- 訂購方式選擇獨立頁面 -->
+        <section id="orderChoicePage" class="hidden order-choice-page" aria-label="選擇訂購方式">
+            <button type="button" class="back-link" onclick="showLandingPage()">← 返回 STILL JI</button>
+            <div class="choice-heading">
+                <div class="brand-kicker">ORDER WITH STILL JI</div>
+                <h2>選擇您的訂購方式</h2>
+                <p>請依照需求選擇現場自取或宅配到府。</p>
+            </div>
+            <div class="choice-grid">
+                <button type="button" class="choice-card" onclick="openOrderForm('pickup')">
+                    <span class="choice-icon">✧</span>
+                    <strong>現場預訂自取</strong>
+                    <span>預先選擇取貨日期與時段<br>到店輕鬆領取</span>
+                    <em>選擇自取 →</em>
+                </button>
+                <button type="button" class="choice-card" onclick="openOrderForm('delivery')">
+                    <span class="choice-icon">✧</span>
+                    <strong>宅配訂購</strong>
+                    <span>將手作好滋味送到家<br>適合送禮與分享</span>
+                    <em>選擇宅配 →</em>
+                </button>
+            </div>
+        </section>
+
+        <section id="orderFormPage" class="hidden order-form-page" aria-label="訂購資料填寫">
+            <button type="button" class="back-link" onclick="showOrderChoices()">← 返回選擇訂購方式</button>
+        <!-- 模式切換按鈕 -->
+        <div class="hidden flex rounded-xl bg-gray-200 p-1 shadow-inner">
+            <button type="button" id="tabPickup" onclick="switchMode('pickup')" class="flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 bg-amber-600 text-white shadow-sm cursor-pointer">
+                🛍️ 現場自取預訂
+            </button>
+            <button type="button" id="tabDelivery" onclick="switchMode('delivery')" class="flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 text-gray-600 hover:text-gray-900 cursor-pointer">
+                📦 宅配到府預購
+            </button>
+        </div>
+
+        <!-- 填寫訂單區 -->
+        <div id="formBlock" class="bg-white shadow-sm rounded-xl p-6 border border-gray-100">
+            <h2 id="formTitle" class="text-xl font-bold text-gray-700 mb-4 pb-2 border-b border-gray-100">✨ 填寫現場自取預訂單</h2>
+            
+            <form id="orderForm" class="space-y-5">
+                <input type="hidden" id="orderMode" value="pickup">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label id="nameLabel" class="block text-sm font-medium text-gray-600 mb-1">取貨人姓名 *</label>
+                        <input type="text" id="buyerName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    <div>
+                        <label id="phoneLabel" class="block text-sm font-medium text-gray-600 mb-1">取貨人手機 *</label>
+                        <input type="tel" id="buyerPhone" required placeholder="如：0912345678" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                </div>
+
+                <!-- 宅配專用欄位區 -->
+                <div id="deliveryFields" class="hidden space-y-4 pt-2 border-t border-gray-100">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">收件人地址 *</label>
+                        <input type="text" id="receiverAddress" placeholder="請填寫完整配送地址" oninput="calculateCart()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-600 mb-1">電子發票開立選項 *</label>
+                            <select id="invoiceType" onchange="toggleTaxFields()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white">
+                                <option value="個人電子發票">個人電子發票</option>
+                                <option value="公司用電子發票(統編)">公司用電子發票 (需打統編)</option>
+                            </select>
+                        </div>
+                        <div id="taxFields" class="hidden pt-1">
+                            <label class="block text-sm font-medium text-gray-600 mb-1">統一編號 *</label>
+                            <input type="text" id="taxId" placeholder="請輸入8碼統編" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 日期與時段選擇區 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label id="dateLabel" class="block text-sm font-medium text-gray-600 mb-1">取貨日期 *</label>
+                        <input type="date" id="orderDate" required onchange="validateDate()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white">
+                        <p id="dateNoticeText" class="text-xs text-red-600 mt-1 font-medium hidden">⚠️ 宅配僅能選擇週一到週五的出貨日，請重新選擇！</p>
+                        <p id="systemClosedNotice" class="text-xs text-red-600 mt-1 font-bold hidden">⚠️ 您選擇的日期為休息日或已滿單，請重新選擇其他日期！</p>
+                        <p id="estimatedArrival" class="text-xs text-amber-700 mt-1 font-bold hidden"></p>
+                    </div>
+                    
+                    <!-- 自取時段選擇 -->
+                    <div id="timeSlotContainer">
+                        <label class="block text-sm font-medium text-gray-600 mb-1">取貨大約時段 *</label>
+                        <select id="timeSlot" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white">
+                            <option value="">-- 請選擇大約取貨時間 --</option>
+                            <option value="上午 09:00 - 11:00 (大約 09:00 後)">上午 09:00 - 11:00 (大約 09:00 後)</option>
+                            <option value="中午 11:00 - 13:00 (大約 11:00 後)">中午 11:00 - 13:00 (大約 11:00 後)</option>
+                            <option value="下午 14:00 - 16:00 (大約 14:00 後)">下午 14:00 - 16:00 (大約 14:00 後)</option>
+                            <option value="傍晚 16:00 - 18:00 (大約 16:00 後)">傍晚 16:00 - 18:00 (大約 16:00 後)</option>
+                        </select>
+                    </div>
+
+                    <!-- 宅配指定時段選擇 -->
+                    <div id="deliveryTimeSlotContainer" class="hidden">
+                        <label class="block text-sm font-medium text-gray-600 mb-1">希望到貨時段 *</label>
+                        <select id="deliveryTimeSlot" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white">
+                            <option value="不指定">不指定</option>
+                            <option value="13點前">13點前</option>
+                            <option value="14~18點前">14~18點前</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="pickupNotice" class="bg-orange-50 border border-orange-200 rounded-xl p-3 text-xs text-orange-800 space-y-1">
+                    <p class="font-bold">⚠️ 自取注意事項：</p>
+                    <p>• 自取最晚時間為 <strong>18:00</strong>，請務必於 18:00 前取貨。</p>
+                    <p>• <strong>貼心提醒：</strong>若訂購數量未達 12 顆，系統將無法提供線上預訂，請於 <strong>17:00 前直接至門市購買即可</strong>。</p>
+                </div>
+
+                <div id="deliveryNotice" class="hidden bg-orange-50 border border-orange-200 rounded-xl p-3 text-xs text-orange-800 space-y-1">
+                    <p class="font-bold">⚠️ 宅配注意事項：</p>
+                    <p>• 超過中午 12:00 成立之宅配訂單，最早出貨日為後天起算。</p>
+                    <p>• 希望配達日期不等於實際到貨日期，恕不負責運送端之延誤。</p>
+                </div>
+
+                <!-- 產品規格 -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-3 font-bold">🛒 選擇蛋黃酥規格與數量 *</label>
+                    
+                    <div id="pickupProductBox" class="space-y-3">
+                        <div class="p-3 border border-gray-200 rounded-xl flex items-center justify-between bg-gray-50/50">
+                            <div>
+                                <span class="text-sm font-bold text-gray-800">6入禮盒</span>
+                                <span class="text-amber-700 text-sm font-bold ml-2">(NT$ 300 / 盒)</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="number" id="pickup_qty_6" min="0" value="0" oninput="calculateCart()" class="w-20 px-2 py-1 text-center border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-bold">
+                                <span class="text-xs text-gray-500">盒</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 border border-gray-200 rounded-xl flex items-center justify-between bg-gray-50/50">
+                            <div>
+                                <span class="text-sm font-bold text-gray-800">12入禮盒</span>
+                                <span class="text-amber-700 text-sm font-bold ml-2">(NT$ 600 / 盒)</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="number" id="pickup_qty_12" min="0" value="0" oninput="calculateCart()" class="w-20 px-2 py-1 text-center border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-bold">
+                                <span class="text-xs text-gray-500">盒</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 border border-gray-200 rounded-xl flex items-center justify-between bg-gray-50/50">
+                            <div>
+                                <span class="text-sm font-bold text-gray-800">15入禮盒</span>
+                                <span class="text-amber-700 text-sm font-bold ml-2">(NT$ 750 / 盒)</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="number" id="pickup_qty_15" min="0" value="0" oninput="calculateCart()" class="w-20 px-2 py-1 text-center border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-bold">
+                                <span class="text-xs text-gray-500">盒</span>
+                            </div>
+                        </div>
+                        <p id="pickupMinNotice" class="text-xs text-red-600 font-bold hidden">⚠️ 現場自取總數量須滿 12 顆（含）以上方可預訂！</p>
+                    </div>
+
+                    <div id="deliveryProductBox" class="hidden space-y-3">
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
+                            <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
+                                <input type="checkbox" name="productCheck" id="check_1" value="6入 × 4盒" data-price="1200" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1">(NT$ 1,350（商品 NT$1,200＋含運 NT$150）)</span></span>
+                            </label>
+                            <input type="number" id="qty_1" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
+                            <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
+                                <input type="checkbox" name="productCheck" id="check_2" value="6入 × 10盒" data-price="3000" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <span>6入 × 10盒 (60顆) <span class="text-amber-700 font-bold ml-1">(NT$ 3,000)</span> <span class="text-xs text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded ml-1 font-bold">免運費</span></span>
+                            </label>
+                            <input type="number" id="qty_2" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
+                            <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
+                                <input type="checkbox" name="productCheck" id="check_3" value="6入 × 15盒" data-price="4500" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1">(NT$ 4,500)</span> <span class="text-xs text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded ml-1 font-bold">免運費</span></span>
+                            </label>
+                            <input type="number" id="qty_3" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
+                            <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
+                                <input type="checkbox" name="productCheck" id="check_12" value="12入禮盒" data-price="600" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <div>
+                                    <span>12入禮盒 <span class="text-amber-700 font-bold ml-1">(NT$ 600 / 盒)</span></span>
+                                    <span class="block text-xs text-gray-500">🚚 1~2盒運費170，3~6盒運費210，7盒up免基本運費</span>
+                                </div>
+                            </label>
+                            <input type="number" id="qty_12" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
+                            <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
+                                <input type="checkbox" name="productCheck" id="check_15" value="15入禮盒" data-price="750" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <div>
+                                    <span>15入禮盒 <span class="text-amber-700 font-bold ml-1">(NT$ 750 / 盒)</span></span>
+                                    <span class="block text-xs text-gray-500">🚚 1~2盒運費170，3~4盒運費210，5盒up免基本運費</span>
+                                </div>
+                            </label>
+                            <input type="number" id="qty_15" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- V20: additional gift boxes (preview only; backend not yet enabled) -->
+                <section id="additionalGiftBoxes" class="mt-5 p-4 rounded-2xl border border-amber-200 bg-amber-50/30 space-y-3">
+                    <div class="font-bold text-gray-800">🍪 其他糕點禮盒</div>
+                    <p class="text-xs text-gray-600">每盒為單一品項，線上僅提供 12 入禮盒；可與蛋黃酥一起選購。單片／單顆歡迎來電洽詢：<a href="tel:047270717" class="underline">04-7270717</a>。</p>
+                    <p class="text-xs font-bold text-amber-900">⚠️ 本頁為 TEST 整合測試版，僅供測試；訂單須經 TEST 後端確認才顯示成功。蛋黃酥與一般糕點分群計費。</p>
+                    <div class="space-y-2" id="additionalGiftBoxInputs">
+                        <label class="flex items-center justify-between gap-2 p-3 bg-white rounded-xl border border-gray-200"><span class="text-sm">老婆餅｜12 入禮盒 <strong class="text-amber-800">NT$400</strong></span><span class="flex items-center gap-1"><input type="number" id="extra_wife" min="0" step="1" value="0" oninput="calculateCart()" class="w-16 border rounded-md p-1 text-center" aria-label="老婆餅12入禮盒盒數">盒</span></label>
+                        <label class="flex items-center justify-between gap-2 p-3 bg-white rounded-xl border border-gray-200"><span class="text-sm">太陽餅｜12 入禮盒 <strong class="text-amber-800">NT$400</strong></span><span class="flex items-center gap-1"><input type="number" id="extra_sun" min="0" step="1" value="0" oninput="calculateCart()" class="w-16 border rounded-md p-1 text-center" aria-label="太陽餅12入禮盒盒數">盒</span></label>
+                        <label class="flex items-center justify-between gap-2 p-3 bg-white rounded-xl border border-gray-200"><span class="text-sm">土鳳梨酥｜12 入禮盒 <strong class="text-amber-800">NT$460</strong></span><span class="flex items-center gap-1"><input type="number" id="extra_pineapple" min="0" step="1" value="0" oninput="calculateCart()" class="w-16 border rounded-md p-1 text-center" aria-label="土鳳梨酥12入禮盒盒數">盒</span></label>
+                    </div>
+                    <p id="extraShippingNotice" class="hidden text-sm font-bold text-red-700" role="status">TEST 測試版：請勿填寫真實顧客個資；6入舊組合及待確認運費訂單暫不送出。</p>
+                </section>
+
+                <!-- 加購不織布提袋專區 -->
+                <div id="bagSection" class="p-4 bg-amber-50/40 border border-amber-200 rounded-xl space-y-2">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-sm font-bold text-gray-800">🛍️ 加購不織布提袋</span>
+                            <span class="text-amber-700 text-xs font-bold ml-2">(NT$ 20 / 個)</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <input type="number" id="bagQty" min="0" step="1" value="0" oninput="calculateCart()" class="w-20 px-2 py-1 text-center border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm font-bold">
+                            <span class="text-xs text-gray-500">個</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-600">可自由加購；提袋尺寸僅適用於蛋黃酥 6 入禮盒，其他禮盒無法裝入。</p>
+                    <p id="deliveryBagNotice" class="hidden text-xs text-amber-900">📦 宅配提醒：蛋黃酥 6 入禮盒宅配預設附塑膠背心袋；如需額外不織布提袋，可於上方加購（NT$20／個）。</p>
+                </div>
+
+                <!-- 金額小計 -->
+                <div class="bg-amber-50/70 border border-amber-100 rounded-xl p-4 space-y-2 text-sm text-gray-700">
+                    <div class="flex justify-between">
+                        <span>已選方案：<span id="summaryCartText" class="font-medium text-gray-800">無產品</span></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>商品總金額：</span>
+                        <span class="font-bold">NT$ <span id="summaryProductPrice">0</span></span>
+                    </div>
+                    <div id="bagFeeRow" class="flex justify-between hidden">
+                        <span>提袋加購金額：</span>
+                        <span class="font-bold">NT$ <span id="summaryBagPrice">0</span></span>
+                    </div>
+                    <div id="extraShippingBreakdown" class="hidden text-xs text-gray-600 bg-white/70 rounded-lg px-3 py-2" aria-live="polite"></div>
+                    <div id="shippingFeeRow" class="flex justify-between hidden">
+                        <span>運費金額：</span>
+                        <span class="font-bold">NT$ <span id="summaryShippingFee">0</span> <span id="shippingDesc" class="text-xs text-amber-800 font-bold ml-1"></span></span>
+                    </div>
+                    <div class="border-t border-amber-200 pt-2 flex justify-between items-center text-base">
+                        <span class="font-bold text-gray-800">應付總金額：</span>
+                        <div class="text-2xl font-black text-amber-700">NT$ <span id="totalAmount">0</span></div>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2.5 px-4 rounded-lg transition duration-200 shadow-md cursor-pointer">
+                    確認送出預訂
+                </button>
+            </form>
+        </div>
+
+        <!-- 確認訂單資訊彈跳視窗 (Modal) -->
+        <div id="confirmModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-gray-100">
+                <h3 class="text-xl font-bold text-amber-700 border-b pb-2">📋 請再次確認您的訂單資訊</h3>
+                <div id="modalContent" class="space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-200"></div>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" onclick="closeConfirmModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2.5 rounded-xl transition cursor-pointer">
+                        返回修改
+                    </button>
+                    <button type="button" id="confirmSubmitBtn" onclick="executeSubmit()" class="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-medium py-2.5 rounded-xl transition cursor-pointer">
+                        確認無誤，送出訂單
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成功頁面 (自取) -->
+        <div id="successPagePickup" class="hidden bg-white shadow-md rounded-2xl p-8 border border-emerald-100 text-center space-y-6">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
+            <div class="space-y-2">
+                <h2 class="text-2xl font-black text-emerald-700">🎉 預訂已成功送出！</h2>
+                <p class="text-gray-600 text-sm">您的訂單編號為：<span id="finalOrderIdPickup" class="font-mono font-bold bg-gray-100 px-2 py-0.5 rounded text-gray-800">---</span></p>
+                <p class="text-md font-bold text-amber-700">應付總金額為：NT$ <span id="finalPricePickup">0</span></p>
+            </div>
+            <button type="button" onclick="copyOrderInfo('pickup')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
+            <a href="lookup.html" class="block text-center text-sm text-amber-800 underline">前往訂單查詢</a>
+            <button onclick="startNewOrder()" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-xl transition text-sm font-medium cursor-pointer">
+                返回填寫新訂單
+            </button>
+        </div>
+
+        <!-- 成功頁面 (宅配) -->
+        <div id="successPageDelivery" class="hidden bg-white shadow-md rounded-2xl p-8 border border-amber-100 text-left space-y-5">
+            <div class="text-center space-y-2">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
+                <h2 class="text-2xl font-black text-amber-700">🎉 宅配預訂已成功送出！</h2>
+            </div>
+            
+            <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-5 space-y-2 text-sm text-gray-800">
+                <p class="font-bold text-amber-900 border-b border-amber-200 pb-2">📦 您本次的訂單資訊：</p>
+                <p>• <strong>訂單編號：</strong><span id="finalOrderIdDelivery" class="font-mono font-bold text-gray-900">---</span></p>
+                <p>• <strong>總金額：</strong><span class="font-bold text-amber-700 text-base">NT$ <span id="finalPriceDelivery">0</span></span></p>
+                
+                <div class="pt-2 border-t border-amber-200 space-y-1">
+                    <p class="font-bold text-amber-900">💳 匯款帳號資訊：</p>
+                    <p>• 銀行：<strong>台灣企銀 彰化分行 (代碼 050)</strong></p>
+                    <p>• 帳號：<strong>54012162300</strong></p>
+                    <p>• 戶名：<strong>紀家烘焙坊吳亭緯</strong></p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-700 space-y-2 text-center">
+                <p class="font-medium">匯款完成請您通知官方line (<span class="font-bold text-amber-700">ID: still_ji</span>)，</p>
+                <p>並提供<strong>帳戶後5碼</strong>，以利客服人員回傳宅配單給您確認</p>
+                <div class="pt-2">
+                    <a href="https://lin.ee/9199Z3x" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-lg transition shadow-xs">
+                        加官方 LINE 通知客服
+                    </a>
+                </div>
+            </div>
+
+            <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
+            <a href="lookup.html" class="block text-center text-sm text-amber-800 underline">前往訂單查詢</a>
+            <button onclick="startNewOrder()" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-xl transition text-sm font-medium cursor-pointer">
+                返回填寫新訂單
+            </button>
+        </div>
+
+        </section>
+    </div>
+
+    <script>
+        // 允許產品介紹頁直接開啟訂購方式選擇
+        if (new URLSearchParams(window.location.search).get('view') === 'order') {
+            window.addEventListener('DOMContentLoaded', function () {
+                showOrderChoices();
+            });
+        }
+        // 頁面導覽：品牌首頁 → 訂購方式 → 訂購表單
+        function showLandingPage() {
+            document.getElementById('landingPage').classList.remove('hidden');
+            document.getElementById('siteHeader').classList.remove('hidden');
+            document.getElementById('orderChoicePage').classList.add('hidden');
+            document.getElementById('orderFormPage').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showOrderChoices() {
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('siteHeader').classList.add('hidden');
+            document.getElementById('orderChoicePage').classList.remove('hidden');
+            document.getElementById('orderFormPage').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openOrderForm(mode) {
+            switchMode(mode);
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('siteHeader').classList.add('hidden');
+            document.getElementById('orderChoicePage').classList.add('hidden');
+            document.getElementById('orderFormPage').classList.remove('hidden');
+            document.getElementById('formBlock').classList.remove('hidden');
+            document.getElementById('successPagePickup').classList.add('hidden');
+            document.getElementById('successPageDelivery').classList.add('hidden');
+            updateMinDateAndValue();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // TEST v5：完成訂單後直接回到訂購表單，保留原本的自取／宅配模式。
+        function startNewOrder() {
+            // 成功頁面才允許重置；待核對的訂單不得藉此重複送出。
+            if (!testConfirmed) return;
+            const previousMode = document.getElementById('orderMode').value;
+            const form = document.getElementById('orderForm');
+            form.reset();
+            pendingOrderData = null;
+            testSubmitStarted = false;
+            testConfirmed = false;
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = false;
+            submitBtn.innerText = '確認送出預訂';
+            document.getElementById('successPagePickup').classList.add('hidden');
+            document.getElementById('successPageDelivery').classList.add('hidden');
+            openOrderForm(previousMode);
+            // 清空上一筆訂單的商品數量、收件資料並重新計算金額。
+            if (typeof toggleTaxFields === 'function') toggleTaxFields();
+            if (typeof calculateCart === 'function') calculateCart();
+        }
+
+        // 第二十版 TEST 專用：請填入「TEST Apps Script」部署後的 /exec 網址。
+        // 不可填正式版網址；留空時禁止送出，避免誤送正式訂單。
+        const TEST_GAS_URL = "https://script.google.com/macros/s/AKfycbwhNqUPzuBem_Hw01eCnDHhQEKVB2QQ7qHX4HZVvKIi4j1LMpY9WdhaIXnqZjo2Oo8m/exec";
+        const GAS_URL = TEST_GAS_URL;
+        
+        const disabledDates = [
+             "2026-09-30", 
+        ];
+
+        let pendingOrderData = null;
+        let testSubmitStarted = false;
+        let testConfirmed = false;
+
+        // 初始化：根據當前時間與模式設定最小出貨/取貨日
+        window.addEventListener('DOMContentLoaded', () => {
+            updateMinDateAndValue();
+        });
+
+        function updateMinDateAndValue() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const mode = document.getElementById('orderMode').value;
+
+            let targetDate = new Date(now);
+            
+            if (mode === 'delivery') {
+                // 超過中午 12:00，宅配最早出貨日為當天 + 2 天；否則為當天 + 1 天
+                if (currentHour >= 12) {
+                    targetDate.setDate(targetDate.getDate() + 2);
+                } else {
+                    targetDate.setDate(targetDate.getDate() + 1);
+                }
+            } else {
+                // 自取固定最早為明天
+                targetDate.setDate(targetDate.getDate() + 1);
+            }
+
+            const yyyy = targetDate.getFullYear();
+            const mm = String(targetDate.getMonth() + 1).padStart(2, '0');
+            const dd = String(targetDate.getDate()).padStart(2, '0');
+            const minDateStr = `${yyyy}-${mm}-${dd}`;
+
+            const orderDateInput = document.getElementById('orderDate');
+            orderDateInput.min = minDateStr;
+            orderDateInput.value = minDateStr;
+            validateDate();
+        }
+
+        function switchMode(mode) {
+            const tabPickup = document.getElementById('tabPickup');
+            const tabDelivery = document.getElementById('tabDelivery');
+            const orderMode = document.getElementById('orderMode');
+            const formTitle = document.getElementById('formTitle');
+            const nameLabel = document.getElementById('nameLabel');
+            const phoneLabel = document.getElementById('phoneLabel');
+            const deliveryFields = document.getElementById('deliveryFields');
+            const dateLabel = document.getElementById('dateLabel');
+            const timeSlotContainer = document.getElementById('timeSlotContainer');
+            const deliveryTimeSlotContainer = document.getElementById('deliveryTimeSlotContainer');
+            const pickupNotice = document.getElementById('pickupNotice');
+            const deliveryNotice = document.getElementById('deliveryNotice');
+            const dateNoticeText = document.getElementById('dateNoticeText');
+            const estimatedArrival = document.getElementById('estimatedArrival');
+            
+            const pickupProductBox = document.getElementById('pickupProductBox');
+            const deliveryProductBox = document.getElementById('deliveryProductBox');
+
+            orderMode.value = mode;
+
+            if (mode === 'pickup') {
+                tabPickup.className = "flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 bg-amber-600 text-white shadow-sm cursor-pointer";
+                tabDelivery.className = "flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 text-gray-600 hover:text-gray-900 cursor-pointer";
+                formTitle.innerText = "✨ 填寫現場自取預訂單";
+                nameLabel.innerText = "取貨人姓名 *";
+                phoneLabel.innerText = "取貨人手機 *";
+                deliveryFields.classList.add('hidden');
+                document.getElementById('receiverAddress').required = false;
+                dateLabel.innerText = "取貨日期 *";
+                timeSlotContainer.classList.remove('hidden');
+                deliveryTimeSlotContainer.classList.add('hidden');
+                document.getElementById('timeSlot').required = true;
+                pickupNotice.classList.remove('hidden');
+                deliveryNotice.classList.add('hidden');
+                dateNoticeText.classList.add('hidden');
+                estimatedArrival.classList.add('hidden');
+
+                pickupProductBox.classList.remove('hidden');
+                deliveryProductBox.classList.add('hidden');
+            } else {
+                tabDelivery.className = "flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 bg-amber-600 text-white shadow-sm cursor-pointer";
+                tabPickup.className = "flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 text-gray-600 hover:text-gray-900 cursor-pointer";
+                formTitle.innerText = "✨ 填寫宅配到府預購單";
+                nameLabel.innerText = "收件人姓名 *";
+                phoneLabel.innerText = "收件人電話 *";
+                deliveryFields.classList.remove('hidden');
+                document.getElementById('receiverAddress').required = true;
+                dateLabel.innerText = "希望出貨日 *";
+                timeSlotContainer.classList.add('hidden');
+                deliveryTimeSlotContainer.classList.remove('hidden');
+                document.getElementById('timeSlot').required = false;
+                pickupNotice.classList.add('hidden');
+                deliveryNotice.classList.remove('hidden');
+
+                pickupProductBox.classList.add('hidden');
+                deliveryProductBox.classList.remove('hidden');
+            }
+
+            updateMinDateAndValue();
+            validateDate();
+            calculateCart();
+        }
+
+        function validateDate() {
+            const mode = document.getElementById('orderMode').value;
+            if (testSubmitStarted) { alert('這筆 TEST 訂單已嘗試送出，請先至 TEST 試算表核對，勿重複送單。'); return; }
+            const dateInput = document.getElementById('orderDate').value;
+            const dateNoticeText = document.getElementById('dateNoticeText');
+            const estimatedArrival = document.getElementById('estimatedArrival');
+            const systemClosedNotice = document.getElementById('systemClosedNotice');
+            const submitBtn = document.getElementById('submitBtn');
+
+            let hasError = false;
+
+            if (dateInput) {
+                if (disabledDates.includes(dateInput)) {
+                    systemClosedNotice.classList.remove('hidden');
+                    hasError = true;
+                } else {
+                    systemClosedNotice.classList.add('hidden');
+                }
+
+                if (mode === 'delivery') {
+                    const dayOfWeek = new Date(dateInput).getDay();
+                    if (dayOfWeek === 0 || dayOfWeek === 6) {
+                        dateNoticeText.classList.remove('hidden');
+                        hasError = true;
+                    } else {
+                        dateNoticeText.classList.add('hidden');
+                    }
+
+                    let dObj1 = new Date(dateInput);
+                    dObj1.setDate(dObj1.getDate() + 1);
+                    let m1 = String(dObj1.getMonth() + 1).padStart(2, '0');
+                    let d1 = String(dObj1.getDate()).padStart(2, '0');
+                    let days = ['日', '一', '二', '三', '四', '五', '六'];
+                    let wk1 = days[dObj1.getDay()];
+
+                    let dObj2 = new Date(dateInput);
+                    dObj2.setDate(dObj2.getDate() + 2);
+                    let m2 = String(dObj2.getMonth() + 1).padStart(2, '0');
+                    let d2 = String(dObj2.getDate()).padStart(2, '0');
+                    let wk2 = days[dObj2.getDay()];
+
+                    estimatedArrival.innerText = `📦 預計到貨日：${m1}/${d1}(${wk1}) ~ ${m2}/${d2}(${wk2}) 左右`;
+                    estimatedArrival.classList.remove('hidden');
+                } else {
+                    estimatedArrival.classList.add('hidden');
+                }
+            }
+
+            if (hasError) {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                submitBtn.classList.add('bg-amber-600', 'hover:bg-amber-700');
+            }
+        }
+
+        function toggleTaxFields() {
+            const invoiceType = document.getElementById('invoiceType').value;
+            const taxFields = document.getElementById('taxFields');
+            if (invoiceType === "公司用電子發票(統編)") {
+                taxFields.classList.remove('hidden');
+                document.getElementById('taxId').required = true;
+            } else {
+                taxFields.classList.add('hidden');
+                document.getElementById('taxId').required = false;
+            }
+        }
+
+        // V20 preview: independent gift-box SKUs; server submission remains disabled until backend supports multi-item orders.
+        const extraGiftCatalog = [
+            {id:'extra_wife', label:'老婆餅 12入禮盒', price:400},
+            {id:'extra_sun', label:'太陽餅 12入禮盒', price:400},
+            {id:'extra_pineapple', label:'土鳳梨酥 12入禮盒', price:460}
+        ];
+        function getExtraGiftDetails() {
+            let price = 0, boxes = 0, specs = [];
+            extraGiftCatalog.forEach(item => {
+                const el = document.getElementById(item.id);
+                const raw = Number(el?.value || 0);
+                const qty = Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 0;
+                if (qty) { price += qty * item.price; boxes += qty; specs.push(`${item.label} × ${qty}盒`); }
+            });
+            return {price, boxes, specs};
+        }
+
+        // 與 TEST Code.gs v3 一致的一般糕點運費及偏遠每件加價。
+        function parcelRatePreview(n, capacity, cheapMax) {
+            const full = Math.floor(n / capacity), rem = n % capacity;
+            return {fee:full * 210 + (rem === 0 ? 0 : rem <= cheapMax ? 170 : 210), parcels:full + (rem ? 1 : 0)};
+        }
+        function isRemoteAddress() {
+            return /宜蘭|花蓮|台東|臺東/.test(document.getElementById('receiverAddress').value);
+        }
+        function getExtraShippingPreview() {
+            const wife = Math.max(0, Math.floor(Number(document.getElementById('extra_wife')?.value) || 0));
+            const sun = Math.max(0, Math.floor(Number(document.getElementById('extra_sun')?.value) || 0));
+            const pineapple = Math.max(0, Math.floor(Number(document.getElementById('extra_pineapple')?.value) || 0));
+            const pastry = wife + sun, total = pastry + pineapple;
+            if (!total) return {fee:0, valid:true, description:'', parcels:0};
+            let rate;
+            if (pineapple && pastry) {
+                if (total > 10 || pastry > 8) return {fee:0, valid:false, description:'一般糕點混裝超過已確認級距，請來電洽詢運費', parcels:0};
+                rate = {fee:210, parcels:1};
+            } else if (pastry) rate = parcelRatePreview(pastry, 8, 1);
+            else rate = parcelRatePreview(pineapple, 10, 2);
+            const remoteFee = isRemoteAddress() ? rate.parcels * 10 : 0;
+            return {fee:rate.fee + remoteFee, valid:true, parcels:rate.parcels,
+                description:`一般糕點 ${total} 盒／${rate.parcels} 件：基本運費 NT$${rate.fee}＋偏遠費 NT$${remoteFee}`};
+        }
+        function collectTestItems() {
+            const items = [], eggBundles = [];
+            const mode = document.getElementById('orderMode').value;
+            const add = (product,size,quantity) => { if (quantity > 0) items.push({product,size,quantity}); };
+            const qty = id => Math.max(0, Math.floor(Number(document.getElementById(id)?.value) || 0));
+            if (mode === 'pickup') {
+                add('蛋黃酥',6,qty('pickup_qty_6'));
+                add('蛋黃酥',12,qty('pickup_qty_12'));
+                add('蛋黃酥',15,qty('pickup_qty_15'));
+            } else {
+                for (const [id, boxes] of [['1',4],['2',10],['3',15]]) {
+                    if (document.getElementById('check_'+id).checked) {
+                        const quantity = Math.max(1,qty('qty_'+id));
+                        eggBundles.push({boxesPerBundle:boxes,quantity});
+                    }
+                }
+                add('蛋黃酥',6,eggBundles.reduce((sum,x)=>sum+x.boxesPerBundle*x.quantity,0));
+                for (const size of [12,15]) if (document.getElementById('check_'+size).checked)
+                    add('蛋黃酥',size,Math.max(1,qty('qty_'+size)));
+            }
+            add('老婆餅',12,qty('extra_wife'));
+            add('太陽餅',12,qty('extra_sun'));
+            add('土鳳梨酥',12,qty('extra_pineapple'));
+            const hasFour = eggBundles.some(x=>x.boxesPerBundle===4);
+            const mixedFour = hasFour && eggBundles.some(x=>x.boxesPerBundle===10 || x.boxesPerBundle===15);
+            return {items,eggBundles,mixedFour,unsupported:false};
+        }
+
+        function getCartDetails() {
+            const mode = document.getElementById('orderMode').value;
+            let productPrice = 0;
+            let selectedItems = [];
+            let totalPiecesForPickup = 0;
+            let hasSixInchesItem = false;
+            let bagQty = 0;
+            let bagPrice = 0;
+            let eggShippingComputed = 0;
+
+            if (mode === 'pickup') {
+                const q6 = parseInt(document.getElementById('pickup_qty_6').value) || 0;
+                const q12 = parseInt(document.getElementById('pickup_qty_12').value) || 0;
+                const q15 = parseInt(document.getElementById('pickup_qty_15').value) || 0;
+
+                totalPiecesForPickup = (q6 * 6) + (q12 * 12) + (q15 * 15);
+                const pickupMinNotice = document.getElementById('pickupMinNotice');
+
+                let productList = [];
+                if (q6 > 0) { productPrice += q6 * 300; productList.push(`6入禮盒 × ${q6}盒`); hasSixInchesItem = true; }
+                if (q12 > 0) { productPrice += q12 * 600; productList.push(`12入禮盒 × ${q12}盒`); }
+                if (q15 > 0) { productPrice += q15 * 750; productList.push(`15入禮盒 × ${q15}盒`); }
+
+                selectedItems = productList;
+
+                if (totalPiecesForPickup > 0 && totalPiecesForPickup < 12) {
+                    pickupMinNotice.classList.remove('hidden');
+                } else {
+                    pickupMinNotice.classList.add('hidden');
+                }
+
+            } else {
+                const checkboxes = document.querySelectorAll('input[name="productCheck"]');
+                let q12Count = 0;
+                let q15Count = 0;
+                let hasCheck1 = false;
+                let check1Qty = 0;
+                let productList = [];
+
+                checkboxes.forEach((cb) => {
+                    const idStr = cb.id.replace('check_', '');
+                    const qtyInput = document.getElementById(`qty_${idStr}`);
+
+                    if (cb.checked) {
+                        let qty = parseInt(qtyInput.value);
+                        if (isNaN(qty) || qty < 1) { qty = 1; }
+
+                        const price = parseInt(cb.getAttribute('data-price'));
+                        productPrice += (price * qty);
+
+                        if (cb.id === 'check_1') {
+                            productList.push(`${cb.value} × ${qty}組`);
+                            hasCheck1 = true;
+                            check1Qty += qty;
+                            hasSixInchesItem = true;
+                        } else if (cb.id === 'check_2' || cb.id === 'check_3') {
+                            productList.push(`${cb.value} × ${qty}組`);
+                            hasSixInchesItem = true;
+                        } else if (cb.id === 'check_12') {
+                            productList.push(`12入禮盒 × ${qty}盒`);
+                            q12Count += qty;
+                        } else if (cb.id === 'check_15') {
+                            productList.push(`15入禮盒 × ${qty}盒`);
+                            q15Count += qty;
+                        }
+                    }
+                });
+
+                selectedItems = productList;
+
+                const regularFreeShipping = q12Count >= 7 || q15Count >= 5;
+                const totalRegularBoxes = q12Count + q15Count;
+                // 6入×4盒優惠：商品金額$1,200，含運價$1,350，故運費拆列$150；不可再把$1,350當商品價。
+                let shippingFee = check1Qty * 150;
+                if (productList.length > 0 && !regularFreeShipping && totalRegularBoxes > 0) {
+                    shippingFee += totalRegularBoxes <= 2 ? 170 : 210;
+                    if (isRemoteAddress()) shippingFee += Math.ceil(totalRegularBoxes / 10) * 10;
+                }
+                eggShippingComputed = shippingFee;
+                document.getElementById('summaryShippingFee').innerText = shippingFee.toLocaleString();
+            }
+
+            // 提袋可自由加購，不限於蛋黃酥 6 入訂單。
+            bagQty = Math.max(0, parseInt(document.getElementById('bagQty').value, 10) || 0);
+            bagPrice = bagQty * 20;
+            if (bagQty > 0) {
+                selectedItems.push(`不織布提袋 × ${bagQty}個`);
+            }
+
+            const extra = getExtraGiftDetails();
+            productPrice += extra.price;
+            selectedItems.push(...extra.specs);
+            // Preserve original egg-yolk shipping calculation and add independent extra-product freight.
+            const eggShipping = mode === 'delivery' ? eggShippingComputed : 0;
+            const extraShipping = mode === 'delivery' ? getExtraShippingPreview() : {fee:0, valid:true, description:''};
+            const shippingFeeFinal = eggShipping + extraShipping.fee;
+            const totalAmount = productPrice + bagPrice + shippingFeeFinal;
+
+            return {
+                specText: selectedItems.join('、'),
+                totalPieces: totalPiecesForPickup,
+                productPrice: productPrice,
+                bagPrice: bagPrice,
+                bagQty: bagQty,
+                shippingFee: shippingFeeFinal,
+                eggShipping: eggShipping,
+                extraShipping: extraShipping,
+                totalAmount: totalAmount
+            };
+        }
+
+        function calculateCart() {
+            const mode = document.getElementById('orderMode').value;
+            const cart = getCartDetails();
+            const bagSection = document.getElementById('bagSection');
+            const bagFeeRow = document.getElementById('bagFeeRow');
+            const shippingFeeRow = document.getElementById('shippingFeeRow');
+
+            let hasSix = false;
+            if (mode === 'pickup') {
+                const q6 = parseInt(document.getElementById('pickup_qty_6').value) || 0;
+                if (q6 > 0) hasSix = true;
+            } else {
+                const checkboxes = document.querySelectorAll('input[name="productCheck"]');
+                checkboxes.forEach((cb) => {
+                    const idStr = cb.id.replace('check_', '');
+                    const qtyInput = document.getElementById(`qty_${idStr}`);
+                    if (cb.checked) {
+                        qtyInput.disabled = false;
+                        qtyInput.classList.remove('bg-gray-100');
+                    } else {
+                        qtyInput.disabled = true;
+                        qtyInput.classList.add('bg-gray-100');
+                    }
+                });
+                if (cart.specText.includes('6入')) {
+                    hasSix = true;
+                }
+                shippingFeeRow.classList.remove('hidden');
+            }
+
+            // 自取與宅配皆可加購，宅配另顯示包裝提醒。
+            bagSection.classList.remove('hidden');
+            document.getElementById('deliveryBagNotice').classList.toggle('hidden', mode !== 'delivery');
+            if (cart.bagPrice > 0) {
+                bagFeeRow.classList.remove('hidden');
+                document.getElementById('summaryBagPrice').innerText = cart.bagPrice.toLocaleString();
+            } else {
+                bagFeeRow.classList.add('hidden');
+            }
+
+            document.getElementById('summaryCartText').innerText = cart.specText !== "" ? cart.specText : '無產品';
+            document.getElementById('summaryProductPrice').innerText = cart.productPrice.toLocaleString();
+            const extra = getExtraGiftDetails();
+            const extraNotice = document.getElementById('extraShippingNotice');
+            extraNotice.classList.toggle('hidden', extra.boxes === 0);
+            const breakdown = document.getElementById('extraShippingBreakdown');
+            const extraFreight = cart.extraShipping;
+            if (mode === 'delivery' && (extra.boxes > 0 || cart.eggShipping > 0)) {
+                breakdown.classList.remove('hidden');
+                breakdown.innerText = `蛋黃酥運費 NT$${cart.eggShipping.toLocaleString()}` + (extra.boxes > 0 ? `｜${extraFreight.description}` : '') + (extraFreight.valid ? '（已計入總額）' : '（未含待確認運費）');
+                document.getElementById('summaryShippingFee').innerText = cart.shippingFee.toLocaleString();
+            } else {
+                breakdown.classList.add('hidden');
+                breakdown.innerText = '';
+            }
+            document.getElementById('totalAmount').innerText = cart.totalAmount.toLocaleString() + (mode === 'delivery' && !extraFreight.valid ? '＋待確認運費' : '');
+        }
+
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const dateInput = document.getElementById('orderDate').value;
+            if (disabledDates.includes(dateInput)) {
+                alert('❌ 您選擇的日期為休息日或已滿單，無法預訂！');
+                return;
+            }
+
+            const cart = getCartDetails();
+            const mode = document.getElementById('orderMode').value;
+            if (!TEST_GAS_URL || !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(TEST_GAS_URL)) {
+                alert('這是 TEST 測試版：尚未設定 TEST Apps Script 的部署網址，禁止送出以免影響正式訂單。');
+                return;
+            }
+            if (!cart.extraShipping.valid) {
+                alert('此訂單一般糕點運費尚待人工確認，暫不開放送出。');
+                return;
+            }
+            const testSelection = collectTestItems();
+            if (testSelection.mixedFour) {
+                alert('您選擇的「6入 × 4盒含運優惠」搭配其他6入免運組合，可能有更划算的合併配送方式。\n請先聯繫紀家烘焙坊，由專人協助確認最優惠的訂購方式，謝謝您！');
+                return;
+            }
+            if (!testSelection.items.length) { alert('請至少選擇一項商品'); return; }
+
+            if (mode === 'pickup' && cart.totalPieces < 12) {
+                alert('❌ 現場自取總數量須滿 12 顆（含）以上方可預訂！');
+                return;
+            }
+
+            if (!cart.specText || cart.specText === "") {
+                alert('❌ 請至少選購一項產品！');
+                return;
+            }
+
+            const orderId = 'ORD' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,8).toUpperCase();
+            const timeSlotValue = mode === 'pickup' ? document.getElementById('timeSlot').value : document.getElementById('deliveryTimeSlot').value;
+            
+            const invoiceType = mode === 'delivery' ? document.getElementById('invoiceType').value : '無';
+            const taxId = mode === 'delivery' ? document.getElementById('taxId').value : '';
+            const finalInvoiceInfo = invoiceType + (taxId ? ` (${taxId})` : '');
+
+            pendingOrderData = {
+                orderId: orderId,
+                mode: mode === 'pickup' ? '現場自取' : '宅配到府',
+                name: document.getElementById('buyerName').value,
+                phone: document.getElementById('buyerPhone').value,
+                address: mode === 'delivery' ? document.getElementById('receiverAddress').value : '現場自取',
+                date: document.getElementById('orderDate').value,
+                timeSlot: timeSlotValue,
+                productSpec: cart.specText,
+                items: testSelection.items,
+                eggBundles: testSelection.eggBundles,
+                bagFee: cart.bagPrice,
+                bagQuantity: cart.bagQty,
+                invoiceInfo: finalInvoiceInfo,
+                totalPrice: cart.totalAmount,
+                status: '已成立',
+                orderTime: new Date().toLocaleString()
+            };
+
+            let modalHtml = `
+                <p>• <strong>訂購模式：</strong><span class="text-amber-700 font-bold">${pendingOrderData.mode}</span></p>
+                <p>• <strong>姓名/電話：</strong>${pendingOrderData.name} (${pendingOrderData.phone})</p>
+            `;
+            if (mode === 'delivery') {
+                modalHtml += `<p>• <strong>配送地址：</strong>${pendingOrderData.address}</p>`;
+                modalHtml += `<p>• <strong>發票選項：</strong>${finalInvoiceInfo}</p>`;
+            }
+            modalHtml += `
+                <p>• <strong>日期/時段：</strong>${pendingOrderData.date} ｜ ${pendingOrderData.timeSlot}</p>
+                <p>• <strong>訂購明細：</strong>${pendingOrderData.productSpec}</p>
+                <p class="pt-2 border-t font-bold text-amber-700 text-base">應付總金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}</p>
+            `;
+
+            document.getElementById('modalContent').innerHTML = modalHtml;
+            document.getElementById('confirmModal').classList.remove('hidden');
+        });
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+        }
+
+        // Read-only order existence check via JSONP. Only an exact ID + phone match confirms success.
+        function verifyTestOrder(orderId, phone, timeoutMs = 10000) {
+            return new Promise(resolve => {
+                const callbackName = 'stillJiCheck' + Math.random().toString(36).slice(2);
+                const script = document.createElement('script');
+                let finished = false;
+                const finish = value => {
+                    if (finished) return;
+                    finished = true;
+                    clearTimeout(timer);
+                    delete window[callbackName];
+                    script.remove();
+                    resolve(value);
+                };
+                const timer = setTimeout(() => finish(null), timeoutMs);
+                window[callbackName] = result => finish(result && result.status === 'ok' ? result.found === true : null);
+                script.onerror = () => finish(null);
+                script.src = TEST_GAS_URL + '?orderId=' + encodeURIComponent(orderId) +
+                    '&phone=' + encodeURIComponent(phone) + '&callback=' + callbackName;
+                document.head.appendChild(script);
+            });
+        }
+
+        function showConfirmedTestOrder(order) {
+            document.getElementById('formBlock').classList.add('hidden');
+            if (order.mode === '現場自取') {
+                document.getElementById('finalOrderIdPickup').innerText = order.orderId;
+                document.getElementById('finalPricePickup').innerText = order.totalPrice.toLocaleString();
+                document.getElementById('successPagePickup').classList.remove('hidden');
+            } else {
+                document.getElementById('finalOrderIdDelivery').innerText = order.orderId;
+                document.getElementById('finalPriceDelivery').innerText = order.totalPrice.toLocaleString();
+                document.getElementById('successPageDelivery').classList.remove('hidden');
+            }
+            window.scrollTo({top:0,behavior:'smooth'});
+        }
+
+        async function executeSubmit() {
+            // Do not submit the same prepared order twice, even after network uncertainty.
+            if (testSubmitStarted || !pendingOrderData) return;
+            testSubmitStarted = true;
+            closeConfirmModal();
+            const order = pendingOrderData;
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = '正在送出 TEST 訂單，請稍候…';
+            try {
+                // no-cors POST is opaque; it cannot by itself prove the backend accepted the order.
+                await fetch(TEST_GAS_URL, {
+                    method:'POST', mode:'no-cors',
+                    headers:{'Content-Type':'text/plain;charset=utf-8'},
+                    body:JSON.stringify(order)
+                });
+            } catch (error) {
+                // A network error does not prove the server failed to receive the request.
+                console.warn('TEST POST 未能取得傳送確認：',error);
+            }
+            submitBtn.innerText = '正在核對 TEST 訂單…';
+            let confirmed = false;
+            for (let attempt = 0; attempt < 3; attempt++) {
+                if (attempt) await new Promise(resolve => setTimeout(resolve, 1700));
+                const found = await verifyTestOrder(order.orderId, order.phone);
+                if (found === true) { confirmed = true; break; }
+            }
+            if (confirmed) {
+                testConfirmed = true;
+                showConfirmedTestOrder(order);
+            } else {
+                submitBtn.innerText = '已傳送，待人工核對（請勿重複送出）';
+                alert('TEST 訂單尚未取得後端寫入確認。\n訂單編號：' + order.orderId +
+                    '\n請先到 TEST 試算表核對，勿重複按送出。\n如果查不到，請把畫面與訂單編號提供給安安排查。');
+            }
+        }
+
+        function copyOrderInfo(mode) {
+          const id = document.getElementById(mode === 'pickup' ? 'finalOrderIdPickup' : 'finalOrderIdDelivery').textContent.trim();
+          const price = document.getElementById(mode === 'pickup' ? 'finalPricePickup' : 'finalPriceDelivery').textContent.trim();
+          const info = `紀家烘焙坊 STILL JI｜TEST 訂單\n訂單編號：${id}\n訂購方式：${mode === 'pickup' ? '現場自取' : '宅配到府'}\n總金額：NT$ ${price}\n訂單查詢：${new URL('lookup.html', location.href).href}`;
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(info).then(() => alert('訂單資訊已複製！')).catch(() => window.prompt('請複製以下訂單資訊：', info));
+          } else { window.prompt('請複製以下訂單資訊：', info); }
+        }
+
+    </script>
+<script id="still-ji-splash-controller">
+(function () {
+  const splash = document.getElementById('brandSplash');
+  if (!splash) return;
+  let played = false;
+  try { played = sessionStorage.getItem('stillJiStorySeen') === '1'; } catch(e) {}
+  const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (played || reduced) return;
+  splash.hidden = false;
+  document.body.classList.add('story-open');
+})();
+function closeBrandStory() {
+  const splash = document.getElementById('brandSplash');
+  if (!splash || splash.hidden) return;
+  try { sessionStorage.setItem('stillJiStorySeen','1'); } catch(e) {}
+  splash.classList.add('story-closing');
+  document.body.classList.remove('story-open');
+  window.setTimeout(function () { splash.hidden = true; }, 450);
+}
+</script>
+<script id="still-ji-story-reveal">
+(function () {
+  const splash = document.getElementById('brandSplash');
+  if (!splash) return;
+  const parts = splash.querySelectorAll('.story-head, .story-intro, .story-awards-photo, .brand-honors p, .brand-story p, .story-enter, .story-caption');
+  parts.forEach(function (node, i) { node.classList.add('story-reveal'); node.style.setProperty('--reveal-order', String(i)); });
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    parts.forEach(function(node) { node.classList.add('story-visible'); });
+    return;
+  }
+  if (!('IntersectionObserver' in window)) {
+    parts.forEach(function(node) { node.classList.add('story-visible'); });
+    return;
+  }
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('story-visible'); observer.unobserve(entry.target); }
+    });
+  }, {root:splash, threshold:0.08, rootMargin:'0px 0px -18px 0px'});
+  parts.forEach(function(node) { observer.observe(node); });
+})();
+</script>
+<script id="stillji-home-scroll-controller">
+(function () {
+  function setupHomeReveal() {
+    var home=document.getElementById('landingPage');
+    if (!home || !('IntersectionObserver' in window)) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var targets=home.querySelectorAll(
+      '.brand-intro, .brand-hero-photo, .brand-photo-card, .brand-note, .brand-cta-wrap, .brand-contact'
+    );
+    var observer=new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('home-reveal-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.08,rootMargin:'0px 0px 24px 0px'});
+    targets.forEach(function(el) {
+      el.classList.add('home-reveal-ready');
+      observer.observe(el);
+    });
+  }
+  if(document.readyState==='loading') {
+    document.addEventListener('DOMContentLoaded',setupHomeReveal,{once:true});
+  } else setupHomeReveal();
+})();
+</script>
+</body>
+</html>
