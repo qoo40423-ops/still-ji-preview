@@ -729,7 +729,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         </section>
 
         <section id="orderFormPage" class="hidden order-form-page" aria-label="訂購資料填寫">
-<div style="padding:12px 18px;background:#fff4dd;color:#65411b;border:1px solid #d9b678;border-radius:12px;margin:14px auto;max-width:860px">目前為 TEST 測試流程：送出僅代表收到訂購需求，尚未成立，請勿匯款。雙 11 優惠請先透過官方 LINE 確認。</div>
+<div style="padding:12px 18px;background:#fff4dd;color:#65411b;border:1px solid #d9b678;border-radius:12px;margin:14px auto;max-width:860px">訂單送出後，我們將透過 LINE 官方帳號通知您。訂單金額及付款方式以店家確認通知為準，確認前請勿匯款。</div>
             <button type="button" class="back-link" onclick="showOrderChoices()">← 返回選擇訂購方式</button>
         <!-- 模式切換按鈕 -->
         <div class="hidden flex rounded-xl bg-gray-200 p-1 shadow-inner">
@@ -919,13 +919,13 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 <section id="additionalGiftBoxes" class="mt-5 p-4 rounded-2xl border border-amber-200 bg-amber-50/30 space-y-3">
                     <div class="font-bold text-gray-800">🍪 其他糕點禮盒</div>
                     <p class="text-xs text-gray-600">每盒為單一品項，線上僅提供 12 入禮盒；可與蛋黃酥一起選購。單片／單顆歡迎來電洽詢：<a href="tel:047270717" class="underline">04-7270717</a>。</p>
-                    <p class="text-xs font-bold text-amber-900">⚠️ 本頁為 TEST 整合測試版，僅供測試；訂單須經 TEST 後端確認才顯示成功。蛋黃酥與一般糕點分群計費。</p>
+                    <p class="text-xs font-bold text-amber-900">蛋黃酥與其他糕點分別計算配送費用；實際訂購金額以店家確認結果為準。</p>
                     <div class="space-y-2" id="additionalGiftBoxInputs">
                         <label class="flex items-center justify-between gap-2 p-3 bg-white rounded-xl border border-gray-200"><span class="text-sm">老婆餅｜12 入禮盒 <strong class="text-amber-800">NT$400</strong></span><span class="flex items-center gap-1"><input type="number" id="extra_wife" min="0" step="1" value="0" oninput="calculateCart()" class="w-16 border rounded-md p-1 text-center" aria-label="老婆餅12入禮盒盒數">盒</span></label>
                         <label class="flex items-center justify-between gap-2 p-3 bg-white rounded-xl border border-gray-200"><span class="text-sm">太陽餅｜12 入禮盒 <strong class="text-amber-800">NT$400</strong></span><span class="flex items-center gap-1"><input type="number" id="extra_sun" min="0" step="1" value="0" oninput="calculateCart()" class="w-16 border rounded-md p-1 text-center" aria-label="太陽餅12入禮盒盒數">盒</span></label>
                         <label class="flex items-center justify-between gap-2 p-3 bg-white rounded-xl border border-gray-200"><span class="text-sm">土鳳梨酥｜12 入禮盒 <strong class="text-amber-800">NT$460</strong></span><span class="flex items-center gap-1"><input type="number" id="extra_pineapple" min="0" step="1" value="0" oninput="calculateCart()" class="w-16 border rounded-md p-1 text-center" aria-label="土鳳梨酥12入禮盒盒數">盒</span></label>
                     </div>
-                    <p id="extraShippingNotice" class="hidden text-sm font-bold text-red-700" role="status">TEST 測試版：請勿填寫真實顧客個資；6入舊組合及待確認運費訂單暫不送出。</p>
+                    <p id="extraShippingNotice" class="hidden text-sm font-bold text-red-700" role="status">部分商品組合的配送費用需要由專人協助確認，請聯繫官方 LINE 客服。</p>
                 </section>
 
                 <!-- 加購不織布提袋專區 -->
@@ -994,9 +994,9 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         <div id="successPagePickup" class="hidden bg-white shadow-md rounded-2xl p-8 border border-emerald-100 text-center space-y-6">
             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
             <div class="space-y-2">
-                <h2 class="text-2xl font-black text-emerald-700">🎉 預訂已成功送出！</h2>
+                <h2 class="text-2xl font-black text-emerald-700">訂購需求已成功送出</h2>
                 <p class="text-gray-600 text-sm">您的訂單編號為：<span id="finalOrderIdPickup" class="font-mono font-bold bg-gray-100 px-2 py-0.5 rounded text-gray-800">---</span></p>
-                <p class="text-md font-bold text-amber-700">應付總金額為：NT$ <span id="finalPricePickup">0</span></p>
+                <p class="text-md font-bold text-amber-700">訂單金額狀態： <span id="finalPricePickup">0</span></p>
             </div>
             <button type="button" onclick="copyOrderInfo('pickup')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
             <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold">💬 開啟官方 LINE（複製後貼上訂單資訊）</a>
@@ -1010,29 +1010,29 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         <div id="successPageDelivery" class="hidden bg-white shadow-md rounded-2xl p-8 border border-amber-100 text-left space-y-5">
             <div class="text-center space-y-2">
                 <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
-                <h2 class="text-2xl font-black text-amber-700">🎉 宅配預訂已成功送出！</h2>
+                <h2 class="text-2xl font-black text-amber-700">宅配訂購需求已成功送出</h2>
             </div>
             
             <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-5 space-y-2 text-sm text-gray-800">
                 <p class="font-bold text-amber-900 border-b border-amber-200 pb-2">📦 您本次的訂單資訊：</p>
                 <p>• <strong>訂單編號：</strong><span id="finalOrderIdDelivery" class="font-mono font-bold text-gray-900">---</span></p>
-                <p>• <strong>總金額：</strong><span class="font-bold text-amber-700 text-base">NT$ <span id="finalPriceDelivery">0</span></span></p>
+                <p>• <strong>訂單金額狀態：</strong><span class="font-bold text-amber-700 text-base"> <span id="finalPriceDelivery">0</span></span></p>
                 
                 <div class="pt-2 border-t border-amber-200 space-y-1">
                     <p class="font-bold text-amber-900">付款提醒</p>
-                    <p>訂購需求送出後，請等待店家確認訂單與最終金額；確認前請勿轉帳。</p>
-                    <p>確認成立後，請依店家提供的付款資訊匯款；匯款後請透過官方 LINE 告知店家，由店家人工核對入帳並提供宅配單供您確認。</p>
+                    <p>我們已收到您的訂購需求，將透過 LINE 官方帳號通知您。店家確認訂單金額及付款方式前，請勿匯款。</p>
+                    <p>訂單確認成立後，請依官方 LINE 提供的付款資訊完成匯款。我們將核對入帳，並提供宅配資料供您確認。</p>
                 </div>
             </div>
 
             <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-700 space-y-3 text-center">
-                <p class="font-bold text-amber-900">💬 請將訂單編號傳給紀家烘焙坊 LINE 官方帳號</p>
-                <p>先按「複製訂單資訊」，再開啟官方 LINE 並貼上送出，方便店家找到您的訂單。此時尚未成立，請先不要匯款。</p>
+                <p class="font-bold text-amber-900">LINE 官方帳號訂單通知</p>
+                <p>系統已透過紀家烘焙坊 LINE 官方帳號發送訂購需求通知。如未收到訊息，請聯繫客服並提供訂單編號。</p>
                 <div class="flex flex-col gap-2">
-                    <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 第一步：複製訂單資訊</button>
-                    <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl">💬 第二步：開啟官方 LINE 並貼上送出</a>
+                    <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
+                    <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl">💬 聯繫官方 LINE 客服</a>
                 </div>
-                <p class="text-xs text-gray-500">LINE 訊息須由您手動貼上並送出，網站不會自動傳送。</p>
+                <p class="text-xs text-gray-500">訂購需求通知由官方 LINE 自動發送；若未收到，請向客服查詢。</p>
             </div>
 
             <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
@@ -1260,7 +1260,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 
         function validateDate() {
             const mode = document.getElementById('orderMode').value;
-            if (testSubmitStarted) { alert('這筆 TEST 訂單已嘗試送出，請先至 TEST 試算表核對，勿重複送單。'); return; }
+            if (testSubmitStarted) { alert('訂單已送出，請先查詢訂單狀態或聯繫客服，勿重複送單。'); return; }
             const dateInput = document.getElementById('orderDate').value;
             const dateNoticeText = document.getElementById('dateNoticeText');
             const estimatedArrival = document.getElementById('estimatedArrival');
@@ -1610,7 +1610,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 return;
             }
             if (!TEST_GAS_URL || !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(TEST_GAS_URL)) {
-                alert('這是 TEST 測試版：尚未設定 TEST Apps Script 的部署網址，禁止送出以免影響正式訂單。');
+                alert('訂購服務暫時無法使用，請聯繫官方 LINE 客服。');
                 return;
             }
             if (!cart.extraShipping.valid) {
@@ -1635,7 +1635,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             }
 
             if (readPendingTestOrder()) {
-                alert('前一筆 TEST 訂單尚待核對，請勿重新送單。');
+                alert('前一筆訂單仍在確認中，請勿重複送出。');
                 return;
             }
             const orderId = 'ORD' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,8).toUpperCase();
@@ -1674,7 +1674,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             modalHtml += `
                 <p>• <strong>日期/時段：</strong>${pendingOrderData.date} ｜ ${pendingOrderData.timeSlot}</p>
                 <p>• <strong>訂購明細：</strong>${pendingOrderData.productSpec}</p>
-                <p class="pt-2 border-t font-bold text-amber-700 text-base">預估金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}（非正式應付金額，待店家確認）</p>
+                <p class="pt-2 border-t font-bold text-amber-700 text-base">試算金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}（最終金額以店家通知為準）</p>
             `;
 
             document.getElementById('modalContent').innerHTML = modalHtml;
@@ -1712,11 +1712,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             document.getElementById('formBlock').classList.add('hidden');
             if (order.mode === '現場自取') {
                 document.getElementById('finalOrderIdPickup').innerText = order.orderId;
-                document.getElementById('finalPricePickup').innerText = '待人工確認（請勿轉帳）';
+                document.getElementById('finalPricePickup').innerText = '待店家確認（請勿匯款）';
                 document.getElementById('successPagePickup').classList.remove('hidden');
             } else {
                 document.getElementById('finalOrderIdDelivery').innerText = order.orderId;
-                document.getElementById('finalPriceDelivery').innerText = '待人工確認（請勿轉帳）';
+                document.getElementById('finalPriceDelivery').innerText = '待店家確認（請勿匯款）';
                 document.getElementById('successPageDelivery').classList.remove('hidden');
             }
             window.scrollTo({top:0,behavior:'smooth'});
@@ -1754,7 +1754,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             savePendingTestOrder(Object.assign({}, order, {lineIdToken:undefined}));
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerText = '正在送出 TEST 訂單，請稍候…';
+            submitBtn.innerText = '正在送出訂單，請稍候…';
             try {
                 // no-cors POST is opaque; it cannot by itself prove the backend accepted the order.
                 await fetch(TEST_GAS_URL, {
@@ -1766,7 +1766,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 // A network error does not prove the server failed to receive the request.
                 console.warn('TEST POST 未能取得傳送確認：',error);
             }
-            submitBtn.innerText = '正在核對 TEST 訂單…';
+            submitBtn.innerText = '正在確認訂單資料…';
             let confirmed = false;
             for (let attempt = 0; attempt < 3; attempt++) {
                 if (attempt) await new Promise(resolve => setTimeout(resolve, 1700));
@@ -1777,16 +1777,16 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 testConfirmed = true;
                 showConfirmedTestOrder(order);
             } else {
-                submitBtn.innerText = '已傳送，待人工核對（請勿重複送出）';
-                alert('TEST 訂單尚未取得後端寫入確認。\n訂單編號：' + order.orderId +
-                    '\n請先到 TEST 試算表核對，勿重複按送出。\n如果查不到，請把畫面與訂單編號提供給安安排查。');
+                submitBtn.innerText = '已送出，請勿重複提交';
+                alert('尚未取得訂單寫入確認。\n訂單編號：' + order.orderId +
+                    '\n請勿重複送出，並透過官方 LINE 聯繫客服查詢。\n請提供訂單編號，方便客服協助查詢。');
             }
         }
 
         function copyOrderInfo(mode) {
           const id = document.getElementById(mode === 'pickup' ? 'finalOrderIdPickup' : 'finalOrderIdDelivery').textContent.trim();
           const price = document.getElementById(mode === 'pickup' ? 'finalPricePickup' : 'finalPriceDelivery').textContent.trim();
-          const info = `紀家烘焙坊 STILL JI｜TEST 訂單\n訂單編號：${id}\n訂購方式：${mode === 'pickup' ? '現場自取' : '宅配到府'}\n金額狀態：${price}\n訂單查詢：${new URL('lookup.html', location.href).href}`;
+          const info = `紀家烘焙坊 STILL JI｜訂購需求\n訂單編號：${id}\n訂購方式：${mode === 'pickup' ? '現場自取' : '宅配到府'}\n金額狀態：${price}\n訂單查詢：${new URL('lookup.html', location.href).href}`;
           if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(info).then(() => alert('訂單資訊已複製！')).catch(() => window.prompt('請複製以下訂單資訊：', info));
           } else { window.prompt('請複製以下訂單資訊：', info); }
