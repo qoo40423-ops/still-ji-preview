@@ -595,6 +595,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         <!-- 品牌形象首頁 -->
         <section class="brand-showcase" id="landingPage" aria-label="STILL JI 品牌與商品介紹">
             <div class="brand-intro">
+              <button type="button" class="sj-replay-story" onclick="replayBrandStory()" aria-label="重新觀看紀家烘焙坊品牌故事">▶ 觀看品牌故事動畫</button>
                 
                 
                 <div class="brand-awards" id="homeAwardsCard">
@@ -1775,6 +1776,26 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         }
 
     </script>
+<style id="stillji-story-replay-style">
+.sj-replay-story{display:inline-block;margin:0 auto 1rem;padding:.55rem 1.1rem;border:1px solid #b79a68;border-radius:99px;background:#fffaf0;color:#49352b;font:600 .85rem/1.5 inherit;cursor:pointer}
+.sj-replay-story:hover,.sj-replay-story:focus-visible{background:#f2e8d5;outline-offset:3px}
+</style>
+<script id="still-ji-story-replay-function">
+function replayBrandStory(){
+  const splash=document.getElementById('brandSplash');
+  if(!splash){alert('品牌故事目前無法載入，請重新整理網頁。');return;}
+  splash.classList.remove('story-closing','splash-leaving');
+  splash.hidden=false;
+  document.body.classList.add('story-open');
+  const scroller=splash.querySelector('.story-scroll');
+  if(scroller)scroller.scrollTop=0;
+  splash.querySelectorAll('.story-reveal').forEach(function(el){
+    el.classList.remove('story-visible');
+    void el.offsetWidth;
+    el.classList.add('story-visible');
+  });
+}
+</script>
 <script id="still-ji-splash-controller">
 (function () {
   const splash = document.getElementById('brandSplash');
