@@ -999,6 +999,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 <p class="text-md font-bold text-amber-700">應付總金額為：NT$ <span id="finalPricePickup">0</span></p>
             </div>
             <button type="button" onclick="copyOrderInfo('pickup')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
+            <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold">💬 開啟官方 LINE（複製後貼上訂單資訊）</a>
             <a href="lookup.html" class="block text-center text-sm text-amber-800 underline">前往訂單查詢</a>
             <button onclick="startNewOrder()" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-xl transition text-sm font-medium cursor-pointer">
                 返回填寫新訂單
@@ -1020,18 +1021,18 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 <div class="pt-2 border-t border-amber-200 space-y-1">
                     <p class="font-bold text-amber-900">付款提醒</p>
                     <p>訂購需求送出後，請等待店家確認訂單與最終金額；確認前請勿轉帳。</p>
-                    <p>確認成立後，請依店家提供的付款資訊匯款，並透過官方 LINE 提供訂單編號與匯款帳戶末五碼，由店家人工核對入帳。</p>
+                    <p>確認成立後，請依店家提供的付款資訊匯款；匯款後請透過官方 LINE 告知店家，由店家人工核對入帳並提供宅配單供您確認。</p>
                 </div>
             </div>
 
-            <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-700 space-y-2 text-center">
-                <p class="font-medium">收到店家確認及匯款資訊後，匯款完成請通知官方 LINE (<span class="font-bold text-amber-700">ID: still_ji</span>)，</p>
-                <p>並提供<strong>帳戶後5碼</strong>，以利客服人員人工核對款項</p>
-                <div class="pt-2">
-                    <a href="https://lin.ee/9199Z3x" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-lg transition shadow-xs">
-                        加官方 LINE 通知客服
-                    </a>
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-700 space-y-3 text-center">
+                <p class="font-bold text-amber-900">💬 請將訂單編號傳給紀家烘焙坊 LINE 官方帳號</p>
+                <p>先按「複製訂單資訊」，再開啟官方 LINE 並貼上送出，方便店家找到您的訂單。此時尚未成立，請先不要匯款。</p>
+                <div class="flex flex-col gap-2">
+                    <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 第一步：複製訂單資訊</button>
+                    <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl">💬 第二步：開啟官方 LINE 並貼上送出</a>
                 </div>
+                <p class="text-xs text-gray-500">LINE 訊息須由您手動貼上並送出，網站不會自動傳送。</p>
             </div>
 
             <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
