@@ -682,7 +682,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
           <button type="button" class="back-link" onclick="returnFromShippingRules()">← 返回宅配訂購</button>
           <div class="sj-rules-kicker">STILL JI · DELIVERY GUIDE</div>
           <h2 class="sj-rules-title">宅配運費與配送規則</h2>
-          <p class="sj-rules-lead">訂購前的小提醒，讓您更輕鬆安排送禮與收件。目前運費以店家人工核定為準；頁面預估僅供參考。</p>
+          <p class="sj-rules-lead">訂購前的小提醒，讓您更輕鬆安排送禮與收件。運費依商品組合、裝箱數量與配送地區計算。</p>
           <details class="sj-rules-card sj-rules-accordion">
             <summary>01｜蛋黃酥宅配運費 <span aria-hidden="true" class="sj-rule-plus">＋</span></summary><div class="sj-rule-body">
             <table class="sj-rules-table" aria-label="蛋黃酥6入優惠組合運費"><thead><tr><th>6 入禮盒優惠組合</th><th>運費說明</th></tr></thead><tbody>
@@ -690,7 +690,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
               <tr><td>6 入 × 10 盒（60 顆）<br><strong>商品價 NT$3,000</strong></td><td><strong>免運費</strong></td></tr>
               <tr><td>6 入 × 15 盒（90 顆）<br><strong class="sj-promo-price" data-normal="商品價 NT$4,500（一般宅配原價含運 NT$4,670）" data-promo="雙 11 活動價 NT$4,200（含運）">商品價 NT$4,500</strong></td><td><strong>免運費</strong></td></tr>
             </tbody></table>
-            <p class="sj-rules-note">6 入優惠組合與其他規格併購時，運費與裝箱方式可能需要人工核對；請以結帳顯示及門市確認為準。</p>
+            <p class="sj-rules-note">6 入蛋黃酥與其他規格分箱計費；一般糕點另計運費。</p>
             <table class="sj-rules-table" aria-label="蛋黃酥12入15入運費"><thead><tr><th>12 入／15 入禮盒</th><th>宅配運費</th></tr></thead><tbody>
               <tr><td>合計 1～2 盒</td><td><strong>NT$170</strong></td></tr>
               <tr><td>合計 3 盒以上，未達免運條件</td><td><strong>NT$210</strong></td></tr>
@@ -872,7 +872,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_1" value="6入 × 4盒" data-price="1350" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 1,350，已含運)" data-promo="(雙 11 優惠 NT$ 1,250，含運)">(NT$ 1,350，已含運)</span></span>
+                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 1,350，已含運)" data-promo="(雙 11 NT$ 1,250，含運；須人工確認)">(NT$ 1,350，已含運)</span></span>
                             </label>
                             <input type="number" id="qty_1" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -888,7 +888,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_3" value="6入 × 15盒" data-price="4500" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 4,500，運費另計)" data-promo="(雙 11 優惠 NT$ 4,200，含運)">(NT$ 4,500)</span></span>
+                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 4,500，運費另計)" data-promo="(雙 11 NT$ 4,200，含運；須人工確認)">(NT$ 4,500)</span></span>
                             </label>
                             <input type="number" id="qty_3" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -1366,8 +1366,8 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             if (!total) return {fee:0, valid:true, description:'', parcels:0};
             let rate;
             if (pineapple && pastry) {
-                if (total > 10 || pastry > 8) return {fee:0, valid:false, description:'一般糕點混裝超過已確認級距，請來電洽詢運費', parcels:0};
-                rate = {fee:210, parcels:1};
+                const parcels=Math.max(Math.ceil(pastry/8),Math.ceil(total/10));
+                rate = {fee:210*parcels, parcels};
             } else if (pastry) rate = parcelRatePreview(pastry, 8, 1);
             else rate = parcelRatePreview(pineapple, 10, 2);
             const remoteFee = isRemoteAddress() ? rate.parcels * 10 : 0;
@@ -1457,17 +1457,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         let qty = parseInt(qtyInput.value);
                         if (isNaN(qty) || qty < 1) { qty = 1; }
 
-                        // 雙11：4盒組與15盒組可同筆併用，各組限1組，其他品項不適用此優惠。
-                        const selectedEggOnly = [...checkboxes].filter(x => x.checked);
-                        const noOtherProducts = ['extra_wife','extra_sun','extra_pineapple','bagQty']
-                            .every(id => (Number(document.getElementById(id)?.value) || 0) === 0);
-                        const onlyPromoBundles = selectedEggOnly.length > 0 &&
-                            selectedEggOnly.every(x => x.id === 'check_1' || x.id === 'check_3') &&
-                            selectedEggOnly.every(x => (Number(document.getElementById('qty_'+x.id.replace('check_',''))?.value) || 1) === 1);
-                        const promoEligible = isDouble11TW() && noOtherProducts && onlyPromoBundles && qty === 1;
-                        const price = promoEligible && cb.id === 'check_1' ? 1250 :
-                            promoEligible && cb.id === 'check_3' ? 4200 :
-                            parseInt(cb.getAttribute('data-price'), 10);
+                        // 雙11 4盒及15盒優惠不限組數，其他商品另行計費。
+                        const promoEligible=isDouble11TW();
+                        const price=promoEligible && cb.id==='check_1'?1250:
+                            promoEligible && cb.id==='check_3'?4200:
+                            parseInt(cb.getAttribute('data-price'),10);
                         productPrice += (price * qty);
 
                         if (cb.id === 'check_1') {
@@ -1618,10 +1612,6 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 return;
             }
             const testSelection = collectTestItems();
-            if (testSelection.mixedFour && !(isDouble11TW() && testSelection.eggBundles.length === 2 && testSelection.eggBundles.some(x=>x.boxesPerBundle===4 && x.quantity===1) && testSelection.eggBundles.some(x=>x.boxesPerBundle===15 && x.quantity===1) && ['extra_wife','extra_sun','extra_pineapple','bagQty'].every(id=>(Number(document.getElementById(id)?.value)||0)===0) && !document.getElementById('check_12').checked && !document.getElementById('check_15').checked)) {
-                alert('您選擇的「6入 × 4盒含運優惠」搭配其他6入免運組合，可能有更划算的合併配送方式。\n請先聯繫紀家烘焙坊，由專人協助確認最優惠的訂購方式，謝謝您！');
-                return;
-            }
             if (!testSelection.items.length) { alert('請至少選擇一項商品'); return; }
 
             if (mode === 'pickup' && cart.totalPieces > 0 && cart.totalPieces < 12) {
@@ -1712,11 +1702,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             document.getElementById('formBlock').classList.add('hidden');
             if (order.mode === '現場自取') {
                 document.getElementById('finalOrderIdPickup').innerText = order.orderId;
-                document.getElementById('finalPricePickup').innerText = '待店家確認（請勿匯款）';
+                document.getElementById('finalPricePickup').innerText = '訂單已成立，請查看官方 LINE 通知';
                 document.getElementById('successPagePickup').classList.remove('hidden');
             } else {
                 document.getElementById('finalOrderIdDelivery').innerText = order.orderId;
-                document.getElementById('finalPriceDelivery').innerText = '待店家確認（請勿匯款）';
+                document.getElementById('finalPriceDelivery').innerText = '訂單已成立，請查看官方 LINE 通知';
                 document.getElementById('successPageDelivery').classList.remove('hidden');
             }
             window.scrollTo({top:0,behavior:'smooth'});
@@ -1786,7 +1776,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         function copyOrderInfo(mode) {
           const id = document.getElementById(mode === 'pickup' ? 'finalOrderIdPickup' : 'finalOrderIdDelivery').textContent.trim();
           const price = document.getElementById(mode === 'pickup' ? 'finalPricePickup' : 'finalPriceDelivery').textContent.trim();
-          const info = `紀家烘焙坊 STILL JI｜訂購需求\n訂單編號：${id}\n訂購方式：${mode === 'pickup' ? '現場自取' : '宅配到府'}\n金額狀態：${price}\n訂單查詢：${new URL('lookup.html', location.href).href}`;
+          const info = `紀家烘焙坊 STILL JI｜訂單資訊\n訂單編號：${id}\n訂購方式：${mode === 'pickup' ? '現場自取' : '宅配到府'}\n金額狀態：${price}\n訂單查詢：${new URL('lookup.html', location.href).href}`;
           if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(info).then(() => alert('訂單資訊已複製！')).catch(() => window.prompt('請複製以下訂單資訊：', info));
           } else { window.prompt('請複製以下訂單資訊：', info); }
