@@ -1073,6 +1073,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         }
 
         function showOrderChoices() {
+            // 提早登入，避免填完訂單才跳 LINE 授權而遺失表單。
+            setTimeout(function(){sjEnsureLoginBeforeOrder().catch(function(err) {
+                console.warn('LINE 授權尚未完成', err);
+                sjShowLoginNotice(err && err.message ? err.message : 'LINE 登入暫時無法使用，請稍後重試。');
+            });},0);
             document.getElementById('landingPage').classList.add('hidden');
             document.getElementById('siteHeader').classList.add('hidden');
             document.getElementById('orderChoicePage').classList.remove('hidden');
@@ -1082,6 +1087,10 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         }
 
         function openOrderForm(mode) {
+            setTimeout(function(){sjEnsureLoginBeforeOrder().catch(function(err) {
+                console.warn('LINE 授權尚未完成', err);
+                sjShowLoginNotice(err && err.message ? err.message : 'LINE 登入暫時無法使用。');
+            });},0);
             switchMode(mode);
             document.getElementById('landingPage').classList.add('hidden');
             document.getElementById('siteHeader').classList.add('hidden');
@@ -1119,7 +1128,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 
         // 第二十版 TEST 專用：請填入「TEST Apps Script」部署後的 /exec 網址。
         // 不可填正式版網址；留空時禁止送出，避免誤送正式訂單。
-        const TEST_GAS_URL = "https://script.google.com/macros/s/AKfycbzUKuqA25-10v1d-pjf38_wSNfS5JfKeHSKINZK3ft0_QWt4tUenEDMsT6zXYhbOJlY/exec"; // 上線前請填入新 TEST 整合版部署網址；禁止沿用舊版
+        const TEST_GAS_URL = "https://script.google.com/macros/s/AKfycbwRTaXn0MMg7gJUBnvQkR8bFVadHoRiPik0fJAcxWY_tI_0vG3S0vpddPZovh_QmjNCLQ/exec"; // 上線前請填入新 TEST 整合版部署網址；禁止沿用舊版
         const GAS_URL = TEST_GAS_URL;
         
         const disabledDates = [
@@ -1149,9 +1158,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         // 初始化：根據當前時間與模式設定最小出貨/取貨日
         window.addEventListener('DOMContentLoaded', () => {
             updateMinDateAndValue();
-            // 清除舊版 TEST 暫存；不再於開頁時跳出歷史訂單警告。
-            // 當前頁面送單仍會暫存訂單，防止同頁重複提交。
-            clearPendingTestOrder();
+            // 不清除待核對訂單：重新整理後仍需防止重複提交。
         });
 
         function updateMinDateAndValue() {
@@ -1713,20 +1720,92 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             window.scrollTo({top:0,behavior:'smooth'});
         }
 
-        // V8: 驗證 LINE Login 的 ID token。僅經 LINE 授權的顧客可以送出 V8 測試訂單。
+        // V8.5.3: LINE 登入需在填單前啟動；登入跳轉時保存表單與頁面狀態。
+        const SJ_LIFF_ID = '2012374320-dGpmrMNX';
+        const SJ_DRAFT_KEY = 'stillji_liff_auth_draft_v853';
         let v8LiffReady = null;
-        async function v8GetLineIdToken() {
-            if (!window.liff) throw new Error('LINE 登入元件尚未載入，請重新整理後再試。');
-            if (!v8LiffReady) v8LiffReady = liff.init({liffId:'2012374320-dGpmrMNX'});
-            await v8LiffReady;
-            if (!liff.isLoggedIn()) {
-                liff.login({redirectUri:window.location.href});
-                throw new Error('正在前往 LINE 登入，完成授權後請重新確認訂單。');
+        let sjLoginRedirecting = false;
+        function sjShowLoginNotice(message) {
+            let notice = document.getElementById('sjLoginNotice');
+            if (!notice) {
+                notice = document.createElement('div');
+                notice.id = 'sjLoginNotice';
+                notice.setAttribute('role','alert');
+                notice.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;max-width:520px;margin:auto;padding:13px 18px;background:#fffaf2;border:1px solid #b79a68;color:#901820;border-radius:12px;z-index:10001;box-shadow:0 8px 30px #49352b22';
+                document.body.appendChild(notice);
             }
-            const token = liff.getIDToken();
-            if (!token) throw new Error('無法取得 LINE 登入憑證，請從 LINE 訂購連結重新開啟。');
+            notice.textContent = message;
+        }
+        function sjCaptureAuthDraft() {
+            const form = document.getElementById('orderForm');
+            const fields = Array.from(form.querySelectorAll('input,select,textarea')).map((el,index)=>({
+                index, value:el.value, checked:el.checked, type:el.type
+            }));
+            const page = !document.getElementById('orderFormPage').classList.contains('hidden') ? 'form' :
+                         !document.getElementById('orderChoicePage').classList.contains('hidden') ? 'choices' : 'home';
+            try { sessionStorage.setItem(SJ_DRAFT_KEY,JSON.stringify({savedAt:Date.now(),page,mode:document.getElementById('orderMode').value,fields})); }
+            catch(e) { console.warn('暫存授權前表單失敗',e); }
+        }
+        function sjRestoreAuthDraft() {
+            let raw;
+            try { raw=sessionStorage.getItem(SJ_DRAFT_KEY); } catch(e) { return false; }
+            if (!raw) return false;
+            let draft;
+            try { draft=JSON.parse(raw); } catch(e) { return false; }
+            if (!draft || Date.now()-draft.savedAt>30*60*1000) { try{sessionStorage.removeItem(SJ_DRAFT_KEY)}catch(e){};return false; }
+            if (draft.page==='form') openOrderForm(draft.mode==='delivery'?'delivery':'pickup');
+            else if (draft.page==='choices') showOrderChoices();
+            if (draft.page==='form' && Array.isArray(draft.fields)) {
+                const fields=Array.from(document.getElementById('orderForm').querySelectorAll('input,select,textarea'));
+                draft.fields.forEach(f=>{const el=fields[f.index];if(!el)return;
+                    if (f.type==='checkbox'||f.type==='radio') el.checked=!!f.checked;
+                    else el.value=f.value;
+                    el.dispatchEvent(new Event('change',{bubbles:true}));
+                });
+                if(typeof calculateCart==='function')calculateCart();
+            }
+            try{sessionStorage.removeItem(SJ_DRAFT_KEY)}catch(e){}
+            return draft.page!=='home';
+        }
+        async function sjInitLiff() {
+            if (!window.liff) throw new Error('LINE 登入元件載入失敗，請確認網路連線。');
+            if (!v8LiffReady) v8LiffReady = liff.init({liffId:SJ_LIFF_ID}).catch(err=>{v8LiffReady=null;throw err;});
+            await v8LiffReady;
+        }
+        async function sjEnsureLoginBeforeOrder() {
+            await sjInitLiff();
+            if (liff.isLoggedIn()) return true;
+            if (sjLoginRedirecting) return false;
+            sjCaptureAuthDraft();
+            sjLoginRedirecting = true;
+            // LIFF 外部瀏覽器可登入；回傳網址必須是已登記的 Endpoint 範圍。
+            const returnUrl = new URL(window.location.href);
+            returnUrl.searchParams.delete('liff.state');
+            returnUrl.searchParams.delete('access_token');
+            returnUrl.hash = '';
+            liff.login({redirectUri:returnUrl.toString()});
+            return false;
+        }
+        async function v8GetLineIdToken() {
+            await sjInitLiff();
+            if (!liff.isLoggedIn()) {
+                await sjEnsureLoginBeforeOrder();
+                throw new Error('正在前往 LINE 授權，授權後會恢復訂單，請勿重複送出。');
+            }
+            const token=liff.getIDToken();
+            if (!token) throw new Error('LINE 登入憑證取得失敗，請由 LINE 訂購連結重新開啟。');
             return token;
         }
+        window.addEventListener('DOMContentLoaded',function(){
+            sjInitLiff().then(function(){
+                if (!liff.isLoggedIn()) return;
+                if (sjRestoreAuthDraft()) {
+                    const splash=document.getElementById('brandSplash');
+                    if(splash){splash.hidden=true;splash.classList.remove('story-closing');}
+                    document.body.classList.remove('story-open');
+                }
+            }).catch(function(err){console.warn('LIFF 初始化失敗',err);});
+        });
 
         async function executeSubmit() {
             // Do not submit the same prepared order twice, even after network uncertainty.
@@ -1738,7 +1817,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 order.lineIdToken = await v8GetLineIdToken();
             } catch (err) {
                 testSubmitStarted = false;
-                alert(err.message || 'LINE 登入失敗，請重新嘗試。');
+                if (!sjLoginRedirecting) alert(err.message || 'LINE 登入失敗，請重新嘗試。');
                 return;
             }
             // LINE 憑證只送到 V8 後端，不保存在 localStorage。
