@@ -994,12 +994,12 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         <div id="successPagePickup" class="hidden bg-white shadow-md rounded-2xl p-8 border border-emerald-100 text-center space-y-6">
             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
             <div class="space-y-2">
-                <h2 class="text-2xl font-black text-emerald-700">訂購需求已成功送出</h2>
+                <h2 class="text-2xl font-black text-emerald-700">訂單已成立</h2>
                 <p class="text-gray-600 text-sm">您的訂單編號為：<span id="finalOrderIdPickup" class="font-mono font-bold bg-gray-100 px-2 py-0.5 rounded text-gray-800">---</span></p>
-                <p class="text-md font-bold text-amber-700">訂單金額狀態： <span id="finalPricePickup">0</span></p>
+                <p class="text-md font-bold text-amber-700">訂單預覽金額： <span id="finalPricePickup">0</span></p><p class="text-xs text-gray-500">實際金額以官方 LINE 通知為準。</p>
             </div>
             <button type="button" onclick="copyOrderInfo('pickup')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
-            <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold">💬 開啟官方 LINE（複製後貼上訂單資訊）</a>
+            <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold">💬 聯繫官方 LINE 客服</a>
             <a href="lookup.html" class="block text-center text-sm text-amber-800 underline">前往訂單查詢</a>
             <button onclick="startNewOrder()" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-xl transition text-sm font-medium cursor-pointer">
                 返回填寫新訂單
@@ -1010,32 +1010,24 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         <div id="successPageDelivery" class="hidden bg-white shadow-md rounded-2xl p-8 border border-amber-100 text-left space-y-5">
             <div class="text-center space-y-2">
                 <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
-                <h2 class="text-2xl font-black text-amber-700">宅配訂購需求已成功送出</h2>
+                <h2 class="text-2xl font-black text-amber-700">宅配訂單已成立</h2>
             </div>
             
             <div class="bg-amber-50/70 border border-amber-200 rounded-xl p-5 space-y-2 text-sm text-gray-800">
                 <p class="font-bold text-amber-900 border-b border-amber-200 pb-2">📦 您本次的訂單資訊：</p>
                 <p>• <strong>訂單編號：</strong><span id="finalOrderIdDelivery" class="font-mono font-bold text-gray-900">---</span></p>
-                <p>• <strong>訂單金額狀態：</strong><span class="font-bold text-amber-700 text-base"> <span id="finalPriceDelivery">0</span></span></p>
+                <p>• <strong>訂單預覽金額：</strong><span class="font-bold text-amber-700 text-base"> <span id="finalPriceDelivery">0</span></span></p><p class="text-xs text-gray-600">實際應付金額以官方 LINE 後端核算通知為準。</p>
                 
                 <div class="pt-2 border-t border-amber-200 space-y-1">
                     <p class="font-bold text-amber-900">付款提醒</p>
-                    <p>我們已收到您的訂購需求，將透過 LINE 官方帳號通知您。店家確認訂單金額及付款方式前，請勿匯款。</p>
-                    <p>訂單確認成立後，請依官方 LINE 提供的付款資訊完成匯款。我們將核對入帳，並提供宅配資料供您確認。</p>
+                    <p>您的宅配訂單已成立，請依紀家烘焙坊官方 LINE 通知的應付金額、匯款帳號及期限完成付款，無須提供匯款帳號後五碼。</p>
+                    <p>我們核對入帳後，將透過 LINE 提供宅配資料供您確認。若未收到通知，請提供訂單編號與客服聯繫。</p>
                 </div>
             </div>
-
-            <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-700 space-y-3 text-center">
-                <p class="font-bold text-amber-900">LINE 官方帳號訂單通知</p>
-                <p>系統已透過紀家烘焙坊 LINE 官方帳號發送訂購需求通知。如未收到訊息，請聯繫客服並提供訂單編號。</p>
-                <div class="flex flex-col gap-2">
-                    <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
-                    <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl">💬 聯繫官方 LINE 客服</a>
-                </div>
-                <p class="text-xs text-gray-500">訂購需求通知由官方 LINE 自動發送；若未收到，請向客服查詢。</p>
+            <div class="flex flex-col gap-2">
+                <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
+                <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-center">💬 聯繫官方 LINE 客服</a>
             </div>
-
-            <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
             <a href="lookup.html" class="block text-center text-sm text-amber-800 underline">前往訂單查詢</a>
             <button onclick="startNewOrder()" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-xl transition text-sm font-medium cursor-pointer">
                 返回填寫新訂單
@@ -1664,7 +1656,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             modalHtml += `
                 <p>• <strong>日期/時段：</strong>${pendingOrderData.date} ｜ ${pendingOrderData.timeSlot}</p>
                 <p>• <strong>訂購明細：</strong>${pendingOrderData.productSpec}</p>
-                <p class="pt-2 border-t font-bold text-amber-700 text-base">試算金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}（最終金額以店家通知為準）</p>
+                <p class="pt-2 border-t font-bold text-amber-700 text-base">訂單預覽金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}（以官方 LINE 通知之後端核算金額為準）</p>
             `;
 
             document.getElementById('modalContent').innerHTML = modalHtml;
@@ -1702,11 +1694,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             document.getElementById('formBlock').classList.add('hidden');
             if (order.mode === '現場自取') {
                 document.getElementById('finalOrderIdPickup').innerText = order.orderId;
-                document.getElementById('finalPricePickup').innerText = '訂單已成立，請查看官方 LINE 通知';
+                document.getElementById('finalPricePickup').innerText = 'NT$ ' + Number(order.totalPrice || 0).toLocaleString('zh-TW');
                 document.getElementById('successPagePickup').classList.remove('hidden');
             } else {
                 document.getElementById('finalOrderIdDelivery').innerText = order.orderId;
-                document.getElementById('finalPriceDelivery').innerText = '訂單已成立，請查看官方 LINE 通知';
+                document.getElementById('finalPriceDelivery').innerText = 'NT$ ' + Number(order.totalPrice || 0).toLocaleString('zh-TW');
                 document.getElementById('successPageDelivery').classList.remove('hidden');
             }
             window.scrollTo({top:0,behavior:'smooth'});
@@ -1787,17 +1779,14 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 (function () {
   const splash = document.getElementById('brandSplash');
   if (!splash) return;
-  let played = false;
-  try { played = sessionStorage.getItem('stillJiStorySeen') === '1'; } catch(e) {}
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (played || reduced) return;
+  if (reduced) return;
   splash.hidden = false;
   document.body.classList.add('story-open');
 })();
 function closeBrandStory() {
   const splash = document.getElementById('brandSplash');
   if (!splash || splash.hidden) return;
-  try { sessionStorage.setItem('stillJiStorySeen','1'); } catch(e) {}
   splash.classList.add('story-closing');
   document.body.classList.remove('story-open');
   window.setTimeout(function () { splash.hidden = true; }, 450);
