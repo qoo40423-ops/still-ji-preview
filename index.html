@@ -1752,6 +1752,27 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             link.textContent = ' 前往訂單查詢';
             link.style.cssText='display:inline-block;margin-left:8px;text-decoration:underline;color:#901820';
             notice.appendChild(link);
+            // The lookup may fail due to network/CORS. Never clear automatically.
+            const reset = document.createElement('button');
+            reset.type = 'button';
+            reset.textContent = '已人工核對未成立：解除這筆卡住的訂單';
+            reset.style.cssText = 'display:block;margin-top:12px;padding:10px 12px;border-radius:8px;background:#901820;color:white;border:0;cursor:pointer;font-size:14px';
+            reset.onclick = () => {
+                const current = readPendingTestOrder();
+                if (!current || current.orderId !== order.orderId) {
+                    alert('待確認訂單已變更，請重新整理頁面。');
+                    return;
+                }
+                if (!confirm('請確認已用訂單編號 ' + order.orderId + ' 查過正式訂單資料，並確認沒有成立。\n\n注意：查詢失敗不代表訂單不存在；若不確定，請先向客服核對。\n\n確定解除本機送單鎖定？此操作不會刪除或重送任何後端訂單。')) return;
+                clearPendingTestOrder();
+                pendingOrderData = null;
+                testSubmitStarted = false;
+                const submitBtn = document.getElementById('submitBtn');
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = '確認送出預訂'; }
+                notice.remove();
+                alert('已解除這筆訂單的本機鎖定。請重新填寫並送出新訂單，勿重複送出已成立的訂單。');
+            };
+            notice.appendChild(reset);
         }
         window.addEventListener('DOMContentLoaded', function(){
             if(readPendingTestOrder()) sjRecoverPendingOrder();
