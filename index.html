@@ -1,3 +1,4 @@
+<!-- STILL JI V3: pending order confirmation recovery, no auto resubmission -->
 <!-- STILL JI NAV VERIFIED 2026-11-04 V2: top navigation only; no three lower shortcuts -->
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -1720,6 +1721,42 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             window.scrollTo({top:0,behavior:'smooth'});
         }
 
+        // Pending-order recovery: verify exact order ID + phone before presenting success.
+        // Never resend the saved order automatically.
+        async function sjRecoverPendingOrder() {
+            const order = readPendingTestOrder();
+            if (!order || !order.orderId || !order.phone) return;
+            const notice = document.createElement('div');
+            notice.id = 'sjPendingRecovery';
+            notice.setAttribute('role','status');
+            notice.style.cssText = 'position:fixed;bottom:12px;left:12px;right:12px;max-width:540px;margin:auto;padding:14px;background:#fffaf2;border:1px solid #b79a68;color:#49352b;border-radius:12px;z-index:10002;box-shadow:0 8px 24px #49352b25;font-size:14px;line-height:1.7';
+            notice.textContent = '正在查詢上次訂單狀態，請稍候…';
+            document.body.appendChild(notice);
+            let found = null;
+            try { found = await verifyTestOrder(order.orderId,order.phone); } catch(e) { console.warn('待確認訂單查詢失敗',e); }
+            if (found === true) {
+                testConfirmed = true;
+                document.getElementById('brandSplash').hidden = true;
+                document.body.classList.remove('story-open');
+                document.getElementById('landingPage').classList.add('hidden');
+                document.getElementById('orderChoicePage').classList.add('hidden');
+                document.getElementById('shippingRulesPage').classList.add('hidden');
+                document.getElementById('orderFormPage').classList.remove('hidden');
+                showConfirmedTestOrder(order);
+                notice.textContent = '已找回成立的訂單：' + order.orderId + '。請勿再次送出同一筆訂單。若要另訂，請點下方「新增一筆訂單」。';
+                return;
+            }
+            notice.textContent = '上次訂單 ' + order.orderId + ' 尚未能線上確認。為避免重複訂單，暫時保留送單保護。';
+            const link = document.createElement('a');
+            link.href = 'lookup.html';
+            link.textContent = ' 前往訂單查詢';
+            link.style.cssText='display:inline-block;margin-left:8px;text-decoration:underline;color:#901820';
+            notice.appendChild(link);
+        }
+        window.addEventListener('DOMContentLoaded', function(){
+            if(readPendingTestOrder()) sjRecoverPendingOrder();
+        });
+
         // V8.5.3: LINE 登入需在填單前啟動；登入跳轉時保存表單與頁面狀態。
         const SJ_LIFF_ID = '2012374320-dGpmrMNX';
         const SJ_DRAFT_KEY = 'stillji_liff_auth_draft_v853';
@@ -1743,16 +1780,16 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             }));
             const page = !document.getElementById('orderFormPage').classList.contains('hidden') ? 'form' :
                          !document.getElementById('orderChoicePage').classList.contains('hidden') ? 'choices' : 'home';
-            try { sessionStorage.setItem(SJ_DRAFT_KEY,JSON.stringify({savedAt:Date.now(),page,mode:document.getElementById('orderMode').value,fields})); }
+            try { localStorage.setItem(SJ_DRAFT_KEY,JSON.stringify({savedAt:Date.now(),page,mode:document.getElementById('orderMode').value,fields})); }
             catch(e) { console.warn('暫存授權前表單失敗',e); }
         }
         function sjRestoreAuthDraft() {
             let raw;
-            try { raw=sessionStorage.getItem(SJ_DRAFT_KEY); } catch(e) { return false; }
+            try { raw=localStorage.getItem(SJ_DRAFT_KEY); } catch(e) { return false; }
             if (!raw) return false;
             let draft;
             try { draft=JSON.parse(raw); } catch(e) { return false; }
-            if (!draft || Date.now()-draft.savedAt>30*60*1000) { try{sessionStorage.removeItem(SJ_DRAFT_KEY)}catch(e){};return false; }
+            if (!draft || Date.now()-draft.savedAt>30*60*1000) { try{localStorage.removeItem(SJ_DRAFT_KEY)}catch(e){};return false; }
             if (draft.page==='form') openOrderForm(draft.mode==='delivery'?'delivery':'pickup');
             else if (draft.page==='choices') showOrderChoices();
             if (draft.page==='form' && Array.isArray(draft.fields)) {
@@ -1764,7 +1801,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 });
                 if(typeof calculateCart==='function')calculateCart();
             }
-            try{sessionStorage.removeItem(SJ_DRAFT_KEY)}catch(e){}
+            try{localStorage.removeItem(SJ_DRAFT_KEY)}catch(e){}
             return draft.page!=='home';
         }
         async function sjInitLiff() {
@@ -1782,6 +1819,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             const returnUrl = new URL(window.location.href);
             returnUrl.searchParams.delete('liff.state');
             returnUrl.searchParams.delete('access_token');
+            returnUrl.searchParams.set('view','order');
             returnUrl.hash = '';
             liff.login({redirectUri:returnUrl.toString()});
             return false;
