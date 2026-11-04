@@ -1151,33 +1151,12 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 return item && item.order && /^ORD[A-Za-z0-9_-]{5,40}$/.test(item.order.orderId) ? item.order : null;
             } catch (e) { return null; }
         }
-        async function checkPreviousTestOrder() {
-            const previous = readPendingTestOrder();
-            if (!previous) return;
-            // The stored record is a local convenience, not proof of server acceptance.
-            const found = await verifyTestOrder(previous.orderId, previous.phone);
-            if (found === true) {
-                testSubmitStarted = true;
-                testConfirmed = true;
-                pendingOrderData = previous;
-                openOrderForm(previous.mode === '現場自取' ? 'pickup' : 'delivery');
-                showConfirmedTestOrder(previous);
-                alert('已找到上次送出的 TEST 訂單，無需重複下單。');
-            } else {
-                testSubmitStarted = true;
-                const btn = document.getElementById('submitBtn');
-                btn.disabled = true;
-                btn.innerText = '前筆訂單待核對，暫停送單';
-                alert('偵測到前次尚未確認的 TEST 訂單：' + previous.orderId +
-                    '\n請先到 TEST 試算表或訂單查詢確認。\n為避免重複訂單，已暫停此瀏覽器送單。');
-            }
-        }
-
-
         // 初始化：根據當前時間與模式設定最小出貨/取貨日
         window.addEventListener('DOMContentLoaded', () => {
             updateMinDateAndValue();
-            checkPreviousTestOrder();
+            // 清除舊版 TEST 暫存；不再於開頁時跳出歷史訂單警告。
+            // 當前頁面送單仍會暫存訂單，防止同頁重複提交。
+            clearPendingTestOrder();
         });
 
         function updateMinDateAndValue() {
