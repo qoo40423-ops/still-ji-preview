@@ -68,7 +68,65 @@ table{width:100%;border-collapse:collapse;font-size:.83rem;margin:12px 0}th,td{p
 .product-order-button{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;margin-top:18px;padding:14px 20px;border-radius:999px;background:var(--wine);color:#fff!important;font-size:.93rem;font-weight:700;letter-spacing:.12em;text-decoration:none;transition:background .2s,transform .2s}
 .product-order-button:hover{background:#6d1119;transform:translateY(-1px)}
 .product-order-button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-</style></head>
+</style><style>
+
+/* STILL JI V4 — consistent typography and promotional banner hierarchy */
+:root{--sj-font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;}
+html,body,button,input,select,textarea{font-family:var(--sj-font)!important;}
+body h1,body h2,body h3,body h4,body h5,body h6,
+body p,body a,body span,body strong,body label,body small,
+.sj-nav-brand,.sj-nav-links,.sj-home-promo,.brand-product-title{
+  font-family:var(--sj-font)!important;
+}
+.sj-top-nav{font-family:var(--sj-font)!important;}
+.sj-nav-brand{font-size:clamp(1.02rem,1.5vw,1.25rem)!important;font-weight:700!important;letter-spacing:.045em!important;}
+.sj-nav-links a,.sj-nav-links button{font-size:.9rem!important;font-weight:600!important;letter-spacing:.015em!important;}
+.sj-home-promo{background:#fffdf9!important;border-color:#e7dcd0!important;box-shadow:0 5px 18px rgba(73,53,43,.04)!important;padding:clamp(22px,3vw,32px)!important;}
+.sj-home-promo .sj-promo-content{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;width:100%!important;text-align:center!important;}
+.sj-home-promo .sj-promo-eyebrow{font-size:clamp(.73rem,1.2vw,.81rem)!important;letter-spacing:.1em!important;font-weight:700!important;text-align:center!important;}
+.sj-home-promo h2{font-size:clamp(1.35rem,2.5vw,1.75rem)!important;line-height:1.45!important;font-weight:800!important;letter-spacing:.035em!important;text-align:center!important;margin:0!important;}
+.sj-home-promo p{font-size:clamp(.92rem,1.45vw,1.03rem)!important;line-height:1.7!important;text-align:center!important;margin:0!important;}
+.sj-home-promo .sj-promo-small{font-size:clamp(.8rem,1.15vw,.88rem)!important;line-height:1.8!important;max-width:37rem!important;text-align:center!important;}
+.sj-home-promo .sj-promo-order{font-family:var(--sj-font)!important;font-size:.95rem!important;font-weight:700!important;line-height:1.5!important;margin:10px auto 0!important;padding:11px 22px!important;}
+@media(max-width:650px){
+ .sj-nav-links a,.sj-nav-links button{font-size:.83rem!important;}
+ .sj-home-promo{padding:22px 16px!important;}
+ .sj-home-promo h2{font-size:1.35rem!important;}
+ .sj-home-promo p{font-size:.92rem!important;}
+ .sj-home-promo .sj-promo-small{font-size:.81rem!important;}
+}
+
+</style>
+<style id="sj-v5-serif-header">
+/* V5: consistent warm serif, left-anchored navigation and compact page headers */
+:root{--sj-font:"Noto Serif TC","Songti TC","PMingLiU",serif;}
+html,body,button,input,select,textarea{font-family:var(--sj-font)!important;}
+body h1,body h2,body h3,body h4,body h5,body h6,body p,body a,body span,body strong,body label,body small{font-family:var(--sj-font)!important;}
+.sj-top-nav-inner{max-width:none!important;margin:0!important;padding-left:clamp(12px,2vw,30px)!important;justify-content:flex-start!important;}
+.sj-nav-brand,.sj-nav-links,.sj-nav-links a,.sj-nav-links button{font-family:var(--sj-font)!important;}
+.sj-nav-links{margin-left:0!important;justify-content:flex-start!important;flex:0 1 auto!important;}
+.sj-nav-brand{margin-left:0!important;}
+@media(max-width:700px){.sj-top-nav-inner{padding-left:12px!important;}.sj-nav-brand{margin-left:0!important;}.sj-nav-links{justify-content:flex-start!important;}}
+
+header{padding:7px 0!important;min-height:65px;display:flex;align-items:center;}
+header .container{width:auto!important;max-width:none!important;margin:0!important;padding-left:clamp(12px,2vw,30px)!important;padding-right:16px!important;flex:1;}
+.header-row{justify-content:flex-start!important;flex-wrap:nowrap!important;gap:clamp(16px,2vw,30px)!important;}
+.brand{font-size:clamp(1.02rem,1.5vw,1.25rem)!important;letter-spacing:.045em!important;}
+.brand img{width:38px!important;height:38px!important;}
+.top-links{margin-left:0!important;gap:12px!important;font-size:.9rem!important;}
+.top-links .order{padding:9px 13px!important;}
+@media(max-width:700px){.header-row{flex-wrap:wrap!important;gap:4px 12px!important;}.top-links{width:100%!important;justify-content:flex-start!important;}}
+</style><style id="sj-v6-balanced-readable">
+/* V6: readable interface typography; serif display headings; balanced header */
+:root{--sj-font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--sj-heading:"Noto Serif TC","Songti TC","PMingLiU",serif;}
+html,body,button,input,select,textarea,body p,body a,body span,body strong,body label,body small{font-family:var(--sj-font)!important;}
+body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family:var(--sj-heading)!important;font-weight:700!important;}
+.sj-top-nav-inner{max-width:none!important;margin:0!important;padding:8px clamp(14px,2.2vw,36px)!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;}
+.sj-nav-brand{margin:0!important;order:0!important;font-family:var(--sj-font)!important;font-weight:800!important;flex-shrink:0!important;}
+.sj-nav-links{margin-left:auto!important;flex:0 1 auto!important;order:1!important;justify-content:flex-end!important;gap:5px!important;}
+.sj-nav-links a,.sj-nav-links button{font-family:var(--sj-font)!important;font-weight:700!important;font-size:.91rem!important;}
+@media(max-width:700px){.sj-top-nav-inner{flex-wrap:wrap!important;gap:5px!important;padding:8px 12px!important;}.sj-nav-links{flex-basis:100%!important;width:100%!important;justify-content:flex-end!important;overflow-x:auto!important;}.sj-nav-links a,.sj-nav-links button{font-size:.83rem!important;padding:8px 9px!important;}}
+header .container{width:100%!important;max-width:none!important;margin:0!important;padding:0 clamp(14px,2.2vw,36px)!important;}.header-row{display:flex!important;justify-content:space-between!important;align-items:center!important;gap:18px!important;}.brand{font-family:var(--sj-font)!important;font-weight:800!important;}.top-links{margin-left:auto!important;justify-content:flex-end!important;font-family:var(--sj-font)!important;font-weight:700!important;}@media(max-width:700px){.header-row{flex-wrap:wrap!important;}.top-links{width:100%!important;justify-content:flex-end!important;}}</style></head>
 <body>
 <header><div class="container header-row">
 <a class="brand" href="index.html"><span>紀家烘焙坊</span><img src="images/stillji-logo-transparent.png" alt="Still Ji Logo"></a>
@@ -104,7 +162,7 @@ table{width:100%;border-collapse:collapse;font-size:.83rem;margin:12px 0}th,td{p
         <div class="allergen-note"><strong>過敏原提醒</strong><p>本產品含有小麥麵粉、蛋、牛奶製品、大豆製品、芝麻，不適合對其過敏體質者食用。</p></div>
       </div>
     </details>
-    <a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
+<a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
   </div>
 </section>
 <section class="product" id="p2">
@@ -129,7 +187,7 @@ table{width:100%;border-collapse:collapse;font-size:.83rem;margin:12px 0}th,td{p
         <div class="allergen-note"><strong>過敏原提醒</strong><p>本產品含有小麥麵粉、蛋、牛奶製品，不適合對其過敏體質者食用。</p></div>
       </div>
     </details>
-    <a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
+<a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
   </div>
 </section>
 <section class="product" id="p3">
@@ -154,7 +212,7 @@ table{width:100%;border-collapse:collapse;font-size:.83rem;margin:12px 0}th,td{p
         <div class="allergen-note"><strong>過敏原提醒</strong><p>本產品含有麩質穀類製品、牛奶製品，不適合對其過敏體質者食用。</p></div>
       </div>
     </details>
-    <a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
+<a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
   </div>
 </section>
 <section class="product" id="p4">
@@ -179,7 +237,7 @@ table{width:100%;border-collapse:collapse;font-size:.83rem;margin:12px 0}th,td{p
         <div class="allergen-note"><strong>過敏原提醒</strong><p>本產品含有麩質穀類製品、牛奶製品，不適合對其過敏體質者食用。</p></div>
       </div>
     </details>
-    <a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
+<a class="product-order-button" href="index.html?view=order" aria-label="前往訂購">點我訂購 <span aria-hidden="true">→</span></a>
   </div>
 </section>
 </main>

@@ -1,3 +1,4 @@
+<!-- STILL JI NAV VERIFIED 2026-11-04 V2: top navigation only; no three lower shortcuts -->
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -7,7 +8,25 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
         *, *::before, *::after { box-sizing: border-box; }
-    </style>
+    
+/* STILL JI | Shipping rules page */
+.sj-shipping-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--bakery-line);padding-bottom:14px;margin-bottom:18px}
+.sj-shipping-heading #formTitle{border:0!important;padding:0!important;margin:0!important}
+.sj-shipping-link{border:1px solid #d7c5a8;background:#fffaf2;color:#6c5035;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.sj-shipping-link:hover,.sj-shipping-link:focus-visible{background:#f1e8da;outline-offset:3px}
+.sj-rules-page{max-width:800px;margin:0 auto;padding:12px 0 35px;color:#49352b}
+.sj-rules-kicker{font-size:11px;letter-spacing:.2em;color:#9a7d57;font-weight:700}
+.sj-rules-title{font-family:"Noto Serif TC","Songti TC",serif;font-size:clamp(23px,5vw,32px);margin:8px 0 12px}
+.sj-rules-lead{color:#70584a;line-height:1.85;margin-bottom:22px}
+.sj-rules-card{background:#fffdf9;border:1px solid #e9dfd1;border-radius:18px;padding:clamp(18px,4vw,26px);margin:14px 0;box-shadow:0 8px 25px rgba(73,53,43,.04)}
+.sj-rules-card h3{font-size:17px;margin:0 0 12px;font-weight:750}
+.sj-rules-card p,.sj-rules-card li{line-height:1.9;font-size:14px;color:#665143}
+.sj-rules-card ul{padding-left:20px;list-style:disc}
+.sj-rules-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+.sj-rules-table th,.sj-rules-table td{padding:11px 8px;text-align:left;border-bottom:1px solid #eee4d7;vertical-align:top}
+.sj-rules-table th{color:#72563f;font-weight:700}
+.sj-rules-note{font-size:13px;color:#816d5a;line-height:1.8}
+</style>
 
 <style id="premium-brand-refresh">
 :root {
@@ -398,8 +417,134 @@ body.story-open { overflow:hidden; }
  #landingPage .home-reveal-ready {opacity:1 !important;transform:none !important;transition:none !important;}
 }
 </style>
-</head>
+
+<style>
+.sj-rules-accordion{overflow:hidden}
+.sj-rules-accordion>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:700;font-size:1.05rem;padding:19px 22px;color:#5c3b2a}
+.sj-rules-accordion>summary::-webkit-details-marker{display:none}
+.sj-rules-accordion>summary:focus-visible{outline:3px solid #a17b50;outline-offset:-3px}
+.sj-rules-accordion .sj-rule-plus{font-size:1.4rem;line-height:1}
+.sj-rules-accordion[open] .sj-rule-plus{transform:rotate(45deg)}
+.sj-rules-accordion .sj-rule-body{padding:0 22px 20px}
+</style>
+<style id="sj-sticky-nav-and-promo">
+body{padding-top:5.5rem!important}
+.sj-top-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:#fffaf3;border-bottom:1px solid #e9dfd1;box-shadow:0 3px 14px rgba(73,53,43,.08)}
+.sj-top-nav-inner{max-width:1100px;margin:auto;min-height:65px;display:flex;align-items:center;gap:22px;padding:9px 18px}
+.sj-nav-logo{font:700 1.1rem Georgia,serif;letter-spacing:.12em;color:#49352b;text-decoration:none;white-space:nowrap}
+.sj-nav-links{display:flex;align-items:center;gap:6px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.sj-nav-links::-webkit-scrollbar{display:none}
+.sj-nav-links a,.sj-nav-links button{font:600 .85rem/1.4 'Noto Sans TC',sans-serif;white-space:nowrap;border:0;border-radius:999px;padding:10px 13px;background:transparent;color:#49352b;text-decoration:none;cursor:pointer}
+.sj-nav-links a:hover,.sj-nav-links button:hover,.sj-nav-links a:focus-visible,.sj-nav-links button:focus-visible{background:#f1e6d6;outline-offset:2px}
+.sj-nav-links .sj-nav-primary{background:#901820;color:#fff!important}
+.sj-nav-links .sj-nav-primary:hover{background:#74131a}
+.sj-home-promo{max-width:42rem;margin:0 auto 1.5rem;border:1px solid #cba778;border-radius:18px;background:linear-gradient(110deg,#fff9ec,#f7e7d2);padding:22px;display:flex;gap:16px;align-items:center;box-shadow:0 8px 28px rgba(113,73,29,.08)}
+.sj-home-promo[hidden],#homeAwardsCard[hidden]{display:none!important}
+.sj-promo-icon{font-size:3rem}
+.sj-promo-content{flex:1;min-width:0}
+.sj-promo-eyebrow{font-size:.7rem;letter-spacing:.12em;color:#92662c;font-weight:700}
+.sj-home-promo h2{font-size:1.25rem;font-weight:800;margin:.25rem 0 .6rem}
+.sj-home-promo p{line-height:1.75;font-size:.88rem;margin:.25rem 0}
+.sj-home-promo .sj-promo-small{font-size:.77rem;color:#806b54}
+.sj-promo-order{margin-top:10px;background:#901820;color:#fff;border:0;border-radius:999px;padding:10px 18px;font-weight:700;cursor:pointer}
+@media(max-width:650px){body{padding-top:7.3rem!important}.sj-top-nav-inner{display:block;min-height:0;padding:10px 12px 7px}.sj-nav-logo{display:block;text-align:center;margin-bottom:6px}.sj-nav-links{justify-content:flex-start;gap:3px}.sj-nav-links a,.sj-nav-links button{padding:8px 10px;font-size:.78rem}.sj-home-promo{padding:17px;align-items:flex-start}.sj-promo-icon{font-size:2rem}}
+
+/* 2026-11-04 brand alignment refinement */
+.sj-top-nav-inner{max-width:1280px;justify-content:space-between;gap:14px}
+.sj-nav-links{margin-left:0;flex:1;justify-content:center;min-width:0}
+.sj-nav-brand{display:flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none;color:#901820;font-family:serif;font-size:clamp(1rem,1.8vw,1.4rem);font-weight:800;letter-spacing:.09em;flex-shrink:0}
+.sj-nav-brand img{width:43px;height:43px;object-fit:contain;mix-blend-mode:multiply}
+#siteHeader{display:none!important}
+.sj-home-promo{justify-content:center;text-align:center}
+.sj-home-promo .sj-promo-content{flex:0 1 100%;text-align:center}
+@media(max-width:700px){.sj-top-nav-inner{flex-wrap:wrap;gap:3px 8px;padding:5px 10px}.sj-nav-brand{order:-1;margin-left:auto;font-size:1rem}.sj-nav-brand img{width:31px;height:31px}.sj-nav-links{order:2;flex-basis:100%;justify-content:flex-start}.sj-nav-links a,.sj-nav-links button{padding:7px 9px;font-size:.76rem}}
+</style>
+
+<style id="sj-left-nav-and-promo-v3">
+/* Brand and all navigation actions start from the left. */
+.sj-top-nav-inner{max-width:1280px;justify-content:flex-start;gap:clamp(12px,2vw,30px)}
+.sj-nav-brand{margin:0;order:0;flex-shrink:0;font-size:clamp(.98rem,1.6vw,1.28rem)}
+.sj-nav-brand img{width:38px;height:38px}
+.sj-nav-links{margin:0;flex:0 1 auto;justify-content:flex-start;gap:2px;order:1}
+.sj-nav-links a,.sj-nav-links button{padding:9px 11px}
+/* A quiet, balanced campaign card matching the site's warm off-white palette. */
+.sj-home-promo{max-width:42rem;width:100%;box-sizing:border-box;margin:0 auto 1.5rem;padding:26px 24px;border:1px solid #e4d8c8;border-radius:16px;background:#fffdf9;box-shadow:0 5px 18px rgba(73,53,43,.045);display:block;text-align:center;color:#49352b}
+.sj-home-promo .sj-promo-content{width:100%;max-width:100%;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.sj-home-promo .sj-promo-eyebrow{display:block;text-align:center;color:#997c5b;font-size:.7rem;letter-spacing:.16em}
+.sj-home-promo h2{margin:0;text-align:center;font-size:clamp(1.1rem,2.5vw,1.35rem);line-height:1.55;color:#49352b}
+.sj-home-promo p{width:100%;margin:0;text-align:center;line-height:1.8;font-size:.87rem}
+.sj-home-promo .sj-promo-small{max-width:36rem;margin:0 auto;color:#857568;font-size:.77rem}
+.sj-home-promo .sj-promo-order{display:block;margin:7px auto 0;padding:10px 20px}
+@media(max-width:700px){
+ .sj-top-nav-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:4px 8px;padding:7px 10px}
+ .sj-nav-brand{order:0;margin:0;font-size:1rem}
+ .sj-nav-brand img{width:30px;height:30px}
+ .sj-nav-links{order:1;flex-basis:100%;width:100%;justify-content:flex-start;overflow-x:auto}
+ .sj-nav-links a,.sj-nav-links button{padding:7px 9px;font-size:.76rem}
+ .sj-home-promo{padding:20px 14px}
+}
+</style>
+<style>
+
+/* STILL JI V4 — consistent typography and promotional banner hierarchy */
+:root{--sj-font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;}
+html,body,button,input,select,textarea{font-family:var(--sj-font)!important;}
+body h1,body h2,body h3,body h4,body h5,body h6,
+body p,body a,body span,body strong,body label,body small,
+.sj-nav-brand,.sj-nav-links,.sj-home-promo,.brand-product-title{
+  font-family:var(--sj-font)!important;
+}
+.sj-top-nav{font-family:var(--sj-font)!important;}
+.sj-nav-brand{font-size:clamp(1.02rem,1.5vw,1.25rem)!important;font-weight:700!important;letter-spacing:.045em!important;}
+.sj-nav-links a,.sj-nav-links button{font-size:.9rem!important;font-weight:600!important;letter-spacing:.015em!important;}
+.sj-home-promo{background:#fffdf9!important;border-color:#e7dcd0!important;box-shadow:0 5px 18px rgba(73,53,43,.04)!important;padding:clamp(22px,3vw,32px)!important;}
+.sj-home-promo .sj-promo-content{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;width:100%!important;text-align:center!important;}
+.sj-home-promo .sj-promo-eyebrow{font-size:clamp(.73rem,1.2vw,.81rem)!important;letter-spacing:.1em!important;font-weight:700!important;text-align:center!important;}
+.sj-home-promo h2{font-size:clamp(1.35rem,2.5vw,1.75rem)!important;line-height:1.45!important;font-weight:800!important;letter-spacing:.035em!important;text-align:center!important;margin:0!important;}
+.sj-home-promo p{font-size:clamp(.92rem,1.45vw,1.03rem)!important;line-height:1.7!important;text-align:center!important;margin:0!important;}
+.sj-home-promo .sj-promo-small{font-size:clamp(.8rem,1.15vw,.88rem)!important;line-height:1.8!important;max-width:37rem!important;text-align:center!important;}
+.sj-home-promo .sj-promo-order{font-family:var(--sj-font)!important;font-size:.95rem!important;font-weight:700!important;line-height:1.5!important;margin:10px auto 0!important;padding:11px 22px!important;}
+@media(max-width:650px){
+ .sj-nav-links a,.sj-nav-links button{font-size:.83rem!important;}
+ .sj-home-promo{padding:22px 16px!important;}
+ .sj-home-promo h2{font-size:1.35rem!important;}
+ .sj-home-promo p{font-size:.92rem!important;}
+ .sj-home-promo .sj-promo-small{font-size:.81rem!important;}
+}
+
+</style>
+<style id="sj-v5-serif-left">
+/* V5: consistent warm serif, left-anchored navigation and compact page headers */
+:root{--sj-font:"Noto Serif TC","Songti TC","PMingLiU",serif;}
+html,body,button,input,select,textarea{font-family:var(--sj-font)!important;}
+body h1,body h2,body h3,body h4,body h5,body h6,body p,body a,body span,body strong,body label,body small{font-family:var(--sj-font)!important;}
+.sj-top-nav-inner{max-width:none!important;margin:0!important;padding-left:clamp(12px,2vw,30px)!important;justify-content:flex-start!important;}
+.sj-nav-brand,.sj-nav-links,.sj-nav-links a,.sj-nav-links button{font-family:var(--sj-font)!important;}
+.sj-nav-links{margin-left:0!important;justify-content:flex-start!important;flex:0 1 auto!important;}
+.sj-nav-brand{margin-left:0!important;}
+@media(max-width:700px){.sj-top-nav-inner{padding-left:12px!important;}.sj-nav-brand{margin-left:0!important;}.sj-nav-links{justify-content:flex-start!important;}}
+</style><style id="sj-v6-balanced-readable">
+/* V6: readable interface typography; serif display headings; balanced header */
+:root{--sj-font:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--sj-heading:"Noto Serif TC","Songti TC","PMingLiU",serif;}
+html,body,button,input,select,textarea,body p,body a,body span,body strong,body label,body small{font-family:var(--sj-font)!important;}
+body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family:var(--sj-heading)!important;font-weight:700!important;}
+.sj-top-nav-inner{max-width:none!important;margin:0!important;padding:8px clamp(14px,2.2vw,36px)!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;}
+.sj-nav-brand{margin:0!important;order:0!important;font-family:var(--sj-font)!important;font-weight:800!important;flex-shrink:0!important;}
+.sj-nav-links{margin-left:auto!important;flex:0 1 auto!important;order:1!important;justify-content:flex-end!important;gap:5px!important;}
+.sj-nav-links a,.sj-nav-links button{font-family:var(--sj-font)!important;font-weight:700!important;font-size:.91rem!important;}
+@media(max-width:700px){.sj-top-nav-inner{flex-wrap:wrap!important;gap:5px!important;padding:8px 12px!important;}.sj-nav-links{flex-basis:100%!important;width:100%!important;justify-content:flex-end!important;overflow-x:auto!important;}.sj-nav-links a,.sj-nav-links button{font-size:.83rem!important;padding:8px 9px!important;}}
+</style></head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen py-10 px-4">
+<nav class="sj-top-nav" aria-label="網站主要導覽"><div class="sj-top-nav-inner">
+<a class="sj-nav-brand" href="index.html" aria-label="紀家烘焙坊 回首頁"><span>紀家烘焙坊</span><img src="images/stillji-logo-transparent.png" alt="Still Ji 標誌"></a>
+
+<div class="sj-nav-links">
+<button type="button" onclick="showLandingPage()">首頁</button>
+<a href="products.html">產品介紹</a>
+<button type="button" class="sj-nav-primary" onclick="showOrderChoices()">點我訂購</button>
+<a href="lookup.html">訂單查詢</a>
+<a href="https://www.t-cat.com.tw/inquire/trace.aspx" target="_blank" rel="noopener noreferrer">黑貓貨況查詢</a>
+</div></div></nav>
 
 
     <section id="brandSplash" class="brand-splash story-opening" aria-label="紀家烘焙坊品牌故事" hidden>
@@ -440,7 +585,7 @@ body.story-open { overflow:hidden; }
     <div class="max-w-2xl mx-auto space-y-8">
         
         <!-- 品牌頁首 -->
-        <header class="text-center space-y-2" id="siteHeader">
+        <header class="text-center space-y-2" id="siteHeader" hidden>
             <div class="site-brand-row">
               <div><div class="brand-wordmark">紀家烘焙坊</div></div>
               <img class="site-official-logo" src="images/stillji-logo-transparent.png" alt="Still Ji 官方標誌">
@@ -452,9 +597,19 @@ body.story-open { overflow:hidden; }
             <div class="brand-intro">
                 
                 
-                <div class="brand-awards">
+                <div class="brand-awards" id="homeAwardsCard">
                     <img src="images/six-awards-real.jpg" alt="紀家烘焙坊六屆獲獎獎盃實拍" loading="lazy">
                     <p><strong>六屆肯定，持續用心</strong>每一份支持，都是我們繼續堅持手作的動力。</p>
+                </div>
+                <div class="sj-home-promo" id="homeDouble11Card" hidden>
+                  
+                  <div class="sj-promo-content">
+                    <span class="sj-promo-eyebrow">2026 DOUBLE 11 · 宅配限定</span>
+                    <h2>雙 11 蛋黃酥限時優惠</h2>
+                    <p>6 入蛋黃酥｜4 盒組 <strong>NT$1,250</strong>　·　15 盒組 <strong>NT$4,200</strong></p>
+                    <p class="sj-promo-small">活動須於 11/11（含）完成訂購及匯款；優惠金額須經店家確認，請勿自行轉帳。</p>
+                    <button type="button" class="sj-promo-order" onclick="showOrderChoices()">查看優惠並前往訂購 →</button>
+                  </div>
                 </div>
                 <h2 class="brand-product-title">把心意，裝進每一盒好滋味</h2>
                 <p>為日常留一份甜，也替重要的人準備一份心意。</p>
@@ -484,10 +639,6 @@ body.story-open { overflow:hidden; }
             </div>
             <div style="text-align:center;margin:1.4rem 0 0;">
                 <a class="site-products-link" href="products.html">認識我們的糕點　→</a>
-            </div>
-            <div class="brand-cta-wrap">
-                <button type="button" class="brand-cta" onclick="showOrderChoices()">點我訂購</button>
-<a href="lookup.html" class="brand-cta" style="display:inline-block;text-decoration:none;margin-top:12px;background:#fffdf9;color:#49352b;border:1px solid #b79a68">🔍 訂單查詢</a>
             </div>
             <footer class="brand-contact" aria-label="門市地址與官方社群">
                 <div class="brand-contact-title">紀家烘焙坊 · STILL JI</div>
@@ -526,7 +677,59 @@ body.story-open { overflow:hidden; }
             </div>
         </section>
 
+        <!-- 獨立宅配運費與配送規則頁；返回時不重置表單 -->
+        <section id="shippingRulesPage" class="hidden sj-rules-page" aria-label="宅配運費與配送規則">
+          <button type="button" class="back-link" onclick="returnFromShippingRules()">← 返回宅配訂購</button>
+          <div class="sj-rules-kicker">STILL JI · DELIVERY GUIDE</div>
+          <h2 class="sj-rules-title">宅配運費與配送規則</h2>
+          <p class="sj-rules-lead">訂購前的小提醒，讓您更輕鬆安排送禮與收件。目前運費以店家人工核定為準；頁面預估僅供參考。</p>
+          <details class="sj-rules-card sj-rules-accordion">
+            <summary>01｜蛋黃酥宅配運費 <span aria-hidden="true" class="sj-rule-plus">＋</span></summary><div class="sj-rule-body">
+            <table class="sj-rules-table" aria-label="蛋黃酥6入優惠組合運費"><thead><tr><th>6 入禮盒優惠組合</th><th>運費說明</th></tr></thead><tbody>
+              <tr><td>6 入 × 4 盒（24 顆）<br><strong class="sj-promo-price" data-normal="組合價 NT$1,350" data-promo="雙 11 活動價 NT$1,250">組合價 NT$1,350</strong></td><td>已含運費</td></tr>
+              <tr><td>6 入 × 10 盒（60 顆）<br><strong>商品價 NT$3,000</strong></td><td><strong>免運費</strong></td></tr>
+              <tr><td>6 入 × 15 盒（90 顆）<br><strong class="sj-promo-price" data-normal="商品價 NT$4,500（一般宅配原價含運 NT$4,670）" data-promo="雙 11 活動價 NT$4,200（含運）">商品價 NT$4,500</strong></td><td><strong>免運費</strong></td></tr>
+            </tbody></table>
+            <p class="sj-rules-note">6 入優惠組合與其他規格併購時，運費與裝箱方式可能需要人工核對；請以結帳顯示及門市確認為準。</p>
+            <table class="sj-rules-table" aria-label="蛋黃酥12入15入運費"><thead><tr><th>12 入／15 入禮盒</th><th>宅配運費</th></tr></thead><tbody>
+              <tr><td>合計 1～2 盒</td><td><strong>NT$170</strong></td></tr>
+              <tr><td>合計 3 盒以上，未達免運條件</td><td><strong>NT$210</strong></td></tr>
+              <tr><td>12 入滿 7 盒，或 15 入滿 5 盒</td><td><strong>免運費</strong></td></tr>
+            </tbody></table>
+            <p class="sj-rules-note">12 入與 15 入可混裝，但免運門檻依各規格分別判定。未達免運時，宜蘭、花蓮、台東每件另加 NT$10；符合免運條件則免除此加價。蛋黃酥與一般糕點運費分開計算。</p>
+          </div></details>
+          <details class="sj-rules-card sj-rules-accordion">
+            <summary>02｜老婆餅、太陽餅與土鳳梨酥運費 <span aria-hidden="true" class="sj-rule-plus">＋</span></summary><div class="sj-rule-body">
+            <p class="sj-rules-note">以下以每筆一般糕點訂單的總盒數計算；老婆餅與太陽餅可合併計盒。</p>
+            <table class="sj-rules-table" aria-label="一般糕點宅配運費"><thead><tr><th>訂購內容</th><th>宅配運費</th></tr></thead><tbody>
+              <tr><td>僅老婆餅／太陽餅，合計 1 盒</td><td><strong>NT$170</strong></td></tr>
+              <tr><td>僅老婆餅／太陽餅，合計 2～8 盒</td><td><strong>NT$210</strong></td></tr>
+              <tr><td>僅老婆餅／太陽餅，超過 8 盒</td><td>每件最多 8 盒；依件數及剩餘盒數累計運費</td></tr>
+              <tr><td>僅土鳳梨酥，合計 1～2 盒</td><td><strong>NT$170</strong></td></tr>
+              <tr><td>僅土鳳梨酥，合計 3～10 盒</td><td><strong>NT$210</strong></td></tr>
+              <tr><td>僅土鳳梨酥，超過 10 盒</td><td>每件最多 10 盒；依件數及剩餘盒數累計運費</td></tr>
+              <tr><td>老婆餅／太陽餅＋土鳳梨酥混裝<br><span class="sj-rules-note">總計最多 10 盒，其中老婆餅＋太陽餅最多 8 盒</span></td><td><strong>NT$210／件</strong></td></tr>
+            </tbody></table>
+            <p class="sj-rules-note">一般糕點每件寄送宜蘭、花蓮、台東另加 NT$10。混裝超過上述盒數限制時，系統會要求人工確認運費；實際應付金額以店家確認為準。</p>
+          </div></details>
+          <details class="sj-rules-card sj-rules-accordion">
+            <summary>03｜配送地區 <span aria-hidden="true" class="sj-rule-plus">＋</span></summary><div class="sj-rule-body">
+            <ul><li>目前僅提供台灣本島宅配，暫不配送澎湖、金門、連江（馬祖）。</li><li>宜蘭、花蓮、台東等地區可能依包裹件數加收偏遠運費；一般糕點每件加 NT$10。</li><li>蛋黃酥偏遠運費依該商品的專屬規則計算，符合免運條件時依結帳顯示為準。</li></ul>
+          </div></details>
+          <details class="sj-rules-card sj-rules-accordion">
+            <summary>04｜出貨與到貨提醒 <span aria-hidden="true" class="sj-rule-plus">＋</span></summary><div class="sj-rule-body">
+            <ul><li>中午 12:00 前成立的訂單，最早可安排隔日出貨；12:00 後最早為後天出貨，實際依可選日期為準。</li><li>出貨日期不等於到貨日期。物流配送可能受貨量、天候及營運狀況影響，無法保證隔日配達。</li><li>若有指定收件需求，建議預留配送緩衝時間。</li></ul>
+          </div></details>
+          <details class="sj-rules-card sj-rules-accordion">
+            <summary>05｜黑貓宅急便貨況查詢 <span aria-hidden="true" class="sj-rule-plus">＋</span></summary><div class="sj-rule-body">
+            <p class="sj-rules-note">本店使用黑貓宅急便配送。商品出貨並取得託運單號後，可前往黑貓官方網站查詢配送進度；物流資訊更新可能需要時間。</p>
+            <a class="sj-shipping-link" href="https://www.t-cat.com.tw/inquire/trace.aspx" target="_blank" rel="noopener noreferrer" style="display:inline-block;text-decoration:none">↗ 前往黑貓貨況查詢（開新視窗）</a>
+          </div></details>
+          <button type="button" class="sj-shipping-link" onclick="returnFromShippingRules()">← 返回宅配訂購，繼續填單</button>
+        </section>
+
         <section id="orderFormPage" class="hidden order-form-page" aria-label="訂購資料填寫">
+<div style="padding:12px 18px;background:#fff4dd;color:#65411b;border:1px solid #d9b678;border-radius:12px;margin:14px auto;max-width:860px">目前為 TEST 測試流程：送出僅代表收到訂購需求，尚未成立，請勿匯款。雙 11 優惠請先透過官方 LINE 確認。</div>
             <button type="button" class="back-link" onclick="showOrderChoices()">← 返回選擇訂購方式</button>
         <!-- 模式切換按鈕 -->
         <div class="hidden flex rounded-xl bg-gray-200 p-1 shadow-inner">
@@ -540,7 +743,10 @@ body.story-open { overflow:hidden; }
 
         <!-- 填寫訂單區 -->
         <div id="formBlock" class="bg-white shadow-sm rounded-xl p-6 border border-gray-100">
-            <h2 id="formTitle" class="text-xl font-bold text-gray-700 mb-4 pb-2 border-b border-gray-100">✨ 填寫現場自取預訂單</h2>
+            <div class="sj-shipping-heading">
+              <h2 id="formTitle" class="text-xl font-bold text-gray-700">✨ 填寫現場自取預訂單</h2>
+              <button type="button" id="shippingRulesButton" class="sj-shipping-link hidden" onclick="showShippingRules()" aria-label="查看宅配運費與配送規則">↗ 查看運費規則</button>
+            </div>
             
             <form id="orderForm" class="space-y-5">
                 <input type="hidden" id="orderMode" value="pickup">
@@ -618,9 +824,8 @@ body.story-open { overflow:hidden; }
                 </div>
 
                 <div id="deliveryNotice" class="hidden bg-orange-50 border border-orange-200 rounded-xl p-3 text-xs text-orange-800 space-y-1">
-                    <p class="font-bold">⚠️ 宅配注意事項：</p>
-                    <p>• 超過中午 12:00 成立之宅配訂單，最早出貨日為後天起算。</p>
-                    <p>• 希望配達日期不等於實際到貨日期，恕不負責運送端之延誤。</p>
+                    <p>📦 <strong>宅配僅限台灣本島</strong>，實際運費將依商品與配送地區自動計算。出貨不保證隔日送達。</p>
+                    <button type="button" class="underline font-bold" onclick="showShippingRules()">查看完整運費與配送規則</button>
                 </div>
 
                 <!-- 產品規格 -->
@@ -660,14 +865,14 @@ body.story-open { overflow:hidden; }
                                 <span class="text-xs text-gray-500">盒</span>
                             </div>
                         </div>
-                        <p id="pickupMinNotice" class="text-xs text-red-600 font-bold hidden">⚠️ 現場自取總數量須滿 12 顆（含）以上方可預訂！</p>
+                        <p id="pickupMinNotice" class="text-xs text-red-600 font-bold hidden">⚠️ 現場自取的蛋黃酥須滿 12 顆（含）；一般糕點可單獨預訂！</p>
                     </div>
 
                     <div id="deliveryProductBox" class="hidden space-y-3">
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
-                                <input type="checkbox" name="productCheck" id="check_1" value="6入 × 4盒" data-price="1200" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1">(NT$ 1,350（商品 NT$1,200＋含運 NT$150）)</span></span>
+                                <input type="checkbox" name="productCheck" id="check_1" value="6入 × 4盒" data-price="1350" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
+                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 1,350，已含運)" data-promo="(雙 11 NT$ 1,250，含運；須人工確認)">(NT$ 1,350，已含運)</span></span>
                             </label>
                             <input type="number" id="qty_1" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -675,7 +880,7 @@ body.story-open { overflow:hidden; }
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_2" value="6入 × 10盒" data-price="3000" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 10盒 (60顆) <span class="text-amber-700 font-bold ml-1">(NT$ 3,000)</span> <span class="text-xs text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded ml-1 font-bold">免運費</span></span>
+                                <span>6入 × 10盒 (60顆) <span class="text-amber-700 font-bold ml-1">(NT$ 3,000)</span></span>
                             </label>
                             <input type="number" id="qty_2" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -683,7 +888,7 @@ body.story-open { overflow:hidden; }
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_3" value="6入 × 15盒" data-price="4500" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1">(NT$ 4,500)</span> <span class="text-xs text-amber-800 bg-amber-100 px-1.5 py-0.5 rounded ml-1 font-bold">免運費</span></span>
+                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 4,500，運費另計)" data-promo="(雙 11 NT$ 4,200，含運；須人工確認)">(NT$ 4,500)</span></span>
                             </label>
                             <input type="number" id="qty_3" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -693,7 +898,6 @@ body.story-open { overflow:hidden; }
                                 <input type="checkbox" name="productCheck" id="check_12" value="12入禮盒" data-price="600" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
                                 <div>
                                     <span>12入禮盒 <span class="text-amber-700 font-bold ml-1">(NT$ 600 / 盒)</span></span>
-                                    <span class="block text-xs text-gray-500">🚚 1~2盒運費170，3~6盒運費210，7盒up免基本運費</span>
                                 </div>
                             </label>
                             <input type="number" id="qty_12" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
@@ -704,7 +908,6 @@ body.story-open { overflow:hidden; }
                                 <input type="checkbox" name="productCheck" id="check_15" value="15入禮盒" data-price="750" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
                                 <div>
                                     <span>15入禮盒 <span class="text-amber-700 font-bold ml-1">(NT$ 750 / 盒)</span></span>
-                                    <span class="block text-xs text-gray-500">🚚 1~2盒運費170，3~4盒運費210，5盒up免基本運費</span>
                                 </div>
                             </label>
                             <input type="number" id="qty_15" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
@@ -760,7 +963,7 @@ body.story-open { overflow:hidden; }
                         <span class="font-bold">NT$ <span id="summaryShippingFee">0</span> <span id="shippingDesc" class="text-xs text-amber-800 font-bold ml-1"></span></span>
                     </div>
                     <div class="border-t border-amber-200 pt-2 flex justify-between items-center text-base">
-                        <span class="font-bold text-gray-800">應付總金額：</span>
+                        <span class="font-bold text-gray-800">預估金額（待核對）：</span>
                         <div class="text-2xl font-black text-amber-700">NT$ <span id="totalAmount">0</span></div>
                     </div>
                 </div>
@@ -815,16 +1018,15 @@ body.story-open { overflow:hidden; }
                 <p>• <strong>總金額：</strong><span class="font-bold text-amber-700 text-base">NT$ <span id="finalPriceDelivery">0</span></span></p>
                 
                 <div class="pt-2 border-t border-amber-200 space-y-1">
-                    <p class="font-bold text-amber-900">💳 匯款帳號資訊：</p>
-                    <p>• 銀行：<strong>台灣企銀 彰化分行 (代碼 050)</strong></p>
-                    <p>• 帳號：<strong>54012162300</strong></p>
-                    <p>• 戶名：<strong>紀家烘焙坊吳亭緯</strong></p>
+                    <p class="font-bold text-amber-900">付款提醒</p>
+                    <p>訂購需求送出後，請等待店家確認訂單與最終金額；確認前請勿轉帳。</p>
+                    <p>確認成立後，請依店家提供的付款資訊匯款，並透過官方 LINE 提供訂單編號與匯款帳戶末五碼，由店家人工核對入帳。</p>
                 </div>
             </div>
 
             <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-xs text-gray-700 space-y-2 text-center">
-                <p class="font-medium">匯款完成請您通知官方line (<span class="font-bold text-amber-700">ID: still_ji</span>)，</p>
-                <p>並提供<strong>帳戶後5碼</strong>，以利客服人員回傳宅配單給您確認</p>
+                <p class="font-medium">收到店家確認及匯款資訊後，匯款完成請通知官方 LINE (<span class="font-bold text-amber-700">ID: still_ji</span>)，</p>
+                <p>並提供<strong>帳戶後5碼</strong>，以利客服人員人工核對款項</p>
                 <div class="pt-2">
                     <a href="https://lin.ee/9199Z3x" target="_blank" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-6 rounded-lg transition shadow-xs">
                         加官方 LINE 通知客服
@@ -850,10 +1052,26 @@ body.story-open { overflow:hidden; }
             });
         }
         // 頁面導覽：品牌首頁 → 訂購方式 → 訂購表單
+        function showShippingRules() {
+            if (document.getElementById('orderMode').value !== 'delivery') return;
+            document.getElementById('orderFormPage').classList.add('hidden');
+            document.getElementById('orderChoicePage').classList.add('hidden');
+            document.getElementById('landingPage').classList.add('hidden');
+            document.getElementById('siteHeader').classList.add('hidden');
+            document.getElementById('shippingRulesPage').classList.remove('hidden');
+            window.scrollTo({top:0,behavior:'smooth'});
+        }
+        function returnFromShippingRules() {
+            document.getElementById('shippingRulesPage').classList.add('hidden');
+            document.getElementById('orderFormPage').classList.remove('hidden');
+            // Keep the same DOM form and its values intact.
+            window.scrollTo({top:0,behavior:'smooth'});
+        }
         function showLandingPage() {
             document.getElementById('landingPage').classList.remove('hidden');
             document.getElementById('siteHeader').classList.remove('hidden');
             document.getElementById('orderChoicePage').classList.add('hidden');
+            document.getElementById('shippingRulesPage').classList.add('hidden');
             document.getElementById('orderFormPage').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -862,6 +1080,7 @@ body.story-open { overflow:hidden; }
             document.getElementById('landingPage').classList.add('hidden');
             document.getElementById('siteHeader').classList.add('hidden');
             document.getElementById('orderChoicePage').classList.remove('hidden');
+            document.getElementById('shippingRulesPage').classList.add('hidden');
             document.getElementById('orderFormPage').classList.add('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -871,6 +1090,7 @@ body.story-open { overflow:hidden; }
             document.getElementById('landingPage').classList.add('hidden');
             document.getElementById('siteHeader').classList.add('hidden');
             document.getElementById('orderChoicePage').classList.add('hidden');
+            document.getElementById('shippingRulesPage').classList.add('hidden');
             document.getElementById('orderFormPage').classList.remove('hidden');
             document.getElementById('formBlock').classList.remove('hidden');
             document.getElementById('successPagePickup').classList.add('hidden');
@@ -889,6 +1109,7 @@ body.story-open { overflow:hidden; }
             pendingOrderData = null;
             testSubmitStarted = false;
             testConfirmed = false;
+            clearPendingTestOrder();
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = false;
             submitBtn.innerText = '確認送出預訂';
@@ -902,7 +1123,7 @@ body.story-open { overflow:hidden; }
 
         // 第二十版 TEST 專用：請填入「TEST Apps Script」部署後的 /exec 網址。
         // 不可填正式版網址；留空時禁止送出，避免誤送正式訂單。
-        const TEST_GAS_URL = "https://script.google.com/macros/s/AKfycbwhNqUPzuBem_Hw01eCnDHhQEKVB2QQ7qHX4HZVvKIi4j1LMpY9WdhaIXnqZjo2Oo8m/exec";
+        const TEST_GAS_URL = "https://script.google.com/macros/s/AKfycbwIquhWaDINXw83wUJAYo8dOgcEMFZqPzpWZZkO_02vAd4EmPj9Ysc9sNe9g83jSmbuuw/exec"; // 上線前請填入新 TEST 整合版部署網址；禁止沿用舊版
         const GAS_URL = TEST_GAS_URL;
         
         const disabledDates = [
@@ -912,10 +1133,50 @@ body.story-open { overflow:hidden; }
         let pendingOrderData = null;
         let testSubmitStarted = false;
         let testConfirmed = false;
+        // Pending orders survive a refresh. Never silently generate a second ID.
+        const TEST_PENDING_KEY = 'stillji_test_pending_order_v1';
+        function savePendingTestOrder(order) {
+            try { localStorage.setItem(TEST_PENDING_KEY, JSON.stringify({order, savedAt: Date.now()})); }
+            catch (e) { console.warn('無法保存待核對訂單', e); }
+        }
+        function clearPendingTestOrder() {
+            try { localStorage.removeItem(TEST_PENDING_KEY); } catch (e) {}
+        }
+        function readPendingTestOrder() {
+            try {
+                const raw = localStorage.getItem(TEST_PENDING_KEY);
+                if (!raw) return null;
+                const item = JSON.parse(raw);
+                return item && item.order && /^ORD[A-Za-z0-9_-]{5,40}$/.test(item.order.orderId) ? item.order : null;
+            } catch (e) { return null; }
+        }
+        async function checkPreviousTestOrder() {
+            const previous = readPendingTestOrder();
+            if (!previous) return;
+            // The stored record is a local convenience, not proof of server acceptance.
+            const found = await verifyTestOrder(previous.orderId, previous.phone);
+            if (found === true) {
+                testSubmitStarted = true;
+                testConfirmed = true;
+                pendingOrderData = previous;
+                openOrderForm(previous.mode === '現場自取' ? 'pickup' : 'delivery');
+                showConfirmedTestOrder(previous);
+                alert('已找到上次送出的 TEST 訂單，無需重複下單。');
+            } else {
+                testSubmitStarted = true;
+                const btn = document.getElementById('submitBtn');
+                btn.disabled = true;
+                btn.innerText = '前筆訂單待核對，暫停送單';
+                alert('偵測到前次尚未確認的 TEST 訂單：' + previous.orderId +
+                    '\n請先到 TEST 試算表或訂單查詢確認。\n為避免重複訂單，已暫停此瀏覽器送單。');
+            }
+        }
+
 
         // 初始化：根據當前時間與模式設定最小出貨/取貨日
         window.addEventListener('DOMContentLoaded', () => {
             updateMinDateAndValue();
+            checkPreviousTestOrder();
         });
 
         function updateMinDateAndValue() {
@@ -943,8 +1204,12 @@ body.story-open { overflow:hidden; }
             const minDateStr = `${yyyy}-${mm}-${dd}`;
 
             const orderDateInput = document.getElementById('orderDate');
+            const lastDayNextMonth = new Date(now.getFullYear(), now.getMonth() + 2, 0);
+            const maxDateStr = `${lastDayNextMonth.getFullYear()}-${String(lastDayNextMonth.getMonth()+1).padStart(2,'0')}-${String(lastDayNextMonth.getDate()).padStart(2,'0')}`;
             orderDateInput.min = minDateStr;
-            orderDateInput.value = minDateStr;
+            orderDateInput.max = maxDateStr;
+            orderDateInput.value = minDateStr <= maxDateStr ? minDateStr : '';
+            if (!orderDateInput.value) alert('本月與下個月已無可選日期，請聯繫客服。');
             validateDate();
         }
 
@@ -968,6 +1233,7 @@ body.story-open { overflow:hidden; }
             const deliveryProductBox = document.getElementById('deliveryProductBox');
 
             orderMode.value = mode;
+            document.getElementById('shippingRulesButton').classList.toggle('hidden', mode !== 'delivery');
 
             if (mode === 'pickup') {
                 tabPickup.className = "flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 bg-amber-600 text-white shadow-sm cursor-pointer";
@@ -1101,6 +1367,10 @@ body.story-open { overflow:hidden; }
         }
 
         // 與 TEST Code.gs v3 一致的一般糕點運費及偏遠每件加價。
+        function isUnsupportedIslandAddress(address) {
+            return /澎湖|金門|連江|馬祖/.test(String(address || '').replace(/\s/g, ''));
+        }
+
         function parcelRatePreview(n, capacity, cheapMax) {
             const full = Math.floor(n / capacity), rem = n % capacity;
             return {fee:full * 210 + (rem === 0 ? 0 : rem <= cheapMax ? 170 : 210), parcels:full + (rem ? 1 : 0)};
@@ -1152,6 +1422,15 @@ body.story-open { overflow:hidden; }
             return {items,eggBundles,mixedFour,unsupported:false};
         }
 
+        function isDouble11TW() {
+            const parts = new Intl.DateTimeFormat('en-CA', {
+                timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit'
+            }).formatToParts(new Date());
+            const d = Object.fromEntries(parts.map(x => [x.type, x.value]));
+            const day = Number(d.year + d.month + d.day);
+            return day >= 20261104 && day <= 20261111;
+        }
+
         function getCartDetails() {
             const mode = document.getElementById('orderMode').value;
             let productPrice = 0;
@@ -1188,7 +1467,6 @@ body.story-open { overflow:hidden; }
                 let q12Count = 0;
                 let q15Count = 0;
                 let hasCheck1 = false;
-                let check1Qty = 0;
                 let productList = [];
 
                 checkboxes.forEach((cb) => {
@@ -1199,13 +1477,20 @@ body.story-open { overflow:hidden; }
                         let qty = parseInt(qtyInput.value);
                         if (isNaN(qty) || qty < 1) { qty = 1; }
 
-                        const price = parseInt(cb.getAttribute('data-price'));
+                        // 雙11：僅宅配、單一6入組合恰好4盒或15盒，且沒有其他商品/提袋，才預覽優惠價。
+                        // 最終核定金額仍以店家人工確認為準。
+                        const selectedEggOnly = [...checkboxes].filter(x => x.checked);
+                        const noOtherProducts = ['extra_wife','extra_sun','extra_pineapple','bagQty']
+                            .every(id => (Number(document.getElementById(id)?.value) || 0) === 0);
+                        const promoEligible = isDouble11TW() && selectedEggOnly.length === 1 &&
+                            noOtherProducts && qty === 1 && (cb.id === 'check_1' || cb.id === 'check_3');
+                        const price = promoEligible ? (cb.id === 'check_1' ? 1250 : 4200)
+                            : parseInt(cb.getAttribute('data-price'), 10);
                         productPrice += (price * qty);
 
                         if (cb.id === 'check_1') {
                             productList.push(`${cb.value} × ${qty}組`);
                             hasCheck1 = true;
-                            check1Qty += qty;
                             hasSixInchesItem = true;
                         } else if (cb.id === 'check_2' || cb.id === 'check_3') {
                             productList.push(`${cb.value} × ${qty}組`);
@@ -1224,11 +1509,13 @@ body.story-open { overflow:hidden; }
 
                 const regularFreeShipping = q12Count >= 7 || q15Count >= 5;
                 const totalRegularBoxes = q12Count + q15Count;
-                // 6入×4盒優惠：商品金額$1,200，含運價$1,350，故運費拆列$150；不可再把$1,350當商品價。
-                let shippingFee = check1Qty * 150;
-                if (productList.length > 0 && !regularFreeShipping && totalRegularBoxes > 0) {
-                    shippingFee += totalRegularBoxes <= 2 ? 170 : 210;
-                    if (isRemoteAddress()) shippingFee += Math.ceil(totalRegularBoxes / 10) * 10;
+                let shippingFee = 0;
+                if (productList.length > 0 && !regularFreeShipping) {
+                    if (totalRegularBoxes > 0) {
+                        shippingFee = hasCheck1 ? 210 : totalRegularBoxes <= 2 ? 170 : 210;
+                        if (isRemoteAddress()) shippingFee += Math.ceil(totalRegularBoxes / 10) * 10;
+                    }
+                    // 6入舊組合的運費／偏遠優惠須人工核對；TEST 送單會阻擋。
                 }
                 eggShippingComputed = shippingFee;
                 document.getElementById('summaryShippingFee').innerText = shippingFee.toLocaleString();
@@ -1310,9 +1597,9 @@ body.story-open { overflow:hidden; }
             extraNotice.classList.toggle('hidden', extra.boxes === 0);
             const breakdown = document.getElementById('extraShippingBreakdown');
             const extraFreight = cart.extraShipping;
-            if (mode === 'delivery' && (extra.boxes > 0 || cart.eggShipping > 0)) {
+            if (mode === 'delivery' && extra.boxes > 0) {
                 breakdown.classList.remove('hidden');
-                breakdown.innerText = `蛋黃酥運費 NT$${cart.eggShipping.toLocaleString()}` + (extra.boxes > 0 ? `｜${extraFreight.description}` : '') + (extraFreight.valid ? '（已計入總額）' : '（未含待確認運費）');
+                breakdown.innerText = `蛋黃酥運費 NT$${cart.eggShipping.toLocaleString()}｜${extraFreight.description}` + (extraFreight.valid ? '（分群計算，偏遠按件）' : '（未含待確認運費）');
                 document.getElementById('summaryShippingFee').innerText = cart.shippingFee.toLocaleString();
             } else {
                 breakdown.classList.add('hidden');
@@ -1330,8 +1617,16 @@ body.story-open { overflow:hidden; }
                 return;
             }
 
+            const selected = document.getElementById('orderDate');
+            if (!selected.value || selected.value < selected.min || selected.value > selected.max) {
+                alert('僅開放當月份及下個月份的可預訂日期。'); return;
+            }
             const cart = getCartDetails();
             const mode = document.getElementById('orderMode').value;
+            if (mode === 'delivery' && isUnsupportedIslandAddress(document.getElementById('receiverAddress').value)) {
+                alert('❌ 目前僅提供台灣本島宅配，澎湖、金門、連江（馬祖）暫不配送！');
+                return;
+            }
             if (!TEST_GAS_URL || !/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(TEST_GAS_URL)) {
                 alert('這是 TEST 測試版：尚未設定 TEST Apps Script 的部署網址，禁止送出以免影響正式訂單。');
                 return;
@@ -1347,8 +1642,8 @@ body.story-open { overflow:hidden; }
             }
             if (!testSelection.items.length) { alert('請至少選擇一項商品'); return; }
 
-            if (mode === 'pickup' && cart.totalPieces < 12) {
-                alert('❌ 現場自取總數量須滿 12 顆（含）以上方可預訂！');
+            if (mode === 'pickup' && cart.totalPieces > 0 && cart.totalPieces < 12) {
+                alert('❌ 現場自取的蛋黃酥須滿 12 顆（含）；一般糕點可單獨預訂！');
                 return;
             }
 
@@ -1357,6 +1652,10 @@ body.story-open { overflow:hidden; }
                 return;
             }
 
+            if (readPendingTestOrder()) {
+                alert('前一筆 TEST 訂單尚待核對，請勿重新送單。');
+                return;
+            }
             const orderId = 'ORD' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,8).toUpperCase();
             const timeSlotValue = mode === 'pickup' ? document.getElementById('timeSlot').value : document.getElementById('deliveryTimeSlot').value;
             
@@ -1394,7 +1693,7 @@ body.story-open { overflow:hidden; }
             modalHtml += `
                 <p>• <strong>日期/時段：</strong>${pendingOrderData.date} ｜ ${pendingOrderData.timeSlot}</p>
                 <p>• <strong>訂購明細：</strong>${pendingOrderData.productSpec}</p>
-                <p class="pt-2 border-t font-bold text-amber-700 text-base">應付總金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}</p>
+                <p class="pt-2 border-t font-bold text-amber-700 text-base">預估金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}（非正式應付金額，待店家確認）</p>
             `;
 
             document.getElementById('modalContent').innerHTML = modalHtml;
@@ -1432,11 +1731,11 @@ body.story-open { overflow:hidden; }
             document.getElementById('formBlock').classList.add('hidden');
             if (order.mode === '現場自取') {
                 document.getElementById('finalOrderIdPickup').innerText = order.orderId;
-                document.getElementById('finalPricePickup').innerText = order.totalPrice.toLocaleString();
+                document.getElementById('finalPricePickup').innerText = '待人工確認（請勿轉帳）';
                 document.getElementById('successPagePickup').classList.remove('hidden');
             } else {
                 document.getElementById('finalOrderIdDelivery').innerText = order.orderId;
-                document.getElementById('finalPriceDelivery').innerText = order.totalPrice.toLocaleString();
+                document.getElementById('finalPriceDelivery').innerText = '待人工確認（請勿轉帳）';
                 document.getElementById('successPageDelivery').classList.remove('hidden');
             }
             window.scrollTo({top:0,behavior:'smooth'});
@@ -1448,6 +1747,7 @@ body.story-open { overflow:hidden; }
             testSubmitStarted = true;
             closeConfirmModal();
             const order = pendingOrderData;
+            savePendingTestOrder(order);
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.innerText = '正在送出 TEST 訂單，請稍候…';
@@ -1482,7 +1782,7 @@ body.story-open { overflow:hidden; }
         function copyOrderInfo(mode) {
           const id = document.getElementById(mode === 'pickup' ? 'finalOrderIdPickup' : 'finalOrderIdDelivery').textContent.trim();
           const price = document.getElementById(mode === 'pickup' ? 'finalPricePickup' : 'finalPriceDelivery').textContent.trim();
-          const info = `紀家烘焙坊 STILL JI｜TEST 訂單\n訂單編號：${id}\n訂購方式：${mode === 'pickup' ? '現場自取' : '宅配到府'}\n總金額：NT$ ${price}\n訂單查詢：${new URL('lookup.html', location.href).href}`;
+          const info = `紀家烘焙坊 STILL JI｜TEST 訂單\n訂單編號：${id}\n訂購方式：${mode === 'pickup' ? '現場自取' : '宅配到府'}\n金額狀態：${price}\n訂單查詢：${new URL('lookup.html', location.href).href}`;
           if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(info).then(() => alert('訂單資訊已複製！')).catch(() => window.prompt('請複製以下訂單資訊：', info));
           } else { window.prompt('請複製以下訂單資訊：', info); }
@@ -1556,6 +1856,25 @@ function closeBrandStory() {
   if(document.readyState==='loading') {
     document.addEventListener('DOMContentLoaded',setupHomeReveal,{once:true});
   } else setupHomeReveal();
+})();
+</script>
+<script>
+// 活動期間切換標示；符合純組合條件時，TEST 結帳同步預覽活動價。
+(function(){
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const d=Object.fromEntries(parts.map(x=>[x.type,x.value]));
+  const day=Number(d.year+d.month+d.day);
+  const active=day>=20261104 && day<=20261111;
+  document.querySelectorAll('.sj-promo-price').forEach(el=>{el.textContent=active?el.dataset.promo:el.dataset.normal});
+})();
+</script>
+<script id="sj-home-promo-window">
+(function(){
+ const d=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const date=[d.find(x=>x.type==='year').value,d.find(x=>x.type==='month').value,d.find(x=>x.type==='day').value].join('-');
+ const active=date>='2026-11-04'&&date<='2026-11-11';
+ const promo=document.getElementById('homeDouble11Card'),awards=document.getElementById('homeAwardsCard');
+ if(promo&&awards){promo.hidden=!active;awards.hidden=active;}
 })();
 </script>
 </body>
