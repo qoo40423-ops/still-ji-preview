@@ -1477,15 +1477,17 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         let qty = parseInt(qtyInput.value);
                         if (isNaN(qty) || qty < 1) { qty = 1; }
 
-                        // 雙11：僅宅配、單一6入組合恰好4盒或15盒，且沒有其他商品/提袋，才預覽優惠價。
-                        // 最終核定金額仍以店家人工確認為準。
+                        // 雙11：4盒組與15盒組可同筆併用，各組限1組，其他品項不適用此優惠。
                         const selectedEggOnly = [...checkboxes].filter(x => x.checked);
                         const noOtherProducts = ['extra_wife','extra_sun','extra_pineapple','bagQty']
                             .every(id => (Number(document.getElementById(id)?.value) || 0) === 0);
-                        const promoEligible = isDouble11TW() && selectedEggOnly.length === 1 &&
-                            noOtherProducts && qty === 1 && (cb.id === 'check_1' || cb.id === 'check_3');
-                        const price = promoEligible ? (cb.id === 'check_1' ? 1250 : 4200)
-                            : parseInt(cb.getAttribute('data-price'), 10);
+                        const onlyPromoBundles = selectedEggOnly.length > 0 &&
+                            selectedEggOnly.every(x => x.id === 'check_1' || x.id === 'check_3') &&
+                            selectedEggOnly.every(x => (Number(document.getElementById('qty_'+x.id.replace('check_',''))?.value) || 1) === 1);
+                        const promoEligible = isDouble11TW() && noOtherProducts && onlyPromoBundles && qty === 1;
+                        const price = promoEligible && cb.id === 'check_1' ? 1250 :
+                            promoEligible && cb.id === 'check_3' ? 4200 :
+                            parseInt(cb.getAttribute('data-price'), 10);
                         productPrice += (price * qty);
 
                         if (cb.id === 'check_1') {
@@ -1636,7 +1638,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 return;
             }
             const testSelection = collectTestItems();
-            if (testSelection.mixedFour) {
+            if (testSelection.mixedFour && !(isDouble11TW() && testSelection.eggBundles.length === 2 && testSelection.eggBundles.some(x=>x.boxesPerBundle===4 && x.quantity===1) && testSelection.eggBundles.some(x=>x.boxesPerBundle===15 && x.quantity===1) && ['extra_wife','extra_sun','extra_pineapple','bagQty'].every(id=>(Number(document.getElementById(id)?.value)||0)===0) && !document.getElementById('check_12').checked && !document.getElementById('check_15').checked)) {
                 alert('您選擇的「6入 × 4盒含運優惠」搭配其他6入免運組合，可能有更划算的合併配送方式。\n請先聯繫紀家烘焙坊，由專人協助確認最優惠的訂購方式，謝謝您！');
                 return;
             }
