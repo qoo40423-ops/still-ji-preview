@@ -533,7 +533,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 .sj-nav-links{margin-left:auto!important;flex:0 1 auto!important;order:1!important;justify-content:flex-end!important;gap:5px!important;}
 .sj-nav-links a,.sj-nav-links button{font-family:var(--sj-font)!important;font-weight:700!important;font-size:.91rem!important;}
 @media(max-width:700px){.sj-top-nav-inner{flex-wrap:wrap!important;gap:5px!important;padding:8px 12px!important;}.sj-nav-links{flex-basis:100%!important;width:100%!important;justify-content:flex-end!important;overflow-x:auto!important;}.sj-nav-links a,.sj-nav-links button{font-size:.83rem!important;padding:8px 9px!important;}}
-</style></head>
+</style><script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script></head>
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen py-10 px-4">
 <nav class="sj-top-nav" aria-label="網站主要導覽"><div class="sj-top-nav-inner">
 <a class="sj-nav-brand" href="index.html" aria-label="紀家烘焙坊 回首頁"><span>紀家烘焙坊</span><img src="images/stillji-logo-transparent.png" alt="Still Ji 標誌"></a>
@@ -1124,7 +1124,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 
         // 第二十版 TEST 專用：請填入「TEST Apps Script」部署後的 /exec 網址。
         // 不可填正式版網址；留空時禁止送出，避免誤送正式訂單。
-        const TEST_GAS_URL = "https://script.google.com/macros/s/AKfycbwIquhWaDINXw83wUJAYo8dOgcEMFZqPzpWZZkO_02vAd4EmPj9Ysc9sNe9g83jSmbuuw/exec"; // 上線前請填入新 TEST 整合版部署網址；禁止沿用舊版
+        const TEST_GAS_URL = "https://script.google.com/macros/s/AKfycbzUKuqA25-10v1d-pjf38_wSNfS5JfKeHSKINZK3ft0_QWt4tUenEDMsT6zXYhbOJlY/exec"; // 上線前請填入新 TEST 整合版部署網址；禁止沿用舊版
         const GAS_URL = TEST_GAS_URL;
         
         const disabledDates = [
@@ -1722,13 +1722,36 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             window.scrollTo({top:0,behavior:'smooth'});
         }
 
+        // V8: 驗證 LINE Login 的 ID token。僅經 LINE 授權的顧客可以送出 V8 測試訂單。
+        let v8LiffReady = null;
+        async function v8GetLineIdToken() {
+            if (!window.liff) throw new Error('LINE 登入元件尚未載入，請重新整理後再試。');
+            if (!v8LiffReady) v8LiffReady = liff.init({liffId:'2012374320-dGpmrMNX'});
+            await v8LiffReady;
+            if (!liff.isLoggedIn()) {
+                liff.login({redirectUri:window.location.href});
+                throw new Error('正在前往 LINE 登入，完成授權後請重新確認訂單。');
+            }
+            const token = liff.getIDToken();
+            if (!token) throw new Error('無法取得 LINE 登入憑證，請從 LINE 訂購連結重新開啟。');
+            return token;
+        }
+
         async function executeSubmit() {
             // Do not submit the same prepared order twice, even after network uncertainty.
             if (testSubmitStarted || !pendingOrderData) return;
             testSubmitStarted = true;
             closeConfirmModal();
             const order = pendingOrderData;
-            savePendingTestOrder(order);
+            try {
+                order.lineIdToken = await v8GetLineIdToken();
+            } catch (err) {
+                testSubmitStarted = false;
+                alert(err.message || 'LINE 登入失敗，請重新嘗試。');
+                return;
+            }
+            // LINE 憑證只送到 V8 後端，不保存在 localStorage。
+            savePendingTestOrder(Object.assign({}, order, {lineIdToken:undefined}));
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.innerText = '正在送出 TEST 訂單，請稍候…';
