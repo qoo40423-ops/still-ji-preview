@@ -1743,7 +1743,25 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 document.getElementById('shippingRulesPage').classList.add('hidden');
                 document.getElementById('orderFormPage').classList.remove('hidden');
                 showConfirmedTestOrder(order);
-                notice.textContent = '已找回成立的訂單：' + order.orderId + '。請勿再次送出同一筆訂單。若要另訂，請點下方「新增一筆訂單」。';
+                notice.textContent = '已找回成立的訂單：' + order.orderId + '。請勿重複送出同一筆訂單。';
+                const newOrderBtn = document.createElement('button');
+                newOrderBtn.type = 'button';
+                newOrderBtn.textContent = '＋ 新增一筆訂單';
+                newOrderBtn.style.cssText = 'display:block;width:100%;margin-top:12px;padding:12px;border:0;border-radius:10px;background:#901820;color:white;font-weight:bold;cursor:pointer;';
+                newOrderBtn.onclick = function () {
+                    const current = readPendingTestOrder();
+                    if (!current || current.orderId !== order.orderId) {
+                        alert('訂單狀態已變更，請重新整理頁面。');
+                        return;
+                    }
+                    if (!testConfirmed) {
+                        alert('尚未確認上一筆訂單成立，請先查詢訂單。');
+                        return;
+                    }
+                    notice.remove();
+                    startNewOrder();
+                };
+                notice.appendChild(newOrderBtn);
                 return;
             }
             notice.textContent = '上次訂單 ' + order.orderId + ' 尚未能線上確認。為避免重複訂單，暫時保留送單保護。';
