@@ -547,7 +547,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 </div></div></nav>
 
 
-    <section id="brandSplash" class="brand-splash story-opening" aria-label="紀家烘焙坊品牌故事" hidden>
+    <section id="brandSplash" class="brand-splash story-opening" aria-label="紀家烘焙坊品牌故事">
       <button type="button" class="story-skip" onclick="closeBrandStory()">略過故事 →</button>
       <div class="story-scroll">
         <div class="story-head">
@@ -595,7 +595,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         <!-- 品牌形象首頁 -->
         <section class="brand-showcase" id="landingPage" aria-label="STILL JI 品牌與商品介紹">
             <div class="brand-intro">
-              <button type="button" class="sj-replay-story" onclick="replayBrandStory()" aria-label="重新觀看紀家烘焙坊品牌故事">▶ 觀看品牌故事動畫</button>
+
                 
                 
                 <div class="brand-awards" id="homeAwardsCard">
@@ -711,7 +711,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
               <tr><td>僅土鳳梨酥，超過 10 盒</td><td>每件最多 10 盒；依件數及剩餘盒數累計運費</td></tr>
               <tr><td>老婆餅／太陽餅＋土鳳梨酥混裝<br><span class="sj-rules-note">總計最多 10 盒，其中老婆餅＋太陽餅最多 8 盒</span></td><td><strong>NT$210／件</strong></td></tr>
             </tbody></table>
-            <p class="sj-rules-note">一般糕點每件寄送宜蘭、花蓮、台東另加 NT$10。混裝超過上述盒數限制時，系統會要求人工確認運費；實際應付金額以店家確認為準。</p>
+            <p class="sj-rules-note">一般糕點每件寄送宜蘭、花蓮、台東另加 NT$10。如有特殊大量訂購需求，歡迎先洽官方 LINE 客服。</p>
           </div></details>
           <details class="sj-rules-card sj-rules-accordion">
             <summary>03｜配送地區 <span aria-hidden="true" class="sj-rule-plus">＋</span></summary><div class="sj-rule-body">
@@ -873,7 +873,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_1" value="6入 × 4盒" data-price="1350" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 1,350，已含運)" data-promo="(雙 11 NT$ 1,250，含運；須人工確認)">(NT$ 1,350，已含運)</span></span>
+                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 1,350，已含運)" data-promo="(雙 11 NT$ 1,250，含運)">(NT$ 1,350，已含運)</span></span>
                             </label>
                             <input type="number" id="qty_1" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -889,7 +889,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_3" value="6入 × 15盒" data-price="4500" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 4,500，運費另計)" data-promo="(雙 11 NT$ 4,200，含運；須人工確認)">(NT$ 4,500)</span></span>
+                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 4,500，運費另計)" data-promo="(雙 11 NT$ 4,200，含運)">(NT$ 4,500)</span></span>
                             </label>
                             <input type="number" id="qty_3" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -977,14 +977,14 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 
         <!-- 確認訂單資訊彈跳視窗 (Modal) -->
         <div id="confirmModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-            <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-gray-100">
-                <h3 class="text-xl font-bold text-amber-700 border-b pb-2">📋 請再次確認您的訂單資訊</h3>
-                <div id="modalContent" class="space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-xl border border-gray-200"></div>
+            <div class="bg-[#fffaf3] rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-xl border border-[#e6d7c4]">
+                <h3 class="text-xl font-bold text-[#901820] border-b border-[#c9a878] pb-2">📋 請再次確認您的訂單資訊</h3>
+                <div id="modalContent" class="space-y-2 text-sm text-[#49352b] bg-[#fffdf9] p-4 rounded-xl border border-[#e6d7c4]"></div>
                 <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closeConfirmModal()" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2.5 rounded-xl transition cursor-pointer">
+                    <button type="button" onclick="closeConfirmModal()" class="flex-1 bg-[#eee4d7] hover:bg-[#e1d0bd] text-[#49352b] font-medium py-2.5 rounded-xl transition cursor-pointer">
                         返回修改
                     </button>
-                    <button type="button" id="confirmSubmitBtn" onclick="executeSubmit()" class="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-medium py-2.5 rounded-xl transition cursor-pointer">
+                    <button type="button" id="confirmSubmitBtn" onclick="executeSubmit()" class="flex-1 bg-[#901820] hover:bg-[#75141b] text-white font-medium py-2.5 rounded-xl transition cursor-pointer">
                         確認無誤，送出訂單
                     </button>
                 </div>
@@ -1021,8 +1021,10 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 
                 <div class="pt-2 border-t border-amber-200 space-y-1">
                     <p class="font-bold text-amber-900">付款提醒</p>
-                    <p>您的宅配訂單已成立，請依紀家烘焙坊官方 LINE 通知的應付金額、匯款帳號及期限完成付款，無須提供匯款帳號後五碼。</p>
-                    <p>我們核對入帳後，將透過 LINE 提供宅配資料供您確認。若未收到通知，請提供訂單編號與客服聯繫。</p>
+                    <ul class="list-disc pl-5 space-y-2 leading-relaxed">
+                      <li>您的宅配訂單已成立，請依紀家烘焙坊官方 LINE 通知的應付金額、匯款帳號及期限完成付款，並於 LINE 上回報匯款帳號末五碼。</li>
+                      <li>我們核對入帳後，將透過 LINE 提供宅配資料供您確認。若未收到通知，請提供訂單編號與客服聯繫，謝謝您！</li>
+                    </ul>
                 </div>
             </div>
             <div class="flex flex-col gap-2">
@@ -1646,18 +1648,24 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 orderTime: new Date().toLocaleString()
             };
 
+            const escapeOrderText = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
             let modalHtml = `
-                <p>• <strong>訂購模式：</strong><span class="text-amber-700 font-bold">${pendingOrderData.mode}</span></p>
-                <p>• <strong>姓名/電話：</strong>${pendingOrderData.name} (${pendingOrderData.phone})</p>
+                <ul class="list-disc pl-5 space-y-2 leading-relaxed">
+                  <li><strong>訂購方式：</strong><span class="font-bold text-[#901820]">${escapeOrderText(pendingOrderData.mode)}</span></li>
+                  <li><strong>訂購姓名：</strong>${escapeOrderText(pendingOrderData.name)}</li>
+                  <li><strong>聯絡電話：</strong>${escapeOrderText(pendingOrderData.phone)}</li>
             `;
             if (mode === 'delivery') {
-                modalHtml += `<p>• <strong>配送地址：</strong>${pendingOrderData.address}</p>`;
-                modalHtml += `<p>• <strong>發票選項：</strong>${finalInvoiceInfo}</p>`;
+                modalHtml += `<li><strong>配送地址：</strong>${escapeOrderText(pendingOrderData.address)}</li>`;
+                modalHtml += `<li><strong>發票選項：</strong>${escapeOrderText(finalInvoiceInfo)}</li>`;
             }
             modalHtml += `
-                <p>• <strong>日期/時段：</strong>${pendingOrderData.date} ｜ ${pendingOrderData.timeSlot}</p>
-                <p>• <strong>訂購明細：</strong>${pendingOrderData.productSpec}</p>
-                <p class="pt-2 border-t font-bold text-amber-700 text-base">訂單預覽金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}（以官方 LINE 通知之後端核算金額為準）</p>
+                <li><strong>預訂日期：</strong>${escapeOrderText(pendingOrderData.date)}</li>
+                <li><strong>取貨／配送時段：</strong>${escapeOrderText(pendingOrderData.timeSlot)}</li>
+                <li><strong>商品明細：</strong>${escapeOrderText(pendingOrderData.productSpec)}</li>
+                </ul>
+                <p class="pt-3 mt-3 border-t border-[#e6d7c4] font-bold text-[#901820] text-base">訂單金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}</p>
+                <p class="text-xs text-[#79695b]">付款金額以官方 LINE 訂單通知為準。</p>
             `;
 
             document.getElementById('modalContent').innerHTML = modalHtml;
@@ -1776,32 +1784,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         }
 
     </script>
-<style id="stillji-story-replay-style">
-.sj-replay-story{display:inline-block;margin:0 auto 1rem;padding:.55rem 1.1rem;border:1px solid #b79a68;border-radius:99px;background:#fffaf0;color:#49352b;font:600 .85rem/1.5 inherit;cursor:pointer}
-.sj-replay-story:hover,.sj-replay-story:focus-visible{background:#f2e8d5;outline-offset:3px}
-</style>
-<script id="still-ji-story-replay-function">
-function replayBrandStory(){
-  const splash=document.getElementById('brandSplash');
-  if(!splash){alert('品牌故事目前無法載入，請重新整理網頁。');return;}
-  splash.classList.remove('story-closing','splash-leaving');
-  splash.hidden=false;
-  document.body.classList.add('story-open');
-  const scroller=splash.querySelector('.story-scroll');
-  if(scroller)scroller.scrollTop=0;
-  splash.querySelectorAll('.story-reveal').forEach(function(el){
-    el.classList.remove('story-visible');
-    void el.offsetWidth;
-    el.classList.add('story-visible');
-  });
-}
-</script>
 <script id="still-ji-splash-controller">
 (function () {
   const splash = document.getElementById('brandSplash');
   if (!splash) return;
   const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
   splash.hidden = false;
   document.body.classList.add('story-open');
 })();
