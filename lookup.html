@@ -69,9 +69,10 @@ document.getElementById('lookupForm').addEventListener('submit', function(e) {
    const title=document.createElement('h3');title.textContent='訂購商品';result.appendChild(title);
    if(items.length){
      const table=document.createElement('table');table.style.cssText='width:100%;border-collapse:collapse';
-     const head=document.createElement('tr');['商品／規格','盒數','小計'].forEach(t=>{const th=document.createElement('th');th.textContent=t;th.style.cssText='padding:8px 4px;text-align:left;border-bottom:1px solid #ddd';head.appendChild(th)});table.appendChild(head);
-     items.forEach(item=>{const tr=document.createElement('tr');[item.product+' '+item.spec,item.quantity+' 盒','NT$ '+item.subtotal].forEach(t=>{const td=document.createElement('td');td.textContent=t;td.style.cssText='padding:9px 4px;border-bottom:1px solid #eee';tr.appendChild(td)});table.appendChild(tr)});result.appendChild(table);
+     const head=document.createElement('tr');['商品／規格','盒數'].forEach(t=>{const th=document.createElement('th');th.textContent=t;th.style.cssText='padding:8px 4px;text-align:left;border-bottom:1px solid #ddd';head.appendChild(th)});table.appendChild(head);
+     items.forEach(item=>{const tr=document.createElement('tr');[item.product+' '+item.spec,item.quantity+' 盒'].forEach(t=>{const td=document.createElement('td');td.textContent=t;td.style.cssText='padding:9px 4px;border-bottom:1px solid #eee';tr.appendChild(td)});table.appendChild(tr)});result.appendChild(table);
    } else {const note=document.createElement('p');note.textContent='這筆訂單尚無可顯示的商品明細，請聯繫客服確認。';result.appendChild(note)}
+   if(items.length){const hint=document.createElement('p');hint.className='muted';hint.style.cssText='font-size:12px;margin-top:10px';hint.textContent='商品明細顯示訂購數量；優惠、運費及提袋等費用均以「正式應付金額」為準。';result.appendChild(hint)}
    const labels={PENDING_REVIEW:'待人工確認（尚未成立，請勿轉帳）',CONFIRMED:'訂單已成立',CANCELLED:'已取消',REJECTED:'未受理'};
    add('訂單狀態',labels[order.orderStatus]||order.orderStatus||'待人工確認');
    add('正式應付金額',order.orderStatus==='CONFIRMED'&&order.total!==null&&order.total!==''?'NT$ '+order.total:'尚未核定，請勿轉帳');
