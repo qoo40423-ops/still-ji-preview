@@ -1276,7 +1276,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             const logisticsNotice = document.getElementById('double11LogisticsNotice');
             logisticsNotice.classList.toggle('hidden', !logisticsPeak);
             if (logisticsPeak && dateInput !== window.lastAcknowledgedLogisticsDate) {
-                const accepted = window.confirm('⚠️ 黑貓宅急便雙 11 繁盛期配送提醒\\n\\n11/02～11/15 期間物流量較大，無法保證您選擇的出貨日期當日順利寄件，也無法保證隔日配達。\\n\\n實際寄送及到貨時間須以黑貓宅急便作業為準。\\n\\n請確認您可以接受上述配送風險後再下單。\\n\\n按「確定」表示了解並繼續選擇；按「取消」可重新選擇出貨日期。');
+                const accepted = window.confirm('⚠️ 黑貓宅急便雙 11 繁盛期配送提醒\n\n11/02～11/15 期間物流量較大，無法保證您選擇的出貨日期當日順利寄件，也無法保證隔日配達。\n\n實際寄送及到貨時間須以黑貓宅急便作業為準。\n\n請確認您可以接受上述配送風險後再下單。\n\n按「確定」表示了解並繼續選擇；按「取消」可重新選擇出貨日期。');
                 if (!accepted) {
                     document.getElementById('orderDate').value = '';
                     logisticsNotice.classList.add('hidden');
