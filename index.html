@@ -971,6 +971,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                     </div>
                 </div>
 
+                <p id="sjSubmitHelp" role="status" aria-live="polite" class="hidden rounded-lg border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-800"></p>
                 <button type="submit" id="submitBtn" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-medium py-2.5 px-4 rounded-lg transition duration-200 shadow-md cursor-pointer">
                     確認送出預訂
                 </button>
@@ -1263,7 +1264,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 
         function validateDate() {
             const mode = document.getElementById('orderMode').value;
-            if (testSubmitStarted) { alert('訂單已送出，請先查詢訂單狀態或聯繫客服，勿重複送單。'); return; }
+            if (testSubmitStarted) return;
             const dateInput = document.getElementById('orderDate').value;
             const dateNoticeText = document.getElementById('dateNoticeText');
             const estimatedArrival = document.getElementById('estimatedArrival');
@@ -1281,6 +1282,9 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                     logisticsNotice.classList.add('hidden');
                     estimatedArrival.classList.add('hidden');
                     window.lastAcknowledgedLogisticsDate = null;
+                    const help = document.getElementById('sjSubmitHelp');
+                    help.textContent = '請重新選擇出貨日期，再確認訂單。';
+                    help.classList.remove('hidden');
                     return;
                 }
                 window.lastAcknowledgedLogisticsDate = dateInput;
@@ -1323,11 +1327,16 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 }
             }
 
+            const help = document.getElementById('sjSubmitHelp');
             if (hasError) {
+                help.textContent = disabledDates.includes(dateInput) ? '您選擇的日期為店休日或已滿單，請更換日期後再送出。' : '宅配出貨日不可選擇星期六、星期日，請更換日期後再送出。';
+                help.classList.remove('hidden');
                 submitBtn.disabled = true;
                 submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
                 submitBtn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
             } else {
+                help.classList.add('hidden');
+                help.textContent = '';
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
                 submitBtn.classList.add('bg-amber-600', 'hover:bg-amber-700');
@@ -1602,6 +1611,17 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             document.getElementById('totalAmount').innerText = cart.totalAmount.toLocaleString() + (mode === 'delivery' && !extraFreight.valid ? '＋待確認運費' : '');
         }
 
+        // Explain browser-native required-field failures instead of silently blocking checkout.
+        document.getElementById('orderForm').addEventListener('invalid', function(e) {
+            const field = e.target;
+            const help = document.getElementById('sjSubmitHelp');
+            const labels = {buyerName:'姓名', buyerPhone:'聯絡電話', receiverAddress:'宅配地址', orderDate:'取貨／出貨日期', timeSlot:'取貨時段', taxId:'統一編號'};
+            const label = labels[field.id] || '必填欄位';
+            help.textContent = '請先確認「' + label + '」是否填寫完整或格式正確，再送出訂單。';
+            help.classList.remove('hidden');
+            help.scrollIntoView({behavior:'smooth',block:'center'});
+        }, true);
+
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -1688,7 +1708,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 <li><strong>商品明細：</strong>${escapeOrderText(pendingOrderData.productSpec)}</li>
                 </ul>
                 <p class="pt-3 mt-3 border-t border-[#e6d7c4] font-bold text-[#901820] text-base">訂單金額：NT$ ${pendingOrderData.totalPrice.toLocaleString()}</p>
-                <p class="text-xs text-[#79695b]">付款金額以官方 LINE 訂單通知為準。</p>
+                <p class="text-xs text-[#79695b]">請確認訂單資訊與金額；宅配匯款資訊將於訂單成立後顯示。</p>
             `;
 
             document.getElementById('modalContent').innerHTML = modalHtml;
