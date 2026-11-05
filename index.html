@@ -794,6 +794,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <p id="dateNoticeText" class="text-xs text-red-600 mt-1 font-medium hidden">⚠️ 宅配僅能選擇週一到週五的出貨日，請重新選擇！</p>
                         <p id="systemClosedNotice" class="text-xs text-red-600 mt-1 font-bold hidden">⚠️ 您選擇的日期為休息日或已滿單，請重新選擇其他日期！</p>
                         <p id="estimatedArrival" class="text-xs text-amber-700 mt-1 font-bold hidden"></p>
+                        <p id="double11LogisticsNotice" class="text-xs text-red-700 mt-2 font-semibold hidden" role="status">⚠️ 黑貓宅急便雙 11 繁盛期（11/02–11/15）物流量較大，無法保證選定日期當日順利寄件或隔日配達；實際寄送與到貨時間以黑貓宅急便作業為準，請確認能接受再下單。</p>
                     </div>
                     
                     <!-- 自取時段選擇 -->
@@ -1271,6 +1272,20 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             const submitBtn = document.getElementById('submitBtn');
 
             let hasError = false;
+            const logisticsPeak = mode === 'delivery' && dateInput >= '2026-11-02' && dateInput <= '2026-11-15';
+            const logisticsNotice = document.getElementById('double11LogisticsNotice');
+            logisticsNotice.classList.toggle('hidden', !logisticsPeak);
+            if (logisticsPeak && dateInput !== window.lastAcknowledgedLogisticsDate) {
+                const accepted = window.confirm('⚠️ 黑貓宅急便雙 11 繁盛期配送提醒\\n\\n11/02～11/15 期間物流量較大，無法保證您選擇的出貨日期當日順利寄件，也無法保證隔日配達。\\n\\n實際寄送及到貨時間須以黑貓宅急便作業為準。\\n\\n請確認您可以接受上述配送風險後再下單。\\n\\n按「確定」表示了解並繼續選擇；按「取消」可重新選擇出貨日期。');
+                if (!accepted) {
+                    document.getElementById('orderDate').value = '';
+                    logisticsNotice.classList.add('hidden');
+                    estimatedArrival.classList.add('hidden');
+                    window.lastAcknowledgedLogisticsDate = null;
+                    return;
+                }
+                window.lastAcknowledgedLogisticsDate = dateInput;
+            }
 
             if (dateInput) {
                 if (disabledDates.includes(dateInput)) {
@@ -1302,7 +1317,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                     let d2 = String(dObj2.getDate()).padStart(2, '0');
                     let wk2 = days[dObj2.getDay()];
 
-                    estimatedArrival.innerText = `📦 預計到貨日：${m1}/${d1}(${wk1}) ~ ${m2}/${d2}(${wk2}) 左右`;
+                    estimatedArrival.innerText = logisticsPeak ? "📦 雙 11 物流繁盛期：到貨時間無法預估，請以黑貓宅急便實際配送為準。" : `📦 預計到貨日：${m1}/${d1}(${wk1}) ~ ${m2}/${d2}(${wk2}) 左右`;
                     estimatedArrival.classList.remove('hidden');
                 } else {
                     estimatedArrival.classList.add('hidden');
