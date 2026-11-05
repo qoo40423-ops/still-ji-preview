@@ -874,7 +874,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_1" value="6入 × 4盒" data-price="1350" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 1,350，已含運)" data-promo="(雙 11 NT$ 1,250，含運)">(NT$ 1,350，已含運)</span></span>
+                                <span>6入 × 4盒 (24顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 1,350，已含運)" data-promo="(雙 11 NT$ 1,250，含運)" data-original="1350" data-offer="1250" data-freight="含運">(NT$ 1,350，已含運)</span></span>
                             </label>
                             <input type="number" id="qty_1" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -882,7 +882,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_2" value="6入 × 10盒" data-price="3000" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 10盒 (60顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 3,000，免運)" data-promo="(雙 11 NT$ 2,900，免運)">(NT$ 3,000，免運)</span></span>
+                                <span>6入 × 10盒 (60顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 3,000，免運)" data-promo="(雙 11 NT$ 2,900，免運)" data-original="3000" data-offer="2900" data-freight="免運">(NT$ 3,000，免運)</span></span>
                             </label>
                             <input type="number" id="qty_2" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -890,7 +890,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                         <div class="flex items-center justify-between p-3 border border-gray-200 rounded-xl hover:bg-gray-50/50">
                             <label class="flex items-center space-x-3 cursor-pointer text-sm font-medium text-gray-700">
                                 <input type="checkbox" name="productCheck" id="check_3" value="6入 × 15盒" data-price="4500" onchange="calculateCart()" class="w-4 h-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500">
-                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 4,500，運費另計)" data-promo="(雙 11 NT$ 4,300，含運)">(NT$ 4,500)</span></span>
+                                <span>6入 × 15盒 (90顆) <span class="text-amber-700 font-bold ml-1 sj-promo-price" data-normal="(NT$ 4,500，運費另計)" data-promo="(雙 11 NT$ 4,300，含運)" data-original="4500" data-offer="4300" data-freight="含運">(NT$ 4,500)</span></span>
                             </label>
                             <input type="number" id="qty_3" min="1" value="1" disabled oninput="calculateCart()" class="w-16 px-2 py-1 text-center border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm">
                         </div>
@@ -2023,6 +2023,27 @@ function closeBrandStory() {
  const active=date>='2026-11-04'&&date<='2026-11-11';
  const promo=document.getElementById('homeDouble11Card'),awards=document.getElementById('homeAwardsCard');
  if(promo&&awards){promo.hidden=!active;awards.hidden=active;}
+})();
+</script>
+
+<script id="sj-bundle-savings-display">
+(function(){
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const date=Object.fromEntries(parts.map(x=>[x.type,x.value]));
+  const day=Number(date.year+date.month+date.day);
+  const active=day>=20261104&&day<=20261111;
+  if(!active)return;
+  const fmt=n=>'NT$ '+n.toLocaleString('en-US');
+  document.querySelectorAll('.sj-promo-price[data-original][data-offer]').forEach(el=>{
+    const original=Number(el.dataset.original),offer=Number(el.dataset.offer);
+    if(!Number.isFinite(original)||!Number.isFinite(offer)||offer>=original)return;
+    el.textContent='';
+    el.style.display='inline-flex';el.style.flexWrap='wrap';el.style.alignItems='center';el.style.gap='5px 9px';
+    const old=document.createElement('del');old.textContent='原價 '+fmt(original);old.style.cssText='color:#887c70;font-weight:400;font-size:0.88em';
+    const now=document.createElement('strong');now.textContent='雙11 '+fmt(offer)+'（'+el.dataset.freight+'）';now.style.cssText='color:#9c293a;font-weight:800';
+    const save=document.createElement('span');save.textContent='現省 '+fmt(original-offer);save.style.cssText='background:#fff0eb;color:#9c293a;border-radius:999px;padding:2px 8px;font-size:0.85em;font-weight:700';
+    el.append(old,now,save);
+  });
 })();
 </script>
 </body>
