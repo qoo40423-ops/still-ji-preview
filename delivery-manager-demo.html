@@ -6,7 +6,7 @@
 <label for="search">搜尋收件人姓名</label><input id="search" placeholder="輸入姓名或部分姓名" autocomplete="off">
 <nav><button id="pendingTab">待建單</button><button id="doneTab" class="secondary">已建單</button></nav><section id="list"></section><p id="notice" class="notice" role="status" aria-live="polite"></p></main>
 <script>
-const orders=[{id:'DEMO-001',name:'王小美',phone:'0912345678',address:'彰化縣彰化市中山路一段100號',product:'蛋黃酥 12入 × 2盒',ship:'2026-11-09',invoice:'否',last5:'',paidDate:'',done:false},{id:'DEMO-002',name:'林小明',phone:'0987654321',address:'臺中市西區公益路100號',product:'老婆餅 12入 × 1盒',ship:'2026-11-10',invoice:'是｜統編 12345675（示範）',last5:'12345',paidDate:'2026-11-08',done:false}];
+const orders=[{id:'DEMO-001',name:'王小美',phone:'0912345678',address:'彰化縣彰化市中山路一段100號',product:'蛋黃酥 12入 × 2盒',ship:'2026-11-09',invoice:'否',tracking:'',last5:'',paidDate:'',done:false},{id:'DEMO-002',name:'林小明',phone:'0987654321',address:'臺中市西區公益路100號',product:'老婆餅 12入 × 1盒',ship:'2026-11-10',invoice:'是｜統編 12345675（示範）',tracking:'',last5:'12345',paidDate:'2026-11-08',done:false}];
 let tab='pending';const $=id=>document.getElementById(id);
 function el(tag,cls,txt){const x=document.createElement(tag);if(cls)x.className=cls;if(txt!==undefined)x.textContent=txt;return x}
 function message(s){$('notice').textContent=s}
@@ -22,7 +22,7 @@ function render(){
    info.append(el('small','',label),el('div','value',value));
    copy.onclick=async()=>{try{await navigator.clipboard.writeText(value);message('已複製'+label)}catch{message('無法自動複製，請長按文字手動複製')}};row.append(info,copy);card.append(row)
   }
-  const fields=el('div','fields');
+  const trackingWrap=el('div','field'),trackingLabel=el('label','','黑貓快遞單號'),trackingInput=el('input');trackingInput.type='text';trackingInput.value=o.tracking;trackingInput.placeholder='輸入託運單號';trackingInput.autocomplete='off';trackingInput.addEventListener('input',()=>{o.tracking=trackingInput.value.trim()});trackingWrap.append(trackingLabel,trackingInput);card.append(trackingWrap);const fields=el('div','fields');
   for(const [key,label,type] of [['last5','匯款後五碼','text'],['paidDate','客人實際匯款日期','date']]){
    const wrap=el('div','field'),lab=el('label','',label),inp=el('input');
    inp.type=type;inp.value=o[key];inp.id=o.id+'-'+key;lab.htmlFor=inp.id;
