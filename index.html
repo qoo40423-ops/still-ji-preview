@@ -1136,6 +1136,12 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         const disabledDates = [
              "2026-09-30", 
         ];
+        // 宅配 11/09 已滿單，不影響現場自取。
+        const deliveryFullDates = ["2026-11-09"];
+        function isClosedOrderDate_(date) {
+            return disabledDates.includes(date) ||
+                (document.getElementById("orderMode").value === "delivery" && deliveryFullDates.includes(date));
+        }
 
         let pendingOrderData = null;
         let testSubmitStarted = false;
@@ -1291,7 +1297,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             }
 
             if (dateInput) {
-                if (disabledDates.includes(dateInput)) {
+                if (isClosedOrderDate_(dateInput)) {
                     systemClosedNotice.classList.remove('hidden');
                     hasError = true;
                 } else {
@@ -1329,7 +1335,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 
             const help = document.getElementById('sjSubmitHelp');
             if (hasError) {
-                help.textContent = disabledDates.includes(dateInput) ? '您選擇的日期為店休日或已滿單，請更換日期後再送出。' : '宅配出貨日不可選擇星期六、星期日，請更換日期後再送出。';
+                help.textContent = isClosedOrderDate_(dateInput) ? '您選擇的日期為店休日或已滿單，請更換日期後再送出。' : '宅配出貨日不可選擇星期六、星期日，請更換日期後再送出。';
                 help.classList.remove('hidden');
                 submitBtn.disabled = true;
                 submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
@@ -1626,7 +1632,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             e.preventDefault();
 
             const dateInput = document.getElementById('orderDate').value;
-            if (disabledDates.includes(dateInput)) {
+            if (isClosedOrderDate_(dateInput)) {
                 alert('❌ 您選擇的日期為休息日或已滿單，無法預訂！');
                 return;
             }
