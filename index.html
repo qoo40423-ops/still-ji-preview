@@ -760,7 +760,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                     </div>
                     <div>
                         <label id="phoneLabel" class="block text-sm font-medium text-gray-600 mb-1">取貨人手機 *</label>
-                        <input type="tel" id="buyerPhone" required placeholder="如：0912345678" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <input type="tel" id="buyerPhone" required placeholder="手機或市話，如：04-7270717#123" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
                     </div>
                 </div>
 
@@ -1143,6 +1143,17 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 (document.getElementById("orderMode").value === "delivery" && deliveryFullDates.includes(date));
         }
 
+function normalizeContactPhone(value) {
+  const compact=String(value||'').trim().replace(/[０-９]/g,c=>String(c.charCodeAt(0)-65296)).replace(/＃/g,'#').replace(/[（）]/g,c=>c==='（'?'(':')').replace(/[－–—]/g,'-').replace(/\s+/g,'');
+  const match=compact.match(/^(.*?)(?:(?:#|分機|轉|ext\.?)(\d{1,6}))?$/i);
+  if(!match)return null;
+  const main=match[1].replace(/[-()]/g,''),ext=match[2]||'';
+  if(/^09\d{8}$/.test(main)&&!ext)return main;
+  if(!/^0\d{8,9}$/.test(main)||/^09/.test(main))return null;
+  if(!(/^02\d{8}$/.test(main)||/^0[3-8]\d{7,8}$/.test(main)))return null;
+  return main+(ext?'#'+ext:'');
+}
+
         let pendingOrderData = null;
         let testSubmitStarted = false;
         let testConfirmed = false;
@@ -1230,7 +1241,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 tabDelivery.className = "flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 text-gray-600 hover:text-gray-900 cursor-pointer";
                 formTitle.innerText = "✨ 填寫現場自取預訂單";
                 nameLabel.innerText = "取貨人姓名 *";
-                phoneLabel.innerText = "取貨人手機 *";
+                phoneLabel.innerText = "取貨人聯絡電話 *";
                 deliveryFields.classList.add('hidden');
                 document.getElementById('receiverAddress').required = false;
                 dateLabel.innerText = "取貨日期 *";
@@ -1249,7 +1260,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 tabPickup.className = "flex-1 py-2.5 rounded-lg font-bold text-sm transition duration-200 text-gray-600 hover:text-gray-900 cursor-pointer";
                 formTitle.innerText = "✨ 填寫宅配到府預購單";
                 nameLabel.innerText = "收件人姓名 *";
-                phoneLabel.innerText = "收件人電話 *";
+                phoneLabel.innerText = "收件人聯絡電話 *";
                 deliveryFields.classList.remove('hidden');
                 document.getElementById('receiverAddress').required = true;
                 dateLabel.innerText = "希望出貨日 *";
@@ -1679,11 +1690,13 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             const taxId = mode === 'delivery' ? document.getElementById('taxId').value : '';
             const finalInvoiceInfo = invoiceType + (taxId ? ` (${taxId})` : '');
 
+            const normalizedContact = normalizeContactPhone(document.getElementById('buyerPhone').value);
+            if (!normalizedContact) { alert('請輸入有效的手機或市話，可加分機，例如 04-7270717#123'); return; }
             pendingOrderData = {
                 orderId: orderId,
                 mode: mode === 'pickup' ? '現場自取' : '宅配到府',
                 name: document.getElementById('buyerName').value,
-                phone: document.getElementById('buyerPhone').value,
+                phone: normalizedContact,
                 address: mode === 'delivery' ? document.getElementById('receiverAddress').value : '現場自取',
                 date: document.getElementById('orderDate').value,
                 timeSlot: timeSlotValue,
