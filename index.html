@@ -1014,19 +1014,22 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
         </div>
 
         <!-- 成功頁面 (自取) -->
-        <div id="successPagePickup" class="hidden bg-white shadow-md rounded-2xl p-8 border border-emerald-100 text-center space-y-6">
-            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
-            <div class="space-y-2">
-                <h2 class="text-2xl font-black text-emerald-700">訂單已成立</h2>
-                <p class="text-gray-600 text-sm">您的訂單編號為：<span id="finalOrderIdPickup" class="font-mono font-bold bg-gray-100 px-2 py-0.5 rounded text-gray-800">---</span></p>
-                <p class="text-md font-bold text-amber-700">訂單預覽金額： <span id="finalPricePickup">0</span></p><p class="text-xs text-gray-500">請保存訂單編號，後續可透過官網查詢；如有疑問請聯繫客服。</p>
+        <div id="successPagePickup" class="hidden bg-white shadow-md rounded-2xl p-6 sm:p-8 border border-emerald-100 text-center space-y-5">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center text-3xl mx-auto font-bold">✓</div>
+            <div class="space-y-3">
+                <h2 class="text-2xl font-black text-emerald-800">自取訂單已成立</h2>
+                <div class="rounded-xl bg-emerald-50/70 border border-emerald-100 p-4 text-left space-y-2 text-sm">
+                    <p><strong>訂單編號：</strong><span id="finalOrderIdPickup" class="font-mono font-bold text-gray-900 break-all">---</span></p>
+                    <p><strong>訂單預覽金額：</strong><span id="finalPricePickup" class="font-bold text-amber-700">0</span></p>
+                </div>
+                <p class="text-sm leading-relaxed text-gray-600">請保存訂單編號，並依預訂日期前往門市取貨。如需確認訂單，可使用下方查詢功能。</p>
             </div>
-            <button type="button" onclick="copyOrderInfo('pickup')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
-            <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-bold">💬 聯繫官方 LINE 客服</a>
-            <a href="lookup.html" class="block text-center text-sm text-amber-800 underline">前往訂單查詢</a>
-            <button onclick="startNewOrder()" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-xl transition text-sm font-medium cursor-pointer">
-                返回填寫新訂單
-            </button>
+            <div class="flex items-center justify-center gap-3 pt-1 text-sm">
+                <a href="lookup.html" class="text-amber-800 underline underline-offset-4">查詢訂單</a>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <button type="button" onclick="startNewOrder()" class="text-gray-600 underline underline-offset-4">返回訂購</button>
+            </div>
+            <p class="text-xs text-gray-500">如需協助，<a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2">聯繫官方 LINE 客服</a></p>
         </div>
 
         <!-- 成功頁面 (宅配) -->
