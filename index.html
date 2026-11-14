@@ -1711,7 +1711,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             document.getElementById('summaryProductPrice').innerText = cart.productPrice.toLocaleString();
             const extra = getExtraGiftDetails();
             const extraNotice = document.getElementById('extraShippingNotice');
-            extraNotice.classList.toggle('hidden', extra.boxes === 0);
+            extraNotice.classList.toggle('hidden', !(mode === 'delivery' && extra.boxes > 0 && !cart.extraShipping.valid));
             const breakdown = document.getElementById('extraShippingBreakdown');
             const extraFreight = cart.extraShipping;
             if (mode === 'delivery' && extra.boxes > 0) {
