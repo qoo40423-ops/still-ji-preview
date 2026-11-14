@@ -48,7 +48,7 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
 .sj-nav-links{margin-left:auto!important;flex:0 1 auto!important;order:1!important;justify-content:flex-end!important;gap:5px!important;}
 .sj-nav-links a,.sj-nav-links button{font-family:var(--sj-font)!important;font-weight:700!important;font-size:.91rem!important;}
 @media(max-width:700px){.sj-top-nav-inner{flex-wrap:wrap!important;gap:5px!important;padding:8px 12px!important;}.sj-nav-links{flex-basis:100%!important;width:100%!important;justify-content:flex-end!important;overflow-x:auto!important;}.sj-nav-links a,.sj-nav-links button{font-size:.83rem!important;padding:8px 9px!important;}}
-</style></head><body><main><a href="index.html">返回首頁</a><p class="eyebrow">STILL JI · 紀家烘焙坊</p><h1>訂單查詢</h1><p class="muted">輸入訂單編號與訂購時的手機號碼，即可查看訂購商品、訂單狀態與已核定金額。</p><form id="lookupForm"><label for="orderId">訂單編號</label><input id="orderId" required autocomplete="off" placeholder="ORD 開頭的訂單編號" maxlength="43"><label for="phone">訂購人手機號碼</label><input id="phone" required type="tel" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX" maxlength="10" pattern="09[0-9]{8}"><button type="submit" id="submit">查詢訂單</button></form><div id="result" role="status" aria-live="polite"></div><p class="fine">查詢結果依訂單紀錄顯示；付款狀態及配送進度請以官方 LINE 通知為準。</p><section><h2>忘記訂單編號？</h2><p class="muted">請透過官方 LINE 聯繫客服，核對訂購資料後協助查詢。為保護個資，無法僅憑手機號碼公開訂單。</p><a class="action secondary" href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer">聯繫官方 LINE 客服</a></section></main><script>
+</style></head><body><main><a href="index.html">返回首頁</a><p class="eyebrow">STILL JI · 紀家烘焙坊</p><h1>訂單查詢</h1><p class="muted">輸入訂單編號與訂購時的手機號碼，即可查看訂購商品、訂單狀態與已核定金額。</p><form id="lookupForm"><label for="orderId">訂單編號</label><input id="orderId" required autocomplete="off" placeholder="ORD 開頭的訂單編號" maxlength="43"><label for="phone">訂購人手機號碼</label><input id="phone" required type="tel" inputmode="numeric" autocomplete="tel" placeholder="09XXXXXXXX" maxlength="10" pattern="09[0-9]{8}"><button type="submit" id="submit">查詢訂單</button></form><div id="result" role="status" aria-live="polite"></div><p class="fine">查詢結果依紀家訂單紀錄顯示；實際配送進度以黑貓宅急便查詢結果為準。</p><section><h2>忘記訂單編號？</h2><p class="muted">請透過官方 LINE 聯繫客服，核對訂購資料後協助查詢。為保護個資，無法僅憑手機號碼公開訂單。</p><a class="action secondary" href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer">聯繫官方 LINE 客服</a></section></main><script>
 const API_URL = "https://script.google.com/macros/s/AKfycbwRTaXn0MMg7gJUBnvQkR8bFVadHoRiPik0fJAcxWY_tI_0vG3S0vpddPZovh_QmjNCLQ/exec"; // 請填入新 TEST 整合版部署網址
 document.getElementById('lookupForm').addEventListener('submit', function(e) {
  e.preventDefault();
@@ -76,7 +76,21 @@ document.getElementById('lookupForm').addEventListener('submit', function(e) {
    const labels={PENDING_REVIEW:'待人工確認（尚未成立，請勿轉帳）',CONFIRMED:'訂單已成立',CANCELLED:'已取消',REJECTED:'未受理'};
    add('訂單狀態',labels[order.orderStatus]||order.orderStatus||'待人工確認');
    add('正式應付金額',order.orderStatus==='CONFIRMED'&&order.total!==null&&order.total!==''?'NT$ '+order.total:'尚未核定，請勿轉帳');
-   if(order.mode==='宅配到府' && order.trackingNumber){add('黑貓快遞單號',order.trackingNumber);const a=document.createElement('a');a.href='https://www.t-cat.com.tw/inquire/trace.aspx';a.target='_blank';a.rel='noopener noreferrer';a.textContent='前往黑貓貨況查詢';result.appendChild(a);} 
+   if(order.mode==='宅配到府'){
+     const box=document.createElement('div');box.style.cssText='margin-top:22px;padding:16px;background:#f5faf7;border:1px solid #cde7d8;border-radius:12px';
+     const heading=document.createElement('h3');heading.textContent='📦 宅配配送資訊';heading.style.margin='0 0 10px';box.appendChild(heading);
+     const tracking=String(order.trackingNumber||'').trim();
+     if(tracking){
+       const p=document.createElement('p');p.style.margin='0 0 8px';const strong=document.createElement('strong');strong.textContent='黑貓快遞單號：';p.append(strong,document.createTextNode(tracking));box.appendChild(p);
+       const copy=document.createElement('button');copy.type='button';copy.textContent='複製快遞單號';copy.style.cssText='margin-top:10px;background:#fff;color:#28674c;border:1px solid #7cb99c';
+       copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(tracking);copy.textContent='已複製 ✓';}catch(e){window.prompt('請複製快遞單號：',tracking);}});box.appendChild(copy);
+       const a=document.createElement('a');a.className='action';a.href='https://www.t-cat.com.tw/inquire/trace.aspx';a.target='_blank';a.rel='noopener noreferrer';a.textContent='前往黑貓查詢配送進度';box.appendChild(a);
+       const note=document.createElement('p');note.className='fine';note.textContent='開啟黑貓網站後，請貼上快遞單號查詢；實際貨況以黑貓系統為準。';box.appendChild(note);
+     }else{
+       const p=document.createElement('p');p.className='muted';p.style.margin='0';p.textContent='尚未提供宅配單號。出貨並登錄單號後，可回到此頁查詢。';box.appendChild(p);
+     }
+     result.appendChild(box);
+   }
  }
  else if(data.status==='ok'&&data.found===false){result.textContent='找不到符合的訂單，請檢查編號與手機號碼，或聯繫客服。';}
  else{result.textContent='目前無法完成查詢，請稍後再試或聯繫客服。';}
