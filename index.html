@@ -1985,11 +1985,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             const date = document.getElementById('sjTransferDate').value;
             const orderId = document.getElementById('finalOrderIdDelivery').textContent.trim();
             if (!/^[0-9]{5}$/.test(last5)) { alert('請輸入正確的匯款帳號後五碼。'); return; }
-            if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) { alert('請選擇實際匯款日期。'); return; }
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { alert('請選擇實際匯款日期。'); return; }
             if (!/^ORD[A-Za-z0-9_-]{5,40}$/.test(orderId)) { alert('無法取得有效訂單編號，請聯繫客服。'); return; }
-            const message = '【紀家烘焙坊｜宅配匯款通知】\\n訂單編號：' + orderId +
-                '\\n匯款帳號後五碼：' + last5 + '\\n匯款日期：' + date +
-                '\\n已完成匯款，煩請協助核帳，謝謝！';
+            const message = '【紀家烘焙坊｜宅配匯款通知】\n訂單編號：' + orderId +
+                '\n匯款帳號後五碼：' + last5 + '\n匯款日期：' + date +
+                '\n已完成匯款，煩請協助核帳，謝謝！';
             // Open from the click gesture to reduce popup blocking; copy first if available.
             const lineWindow = window.open('https://lin.ee/ifHbhYi', '_blank', 'noopener,noreferrer');
             try {
