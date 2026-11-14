@@ -27,6 +27,20 @@
 .sj-rules-table th,.sj-rules-table td{padding:11px 8px;text-align:left;border-bottom:1px solid #eee4d7;vertical-align:top}
 .sj-rules-table th{color:#72563f;font-weight:700}
 .sj-rules-note{font-size:13px;color:#816d5a;line-height:1.8}
+
+/* Separate pickup/delivery date calendars: native input remains canonical for existing validation. */
+.sj-date-source{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none!important}
+.sj-date-trigger{width:100%;padding:11px 13px;border:1px solid #d1c4b7;border-radius:10px;background:#fff;color:#4b3830;text-align:left;font-size:16px;cursor:pointer}
+.sj-calendar{position:relative;z-index:20;background:#fff;border:1px solid #e5d7c8;border-radius:12px;box-shadow:0 8px 25px #45362f20;padding:12px;margin-top:6px;max-width:350px}
+.sj-calendar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sj-calendar-nav{background:#f4eee8;color:#593f39;border:0;border-radius:8px;padding:6px 13px}
+.sj-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;text-align:center}
+.sj-calendar-grid .sj-weekday{font-size:12px;color:#806f63;padding:7px 0}
+.sj-calendar-grid button{background:transparent;color:#47372f;border:0;border-radius:7px;padding:9px 0;font-size:14px;cursor:pointer}
+.sj-calendar-grid button:hover:not(:disabled){background:#f5e9dc}
+.sj-calendar-grid button[aria-pressed="true"]{background:#79394a;color:#fff}
+.sj-calendar-grid button:disabled{color:#bdb8b3;background:#f7f7f7;cursor:not-allowed}
+.sj-calendar-grid .sj-empty{min-height:32px}
 </style>
 
 <style id="premium-brand-refresh">
@@ -790,7 +804,12 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label id="dateLabel" class="block text-sm font-medium text-gray-600 mb-1">取貨日期 *</label>
-                        <input type="date" id="orderDate" required onchange="validateDate()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white">
+                        <input type="date" id="orderDate" required onchange="validateDate()" class="sj-date-source" tabindex="-1" aria-hidden="true">
+                        <button type="button" id="sjDateTrigger" class="sj-date-trigger" aria-haspopup="dialog" aria-expanded="false" onclick="sjToggleCalendar()">選擇日期 ▾</button>
+                        <div id="sjCalendar" class="sj-calendar hidden" role="dialog" aria-label="選擇取貨或出貨日期">
+                            <div class="sj-calendar-head"><button type="button" class="sj-calendar-nav" onclick="sjMoveCalendar(-1)" aria-label="上個月">‹</button><strong id="sjCalendarMonth"></strong><button type="button" class="sj-calendar-nav" onclick="sjMoveCalendar(1)" aria-label="下個月">›</button></div>
+                            <div class="sj-calendar-grid" id="sjCalendarDays"></div>
+                        </div>
                         <p id="dateNoticeText" class="text-xs text-red-600 mt-1 font-medium hidden">⚠️ 宅配僅能選擇週一到週五的出貨日，請重新選擇！</p>
                         <p id="systemClosedNotice" class="text-xs text-red-600 mt-1 font-bold hidden">⚠️ 您選擇的日期為休息日或已滿單，請重新選擇其他日期！</p>
                         <p id="estimatedArrival" class="text-xs text-amber-700 mt-1 font-bold hidden"></p>
@@ -1169,6 +1188,77 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             // 不清除待核對訂單：重新整理後仍需防止重複提交。
         });
 
+
+        // Date calendar state is separate for each order mode; the existing #orderDate is still the submission value.
+        const sjDatesByMode = {pickup:'', delivery:''};
+        let sjCalendarMonthDate = null;
+        function sjLocalDate(iso){ const p=iso.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]); }
+        function sjIso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+        function sjDateAllowed(iso){
+            const el=document.getElementById('orderDate');
+            if(!iso || iso<el.min || iso>el.max || isClosedOrderDate_(iso))return false;
+            if(document.getElementById('orderMode').value==='delivery'){
+                const weekday=sjLocalDate(iso).getDay();
+                if(weekday===0 || weekday===6)return false;
+            }
+            return true;
+        }
+        function sjNextAllowed(start){
+            let d=sjLocalDate(start);
+            const max=document.getElementById('orderDate').max;
+            for(let i=0;i<65 && sjIso(d)<=max;i++,d.setDate(d.getDate()+1)){
+                const iso=sjIso(d);if(sjDateAllowed(iso))return iso;
+            }
+            return '';
+        }
+        function sjSyncDateDisplay(){
+            const value=document.getElementById('orderDate').value;
+            document.getElementById('sjDateTrigger').textContent=value?value.replace(/-/g,'/')+'  ▾':'請選擇日期  ▾';
+        }
+        function sjCloseCalendar(){
+            document.getElementById('sjCalendar').classList.add('hidden');
+            document.getElementById('sjDateTrigger').setAttribute('aria-expanded','false');
+        }
+        function sjToggleCalendar(){
+            const popup=document.getElementById('sjCalendar');
+            if(!popup.classList.contains('hidden')){sjCloseCalendar();return;}
+            const input=document.getElementById('orderDate');
+            sjCalendarMonthDate=sjLocalDate(input.value||input.min);
+            sjCalendarMonthDate.setDate(1);
+            sjRenderCalendar();
+            popup.classList.remove('hidden');
+            document.getElementById('sjDateTrigger').setAttribute('aria-expanded','true');
+        }
+        function sjMoveCalendar(n){
+            sjCalendarMonthDate.setMonth(sjCalendarMonthDate.getMonth()+n,1);
+            sjRenderCalendar();
+        }
+        function sjRenderCalendar(){
+            const root=document.getElementById('sjCalendarDays');
+            root.replaceChildren();
+            const month=sjCalendarMonthDate;
+            document.getElementById('sjCalendarMonth').textContent=month.getFullYear()+'年'+(month.getMonth()+1)+'月';
+            ['日','一','二','三','四','五','六'].forEach(w=>{const x=document.createElement('span');x.className='sj-weekday';x.textContent=w;root.append(x);});
+            for(let i=0;i<month.getDay();i++){const x=document.createElement('span');x.className='sj-empty';root.append(x);}
+            const count=new Date(month.getFullYear(),month.getMonth()+1,0).getDate();
+            const input=document.getElementById('orderDate');
+            for(let day=1;day<=count;day++){
+                const d=new Date(month.getFullYear(),month.getMonth(),day),iso=sjIso(d);
+                const b=document.createElement('button');b.type='button';b.textContent=String(day);
+                b.disabled=!sjDateAllowed(iso);b.setAttribute('aria-pressed',String(iso===input.value));
+                b.setAttribute('aria-label',iso);
+                b.onclick=()=>{
+                    input.value=iso;
+                    sjDatesByMode[document.getElementById('orderMode').value]=iso;
+                    sjSyncDateDisplay();sjCloseCalendar();validateDate();
+                };
+                root.append(b);
+            }
+        }
+        document.addEventListener('click',e=>{
+            if(!e.target.closest('#sjCalendar')&&!e.target.closest('#sjDateTrigger'))sjCloseCalendar();
+        });
+
         function updateMinDateAndValue() {
             const now = new Date();
             const currentHour = now.getHours();
@@ -1198,7 +1288,11 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             const maxDateStr = `${lastDayNextMonth.getFullYear()}-${String(lastDayNextMonth.getMonth()+1).padStart(2,'0')}-${String(lastDayNextMonth.getDate()).padStart(2,'0')}`;
             orderDateInput.min = minDateStr;
             orderDateInput.max = maxDateStr;
-            orderDateInput.value = minDateStr <= maxDateStr ? minDateStr : '';
+            const saved=sjDatesByMode[mode];
+            orderDateInput.value=saved && sjDateAllowed(saved)?saved:(minDateStr<=maxDateStr?sjNextAllowed(minDateStr):'');
+            sjDatesByMode[mode]=orderDateInput.value;
+            sjSyncDateDisplay();
+            sjCloseCalendar();
             if (!orderDateInput.value) alert('本月與下個月已無可選日期，請聯繫客服。');
             validateDate();
         }
