@@ -1059,12 +1059,13 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             <div class="flex flex-col gap-2">
                 <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 space-y-3 text-left">
                     <h3 class="font-bold text-emerald-900">💬 已完成匯款？通知紀家</h3>
-                    <p class="text-xs leading-relaxed text-gray-700">匯款後填寫帳號末五碼，點選下方按鈕複製通知內容並開啟官方 LINE，<strong>請務必在 LINE 貼上並送出訊息</strong>，我們才能協助核帳與提供宅配單號。</p>
+                    <p class="text-xs leading-relaxed text-gray-700">匯款後填寫帳號末五碼與日期，送出後將先儲存至紀家核帳紀錄，再開啟官方 LINE。<strong>請務必在 LINE 貼上並傳送訊息</strong>，以便客服協助確認。</p>
                     <label for="sjTransferLast5" class="block text-sm font-bold text-gray-700">匯款帳號後五碼 *</label>
                     <input id="sjTransferLast5" type="text" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" autocomplete="off" placeholder="請輸入 5 位數字" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,5)">
                     <label for="sjTransferDate" class="block text-sm font-bold text-gray-700">匯款日期 *</label>
                     <input id="sjTransferDate" type="date" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base">
-                    <button type="button" onclick="sjNotifyTransferViaLine()" class="block w-full rounded-xl bg-emerald-700 py-3 font-bold text-white hover:bg-emerald-800">📋 複製通知並開啟官方 LINE</button>
+                    <button id="sjTransferSubmitBtn" type="button" onclick="sjNotifyTransferViaLine()" class="block w-full rounded-xl bg-emerald-700 py-3 font-bold text-white hover:bg-emerald-800">確認提交並前往 LINE</button>
+                    <p id="sjTransferStatus" role="status" aria-live="polite" class="text-sm text-emerald-900"></p>
                     <p class="text-xs text-gray-600">提醒：填寫資料不代表已付款成功；請於 LINE 實際傳送訊息，並以紀家人工核帳結果為準。</p>
                 </div>
                 <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
@@ -1980,27 +1981,107 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
             }
         }
 
+        // S-07: only confirmed backend writes may lead to LINE notification.
+        const SJ_TRANSFER_API_URL = GAS_URL;
+        const SJ_TRANSFER_LINE_URL = 'https://lin.ee/ifHbhYi';
+        let sjTransferBusy = false;
+        function sjTransferReportKey(orderId) { return 'stillji_transfer_report_' + orderId; }
+        function sjTransferVerifySaved(orderId, phone, reportId, timeoutMs = 12000) {
+            return new Promise(resolve => {
+                const callbackName = 'sjTransferCheck' + Math.random().toString(36).slice(2);
+                const script = document.createElement('script');
+                let done = false;
+                const finish = value => {
+                    if (done) return;
+                    done = true;
+                    clearTimeout(timer);
+                    try { delete window[callbackName]; } catch (_) {}
+                    script.remove();
+                    resolve(value);
+                };
+                const timer = setTimeout(() => finish(null), timeoutMs);
+                window[callbackName] = response => finish(response && response.status === 'ok' ? response.saved === true : null);
+                script.onerror = () => finish(null);
+                script.src = SJ_TRANSFER_API_URL + '?action=checkTransferReport'
+                    + '&orderId=' + encodeURIComponent(orderId)
+                    + '&phone=' + encodeURIComponent(phone)
+                    + '&reportId=' + encodeURIComponent(reportId)
+                    + '&callback=' + callbackName;
+                document.head.appendChild(script);
+            });
+        }
         async function sjNotifyTransferViaLine() {
+            if (sjTransferBusy) return;
             const last5 = document.getElementById('sjTransferLast5').value.trim();
             const date = document.getElementById('sjTransferDate').value;
             const orderId = document.getElementById('finalOrderIdDelivery').textContent.trim();
+            const order = (pendingOrderData && pendingOrderData.orderId === orderId ? pendingOrderData : null)
+                || readPendingTestOrder();
+            const phone = order && order.orderId === orderId ? order.phone : '';
+            const button = document.getElementById('sjTransferSubmitBtn');
+            const status = document.getElementById('sjTransferStatus');
             if (!/^[0-9]{5}$/.test(last5)) { alert('請輸入正確的匯款帳號後五碼。'); return; }
             if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) { alert('請選擇實際匯款日期。'); return; }
-            if (!/^ORD[A-Za-z0-9_-]{5,40}$/.test(orderId)) { alert('無法取得有效訂單編號，請聯繫客服。'); return; }
-            const message = '【紀家烘焙坊｜宅配匯款通知】\n訂單編號：' + orderId +
-                '\n匯款帳號後五碼：' + last5 + '\n匯款日期：' + date +
-                '\n已完成匯款，煩請協助核帳，謝謝！';
-            // Open from the click gesture to reduce popup blocking; copy first if available.
-            const lineWindow = window.open('https://lin.ee/ifHbhYi', '_blank', 'noopener,noreferrer');
-            try {
-                if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(message);
-                else throw new Error('clipboard unavailable');
-                alert('匯款通知內容已複製！請前往 LINE 貼上並傳送給紀家客服。');
-            } catch (e) {
-                window.prompt('請先複製以下內容，再貼到官方 LINE 傳送：', message);
+            const today = new Date();
+            const localToday = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+            if (date > localToday) { alert('匯款日期不能是未來日期。'); return; }
+            if (!/^ORD[A-Za-z0-9_-]{5,40}$/.test(orderId) || !phone) {
+                alert('無法取得訂單編號或聯絡電話，請至訂單查詢頁或聯絡官方 LINE 客服。');
+                return;
             }
+            let reportId;
+            const key = sjTransferReportKey(orderId);
+            try {
+                const saved = JSON.parse(localStorage.getItem(key) || 'null');
+                if (saved && (saved.lastFive !== last5 || saved.transferDate !== date)) {
+                    alert('此訂單已提交過其他匯款資料。如需更正，請聯絡官方 LINE 客服。');
+                    return;
+                }
+                reportId = saved && saved.reportId;
+                if (!reportId) {
+                    reportId = crypto.randomUUID();
+                    localStorage.setItem(key, JSON.stringify({reportId, lastFive:last5, transferDate:date}));
+                }
+            } catch (_) {
+                alert('無法保存回報識別碼，請確認瀏覽器允許本網站儲存資料後再試。');
+                return;
+            }
+            sjTransferBusy = true;
+            button.disabled = true;
+            button.textContent = '正在確認匯款回報，請稍候…';
+            status.textContent = '正在提交並確認紀家已收到資料，請勿重複點擊。';
+            try {
+                // Apps Script cross-origin POST is opaque. Only the follow-up JSONP read confirms success.
+                await fetch(SJ_TRANSFER_API_URL, {
+                    method:'POST', mode:'no-cors',
+                    headers:{'Content-Type':'text/plain;charset=utf-8'},
+                    body:JSON.stringify({action:'reportTransfer',orderId,phone,lastFive:last5,transferDate:date,reportId})
+                });
+            } catch (_) { /* Verify regardless: POST may have been saved before a network error. */ }
+            const verified = await sjTransferVerifySaved(orderId,phone,reportId);
+            sjTransferBusy = false;
+            button.disabled = false;
+            button.textContent = '確認提交並前往 LINE';
+            if (verified !== true) {
+                status.textContent = '尚無法確認是否成功儲存。請勿重新匯款；可用相同資料再按一次確認，或聯絡客服。';
+                alert('目前無法確認紀家是否收到回報，請勿重複匯款。請稍後以相同資料重試，或聯絡官方 LINE 客服。');
+                return;
+            }
+            const message = '【紀家烘焙坊｜宅配匯款通知】\n訂單編號：' + orderId
+                + '\n匯款帳號後五碼：' + last5 + '\n匯款日期：' + date
+                + '\n已提交匯款回報，煩請協助人工核帳，謝謝！';
+            status.textContent = '匯款回報已儲存，等待人工核帳。請至 LINE 貼上並傳送通知。';
+            try {
+                if (!navigator.clipboard || !window.isSecureContext) throw new Error('clipboard unavailable');
+                await navigator.clipboard.writeText(message);
+                alert('匯款回報已儲存！通知文字也已複製，請到 LINE 貼上並送出。');
+            } catch (_) {
+                window.prompt('匯款回報已儲存！請複製以下訊息，再到 LINE 貼上並送出：',message);
+            }
+            const lineWindow = window.open(SJ_TRANSFER_LINE_URL,'_blank');
             if (!lineWindow) {
-                if (confirm('LINE 未自動開啟，是否現在前往官方 LINE？')) window.location.href = 'https://lin.ee/ifHbhYi';
+                if (confirm('匯款回報已儲存，但 LINE 未自動開啟。現在前往官方 LINE？'))
+                    window.location.href = SJ_TRANSFER_LINE_URL;
             }
         }
 
