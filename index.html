@@ -1057,6 +1057,16 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 </div>
             </div>
             <div class="flex flex-col gap-2">
+                <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 space-y-3 text-left">
+                    <h3 class="font-bold text-emerald-900">💬 已完成匯款？通知紀家</h3>
+                    <p class="text-xs leading-relaxed text-gray-700">匯款後填寫帳號末五碼，點選下方按鈕複製通知內容並開啟官方 LINE，<strong>請務必在 LINE 貼上並送出訊息</strong>，我們才能協助核帳與提供宅配單號。</p>
+                    <label for="sjTransferLast5" class="block text-sm font-bold text-gray-700">匯款帳號後五碼 *</label>
+                    <input id="sjTransferLast5" type="text" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" autocomplete="off" placeholder="請輸入 5 位數字" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,5)">
+                    <label for="sjTransferDate" class="block text-sm font-bold text-gray-700">匯款日期 *</label>
+                    <input id="sjTransferDate" type="date" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base">
+                    <button type="button" onclick="sjNotifyTransferViaLine()" class="block w-full rounded-xl bg-emerald-700 py-3 font-bold text-white hover:bg-emerald-800">📋 複製通知並開啟官方 LINE</button>
+                    <p class="text-xs text-gray-600">提醒：填寫資料不代表已付款成功；請於 LINE 實際傳送訊息，並以紀家人工核帳結果為準。</p>
+                </div>
                 <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
                 <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-center">💬 聯繫官方 LINE 客服</a>
             </div>
@@ -1967,6 +1977,30 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                 submitBtn.innerText = '已送出，請勿重複提交';
                 alert('尚未取得訂單寫入確認。\n訂單編號：' + order.orderId +
                     '\n請勿重複送出，並透過官方 LINE 聯繫客服查詢。\n請提供訂單編號，方便客服協助查詢。');
+            }
+        }
+
+        async function sjNotifyTransferViaLine() {
+            const last5 = document.getElementById('sjTransferLast5').value.trim();
+            const date = document.getElementById('sjTransferDate').value;
+            const orderId = document.getElementById('finalOrderIdDelivery').textContent.trim();
+            if (!/^[0-9]{5}$/.test(last5)) { alert('請輸入正確的匯款帳號後五碼。'); return; }
+            if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)) { alert('請選擇實際匯款日期。'); return; }
+            if (!/^ORD[A-Za-z0-9_-]{5,40}$/.test(orderId)) { alert('無法取得有效訂單編號，請聯繫客服。'); return; }
+            const message = '【紀家烘焙坊｜宅配匯款通知】\\n訂單編號：' + orderId +
+                '\\n匯款帳號後五碼：' + last5 + '\\n匯款日期：' + date +
+                '\\n已完成匯款，煩請協助核帳，謝謝！';
+            // Open from the click gesture to reduce popup blocking; copy first if available.
+            const lineWindow = window.open('https://lin.ee/ifHbhYi', '_blank', 'noopener,noreferrer');
+            try {
+                if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(message);
+                else throw new Error('clipboard unavailable');
+                alert('匯款通知內容已複製！請前往 LINE 貼上並傳送給紀家客服。');
+            } catch (e) {
+                window.prompt('請先複製以下內容，再貼到官方 LINE 傳送：', message);
+            }
+            if (!lineWindow) {
+                if (confirm('LINE 未自動開啟，是否現在前往官方 LINE？')) window.location.href = 'https://lin.ee/ifHbhYi';
             }
         }
 
