@@ -1056,25 +1056,22 @@ body h1,body h2,body h3,body h4,body h5,body h6,.brand-product-title{font-family
                     </ul>
                 </div>
             </div>
-            <div class="flex flex-col gap-2">
-                <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 space-y-3 text-left">
-                    <h3 class="font-bold text-emerald-900">💬 已完成匯款？通知紀家</h3>
-                    <p class="text-xs leading-relaxed text-gray-700">匯款後填寫帳號末五碼與日期，送出後將先儲存至紀家核帳紀錄，再開啟官方 LINE。<strong>請務必在 LINE 貼上並傳送訊息</strong>，以便客服協助確認。</p>
-                    <label for="sjTransferLast5" class="block text-sm font-bold text-gray-700">匯款帳號後五碼 *</label>
-                    <input id="sjTransferLast5" type="text" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" autocomplete="off" placeholder="請輸入 5 位數字" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,5)">
-                    <label for="sjTransferDate" class="block text-sm font-bold text-gray-700">匯款日期 *</label>
-                    <input id="sjTransferDate" type="date" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base">
-                    <button id="sjTransferSubmitBtn" type="button" onclick="sjNotifyTransferViaLine()" class="block w-full rounded-xl bg-emerald-700 py-3 font-bold text-white hover:bg-emerald-800">確認提交並前往 LINE</button>
-                    <p id="sjTransferStatus" role="status" aria-live="polite" class="text-sm text-emerald-900"></p>
-                    <p class="text-xs text-gray-600">提醒：填寫資料不代表已付款成功；請於 LINE 實際傳送訊息，並以紀家人工核帳結果為準。</p>
-                </div>
-                <button type="button" onclick="copyOrderInfo('delivery')" class="block w-full bg-amber-100 hover:bg-amber-200 text-amber-900 py-2.5 rounded-xl font-bold">📋 複製訂單資訊</button>
-                <a href="https://lin.ee/ifHbhYi" target="_blank" rel="noopener noreferrer" class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-center">💬 聯繫官方 LINE 客服</a>
+            <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4 sm:p-5 space-y-3 text-left">
+                <h3 class="font-bold text-emerald-900">已完成匯款？通知紀家</h3>
+                <p class="text-sm leading-relaxed text-gray-700">完成匯款後，請填寫以下資料，方便紀家為您核對款項。</p>
+                <label for="sjTransferLast5" class="block text-sm font-bold text-gray-700">匯款帳號後五碼 *</label>
+                <input id="sjTransferLast5" type="text" inputmode="numeric" maxlength="5" pattern="[0-9]{5}" autocomplete="off" placeholder="請輸入 5 位數字" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,5)">
+                <label for="sjTransferDate" class="block text-sm font-bold text-gray-700">匯款日期 *</label>
+                <input id="sjTransferDate" type="date" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base">
+                <div class="rounded-lg bg-white/75 px-3 py-2 text-xs leading-relaxed text-gray-700">匯款後再提交。系統將記錄匯款資訊並開啟官方 LINE；請貼上通知並傳送，款項仍以人工核帳為準。</div>
+                <button id="sjTransferSubmitBtn" type="button" onclick="sjNotifyTransferViaLine()" class="block w-full rounded-xl bg-emerald-700 py-3 font-bold text-white hover:bg-emerald-800 disabled:opacity-60">確認提交並前往 LINE</button>
+                <p id="sjTransferStatus" role="status" aria-live="polite" class="text-sm text-emerald-900"></p>
             </div>
-            <a href="lookup.html" class="block text-center text-sm text-amber-800 underline">前往訂單查詢</a>
-            <button onclick="startNewOrder()" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-600 py-2.5 rounded-xl transition text-sm font-medium cursor-pointer">
-                返回填寫新訂單
-            </button>
+            <div class="flex items-center justify-center gap-3 pt-1 text-sm">
+                <a href="lookup.html" class="text-amber-800 underline underline-offset-4">查詢訂單</a>
+                <span class="text-gray-300" aria-hidden="true">·</span>
+                <button type="button" onclick="startNewOrder()" class="text-gray-600 underline underline-offset-4">返回訂購</button>
+            </div>
         </div>
 
         </section>
